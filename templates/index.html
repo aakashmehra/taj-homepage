@@ -1,0 +1,894 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.site_title }}{% endblock %}
+
+{% block content %}
+
+
+<div id="root">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-gold">TAJ</span>
+            </h1>
+            <p class="hero-subtitle">
+                {% if lang == 'jp' %}
+                    本格インド料理 & アジアンフュージョン
+                {% else %}
+                    Indian Cuisine & Asian Fusion
+                {% endif %}
+            </p>
+            <p class="hero-description">
+                {% if lang == 'jp' %}
+                    日光・河口湖・沖縄で本格的な味をお楽しみください
+                {% else %}
+                    Experience authentic flavors in Nikko • Kawaguchiko • Okinawa
+                {% endif %}
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('menu-section')">
+                    {% if lang == 'jp' %}
+                        メニューを見る
+                    {% else %}
+                        View Menu
+                    {% endif %}
+                </button>
+                <button class="btn btn-outline" onclick="scrollToSection('locations-section')">
+                    {% if lang == 'jp' %}
+                        店舗を探す
+                    {% else %}
+                        Find Locations
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="index-locations-section locations-section" id="locations-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        私たちの<span class="text-luxury-gold">店舗</span>
+                    {% else %}
+                        Our <span class="text-luxury-gold">Locations</span>
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        日本全国の美しい3つの店舗でお待ちしております
+                    {% else %}
+                        Visit us at any of our three beautiful locations across Japan
+                    {% endif %}
+                </p>
+            </div>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                            <h3 class="location-city">{{ content.nav_nikko }}</h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    インドの香りと日本の静けさが出会うフラッグシップ店舗
+                                {% else %}
+                                    Where Indian Spices Meet Nikko's Serenity
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="location-details">
+                            <div class="location-detail">
+                                <i class="fas fa-map-marker-alt location-icon"></i>
+                                <span class="location-text">2F, 2-32 Honcho, Nikko, Tochigi 321-1434</span>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-phone location-icon"></i>
+                                <a href="tel:+81-288-25-7766" style="color: inherit; text-decoration: none;">
+                                <span class="location-text" phone="+81-288-25-7766">0288-25-7766</span>
+                                </a>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-clock location-icon"></i>
+                                <span class="location-text">11:00 AM - 9:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="location-actions">
+                            <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_nikko') }}'">
+                                {% if lang == 'jp' %}
+                                    店舗ページ
+                                {% else %}
+                                    Visit Page
+                                {% endif %}
+                            </button>
+                            <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/pmnrpPqi8ytgE7a99', '_blank')">
+                                {% if lang == 'jp' %}
+                                    道順を取得
+                                {% else %}
+                                    Get Directions
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                            <h3 class="location-city">{{ content.nav_fuji }}</h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    富士のふもとにあるインドの味
+                                {% else %}
+                                    A Taste of India at the foot of Fuji
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="location-details">
+                            <div class="location-detail">
+                                <i class="fas fa-map-marker-alt location-icon"></i>
+                                <span class="location-text">Kawaguchiko, Yamanashi</span>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-phone location-icon"></i>
+                                <a href="tel:+81 70-9197-2306" style="color: inherit; text-decoration: none;">
+                                <span class="location-text" phone="+81 70-9197-2306">070-9197-2306</span>
+                                </a>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-clock location-icon"></i>
+                                <span class="location-text">11:00 AM - 9:30 PM</span>
+                            </div>
+                        </div>
+                        <div class="location-actions">
+                            <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_fuji') }}'">
+                                {% if lang == 'jp' %}
+                                    店舗ページ
+                                {% else %}
+                                    Visit Page
+                                {% endif %}
+                            </button>
+                            <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/SRFfkiLpUHTxPWAJ8', '_blank')">
+                                {% if lang == 'jp' %}
+                                    道順を取得
+                                {% else %}
+                                    Get Directions
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                            <h3 class="location-city">{{ content.nav_okinawa }}</h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    沖縄で本格的なインドの味をお楽しみください。
+                                {% else %}
+                                    Taste the Taj. Feel the Island. Your Indian Destination in Okinawa.
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="location-details">
+                            <div class="location-detail">
+                                <i class="fas fa-map-marker-alt location-icon"></i>
+                                <span class="location-text">Ihei, 458-1 Eagle Lodge 1F, Chatan, Okinawa</span>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-phone location-icon"></i>
+                                <a href="tel:+81-98-923-1312" style="color: inherit; text-decoration: none;">
+                                <span class="location-text" phone="+81-98-923-1312">098-923-1312</span>
+                                </a>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-clock location-icon"></i>
+                                <span class="location-text">11:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="location-actions">
+                            <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_okinawa') }}'">
+                                {% if lang == 'jp' %}
+                                    店舗ページ
+                                {% else %}
+                                    Visit Page
+                                {% endif %}
+                            </button>
+                            <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/GUva8oatkwVs4krX7', '_blank')">
+                                {% if lang == 'jp' %}
+                                    道順を取得
+                                {% else %}
+                                    Get Directions
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section class="reservations-section" id="reservations-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        ご<span class="text-luxury-gold">予約</span>
+                    {% else %}
+                        Make a <span class="text-luxury-gold">Reservation</span>
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        個人・グループ予約、旅行会社様のご予約も承っております
+                    {% else %}
+                        We accept individual, group, and travel agency reservations
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div class="reservation-options">
+                <div class="reservation-option">
+                    <i class="fas fa-users" style="color: hsl(var(--luxury-red));"></i>
+                    <h3 style="color: var(--luxury-red);">
+                        {% if lang == 'jp' %}
+                            個人・グループ予約
+                        {% else %}
+                            Individual/Group Reservations
+                        {% endif %}
+                    </h3>
+                    <p>
+                        {% if lang == 'jp' %}
+                            個人のお客様やグループでのご予約はこちらからお申し込みください。
+                        {% else %}
+                            Make reservations for individuals or groups through our dedicated form.
+                        {% endif %}
+                    </p>
+                    <a href="{{ url_for('reservations_page') }}" class="btn btn-location-primary">
+                        {% if lang == 'jp' %}
+                            予約フォームへ
+                        {% else %}
+                            Go to Reservation Form
+                        {% endif %}
+                    </a>
+                </div>
+                
+                <div class="reservation-option">
+                    <i class="fas fa-bus" style="color: hsl(var(--luxury-red));"></i>
+                    <h3 style="color: var(--luxury-red);">
+                        {% if lang == 'jp' %}
+                            旅行会社様予約
+                        {% else %}
+                            Travel Agency Reservations
+                        {% endif %}
+                    </h3>
+                    <p>
+                        {% if lang == 'jp' %}
+                            旅行会社様、バス会社様のご予約は専用フォームをご利用ください。
+                        {% else %}
+                            Travel agencies and bus companies can use our specialized reservation form.
+                        {% endif %}
+                    </p>
+                    <a href="{{ url_for('reservations_page') }}" class="btn btn-location-primary">
+                        {% if lang == 'jp' %}
+                            予約フォームへ
+                        {% else %}
+                            Go to Reservation Form
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="index-menu-section menu-section" id="menu-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        私たちの<span class="text-luxury-red">料理</span>の旅
+                    {% else %}
+                        Our <span class="text-luxury-red">Culinary</span> Journey
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        伝統的なインド料理と現代的なイノベーションが出会う味の世界を発見してください
+                    {% else %}
+                        Discover a world of flavors where traditional Indian cuisine meets modern innovation
+                    {% endif %}
+                </p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img src="{{ url_for('static', filename='images/taj_nikko_gallery/013.webp') }}" alt="Indian Cuisine" class="menu-image">
+                        <div class="menu-card-overlay"></div>
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">
+                            {% if lang == 'jp' %}
+                                インド料理
+                            {% else %}
+                                Indian Cuisine
+                            {% endif %}
+                        </h3>
+                        <p class="menu-card-description">
+                            {% if lang == 'jp' %}
+                                モダンなプレゼンテーションで本格的なインドの味。クラシックなカレーからタンドリー料理まで。
+                            {% else %}
+                                Authentic Indian flavors with modern presentation. From classic curries to tandoori specialties.
+                            {% endif %}
+                        </p>
+                        <div class="menu-specialties">
+                            <h4 class="specialties-title">
+                                {% if lang == 'jp' %}
+                                    おすすめ:
+                                {% else %}
+                                    Specialties:
+                                {% endif %}
+                            </h4>
+                            <div class="specialties-tags">
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}バターチキン{% else %}Butter Chicken{% endif %}
+                                </span>
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}ビリヤニ{% else %}Biryani{% endif %}
+                                </span>
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}タンドリープラッター{% else %}Tandoori Platters{% endif %}
+                                </span>
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}焼きたてナン{% else %}Fresh Naan{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-menu" onclick="showMenuPopup('indian', 'nikko')">
+                            {% if lang == 'jp' %}
+                                メニューを見る
+                            {% else %}
+                                Explore Menu
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img src="{{ url_for('static', filename='images/taj_nikko_fuji_menu_images/taj_nikko_fuji39.webp') }}" alt="Asian Fusion" class="menu-image">
+                        <div class="menu-card-overlay"></div>
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">
+                            {% if lang == 'jp' %}
+                                アジアンフュージョン
+                            {% else %}
+                                Asian Fusion
+                            {% endif %}
+                        </h3>
+                        <p class="menu-card-description">
+                            {% if lang == 'jp' %}
+                                様々な地域料理から厳選された料理でアジアを旅する体験。
+                            {% else %}
+                                A journey through Asia with carefully crafted dishes from various regional cuisines.
+                            {% endif %}
+                        </p>
+                        <div class="menu-specialties">
+                            <h4 class="specialties-title">
+                                {% if lang == 'jp' %}
+                                    おすすめ:
+                                {% else %}
+                                    Specialties:
+                                {% endif %}
+                            </h4>
+                            <div class="specialties-tags">
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}パッタイ{% else %}Pad Thai{% endif %}
+                                </span>
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}ガパオライス{% else %}Gappao Rice{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-menu" onclick="showMenuPopup('asian', 'okinawa')">
+                            {% if lang == 'jp' %}
+                                メニューを見る
+                            {% else %}
+                                Explore Menu
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="menu-card">
+                    <div class="menu-card-image">
+                        <img src="{{ url_for('static', filename='images/taj_nikko_fuji_menu_images/taj_nikko_fuji38.webp') }}" alt="Artisan Pizza" class="menu-image">
+                        <div class="menu-card-overlay"></div>
+                    </div>
+                    <div class="menu-card-content">
+                        <h3 class="menu-card-title">
+                            {% if lang == 'jp' %}
+                                職人ピザ
+                            {% else %}
+                                Artisan Pizza
+                            {% endif %}
+                        </h3>
+                        <p class="menu-card-description">
+                            {% if lang == 'jp' %}
+                                プレミアム食材とユニークなフュージョントッピングのピザ。
+                            {% else %}
+                                Pizzas with premium ingredients and unique fusion toppings.
+                            {% endif %}
+                        </p>
+                        <div class="menu-specialties">
+                            <h4 class="specialties-title">
+                                {% if lang == 'jp' %}
+                                    おすすめ:
+                                {% else %}
+                                    Specialties:
+                                {% endif %}
+                            </h4>
+                            <div class="specialties-tags">
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}トマト & バジルソース{% else %}Tomato Pizza with Basil Sauce{% endif %}
+                                </span>
+                                <span class="specialty-tag">
+                                    {% if lang == 'jp' %}チーズピザ {% else %}Cheese Pizza{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-menu" onclick="showMenuPopup('pizza', 'fuji')">
+                            {% if lang == 'jp' %}
+                                メニューを見る
+                            {% else %}
+                                Explore Menu
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Navigation Section -->
+    <section class="quick-nav-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        もっと<span class="text-luxury-red">詳しく</span>
+                    {% else %}
+                        Learn <span class="text-luxury-red">More</span>
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        タージレストランについてもっと詳しく知りたい方はこちら
+                    {% else %}
+                        Discover more about Taj Restaurants and get in touch with us
+                    {% endif %}
+                </p>
+            </div>
+            <div class="quick-nav-grid">
+                <div class="quick-nav-card">
+                    <div class="quick-nav-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="quick-nav-title">
+                        {% if lang == 'jp' %}
+                            私たちについて
+                        {% else %}
+                            About Us
+                        {% endif %}
+                    </h3>
+                    <p class="quick-nav-description">
+                        {% if lang == 'jp' %}
+                            40年以上の歴史と情熱に満ちた私たちの物語をご覧ください
+                        {% else %}
+                            Discover our story of over 40 years of passion and dedication
+                        {% endif %}
+                    </p>
+                    <button class="btn btn-outline" onclick="navigateToAbout()">
+                        {% if lang == 'jp' %}
+                            詳細を見る
+                        {% else %}
+                            Learn More
+                        {% endif %}
+                    </button>
+                </div>
+                
+                <div class="quick-nav-card">
+                    <div class="quick-nav-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="quick-nav-title">
+                        {% if lang == 'jp' %}
+                            お問い合わせ
+                        {% else %}
+                            Contact Us
+                        {% endif %}
+                    </h3>
+                    <p class="quick-nav-description">
+                        {% if lang == 'jp' %}
+                            ご予約、お問い合わせ、特別なご要望はお気軽にご連絡ください
+                        {% else %}
+                            Get in touch for reservations, inquiries, or special requests
+                        {% endif %}
+                    </p>
+                    <button class="btn btn-outline" onclick="navigateToContact()">
+                        {% if lang == 'jp' %}
+                            お問い合わせ
+                        {% else %}
+                            Contact Now
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="index-contact-section contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h2 class="contact-title">
+                    {% if lang == 'jp' %}
+                        お<span class="text-luxury-gold">問い合わせ</span>
+                    {% else %}
+                        Get In <span class="text-luxury-gold">Touch</span>
+                    {% endif %}
+                </h2>
+                <p class="contact-description">
+                    {% if lang == 'jp' %}
+                        最高のインド・アジア料理を体験する準備はできましたか？今すぐお問い合わせください
+                    {% else %}
+                        Ready to experience the finest in Indian and Asian cuisine? Contact us today
+                    {% endif %}
+                </p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-info-section">
+                        <h3 class="contact-info-title">
+                            {% if lang == 'jp' %}
+                                お問い合わせ情報
+                            {% else %}
+                                Contact Information
+                            {% endif %}
+                        </h3>
+                        <p class="contact-info-description" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                お客様のお食事体験を素晴らしいものにするために、私たちはここにいます。ご予約、ケータリングサービス、メニューや店舗についてのお問い合わせは、お気軽にご連絡ください。
+                            {% else %}
+                                We're here to make your dining experience exceptional. Reach out to us for reservations, catering services, or any inquiries about our menu and locations.
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-phone contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        お電話
+                                    {% else %}
+                                        Call Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">+81-288-25-7766</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-envelope contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        メール
+                                    {% else %}
+                                        Email Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">hello@tajrestaurant.jp</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-comments contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        フォロー
+                                    {% else %}
+                                        Follow Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">@TajRestaurantJapan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-special">
+                        <h4 class="special-title" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                特別イベント
+                            {% else %}
+                                Special Events
+                            {% endif %}
+                        </h4>
+                        <p class="special-description" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                特別なイベントをご計画ですか？私たちのケータリングサービスで、タージの本格的な味をお客様のお祝いにお届けします。カスタムメニューの企画やイベントコーディネートについては、お問い合わせください。
+                            {% else %}
+                                Planning a special event? Our catering services bring the authentic taste of Taj to your celebrations. Contact us for custom menu planning and event coordination.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="contact-form-card">
+                    <div class="contact-form-content">
+                        <h3 class="form-title">
+                            {% if lang == 'jp' %}
+                                メッセージを送る
+                            {% else %}
+                                Send us a message
+                            {% endif %}
+                        </h3>
+                        <form class="contact-form" action="{{ url_for('contact_page') }}" method="post">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        {% if lang == 'jp' %}
+                                            名
+                                        {% else %}
+                                            First Name
+                                        {% endif %}
+                                    </label>
+                                    <input type="text" class="form-input" placeholder="{% if lang == 'jp' %}お名前（名）{% else %}Your first name{% endif %}" name="first_name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        {% if lang == 'jp' %}
+                                            姓
+                                        {% else %}
+                                            Last Name
+                                        {% endif %}
+                                    </label>
+                                    <input type="text" class="form-input" placeholder="{% if lang == 'jp' %}お名前（姓）{% else %}Your last name{% endif %}" name="last_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        メールアドレス <span style="color: red;">*</span>
+                                    {% else %}
+                                        Email <span style="color: red;">*</span>
+                                    {% endif %}
+                                </label>
+                                <input type="email" class="form-input" placeholder="{% if lang == 'jp' %}your@email.com{% else %}your@email.com{% endif %}" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        電話番号
+                                    {% else %}
+                                        Phone
+                                    {% endif %}
+                                </label>
+                                <input type="tel" class="form-input" placeholder="{% if lang == 'jp' %}お電話番号{% else %}Your phone number{% endif %}" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        メッセージ <span style="color: red;">*</span>
+                                    {% else %}
+                                        Message <span style="color: red;">*</span>
+                                    {% endif %}
+                                </label>
+                                <textarea class="form-textarea" placeholder="{% if lang == 'jp' %}お食事のご希望、特別な機会、ご質問などをお聞かせください...{% else %}Tell us about your dining preferences, special occasions, or any questions...{% endif %}" rows="4" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-contact-submit">
+                                {% if lang == 'jp' %}
+                                    メッセージを送信
+                                {% else %}
+                                    Send Message
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Menu Selection Popup Modal -->
+<div id="menuPopup" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="popupTitle">
+                {% if lang == 'jp' %}
+                    メニューを選択
+                {% else %}
+                    Select Menu
+                {% endif %}
+            </h3>
+            <button class="modal-close" onclick="closeMenuPopup()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="popupMessage">
+                {% if lang == 'jp' %}
+                    どの店舗のメニューをご覧になりますか？
+                {% else %}
+                    Which restaurant menu would you like to view?
+                {% endif %}
+            </p>
+            <div class="restaurant-options">
+                <button class="btn btn-location-primary" onclick="selectRestaurant('nikko')">
+                    {% if lang == 'jp' %}
+                        日光店
+                    {% else %}
+                        Nikko
+                    {% endif %}
+                </button>
+                <button class="btn btn-location-primary" onclick="selectRestaurant('fuji')">
+                    {% if lang == 'jp' %}
+                        河口湖店
+                    {% else %}
+                        Kawaguchiko
+                    {% endif %}
+                </button>
+                <button class="btn btn-location-primary" onclick="selectRestaurant('okinawa')">
+                    {% if lang == 'jp' %}
+                        沖縄店
+                    {% else %}
+                        Okinawa
+                    {% endif %}
+                </button>
+            </div>
+            <div id="restrictionMessage" class="restriction-message" style="display: none;">
+                <p id="restrictionText"></p>
+                <div class="restriction-actions">
+                    <button class="btn btn-primary" onclick="proceedToMenu()">
+                        {% if lang == 'jp' %}
+                            はい、メニューを見る
+                        {% else %}
+                            Yes, View Menu
+                        {% endif %}
+                    </button>
+                    <button class="btn btn-outline" onclick="closeMenuPopup()">
+                        {% if lang == 'jp' %}
+                            キャンセル
+                        {% else %}
+                            Cancel
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentCuisine = '';
+let selectedRestaurant = '';
+
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+function navigateToAbout() {
+    window.location.href = "{{ url_for('about_page') }}";
+}
+
+function navigateToContact() {
+    window.location.href = "{{ url_for('contact_page') }}";
+}
+
+function showMenuPopup(cuisine, defaultRestaurant) {
+    currentCuisine = cuisine;
+    selectedRestaurant = defaultRestaurant;
+    
+    const popup = document.getElementById('menuPopup');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupMessage = document.getElementById('popupMessage');
+    const restrictionMessage = document.getElementById('restrictionMessage');
+    const restaurantOptions = document.querySelector('.restaurant-options');
+    
+    // Reset popup state
+    restrictionMessage.style.display = 'none';
+    restaurantOptions.style.display = 'block';
+    
+    // Set title and message based on cuisine
+    if (cuisine === 'indian') {
+        popupTitle.textContent = '{% if lang == "jp" %}インド料理メニュー{% else %}Indian Cuisine Menu{% endif %}';
+        popupMessage.textContent = '{% if lang == "jp" %}どの店舗のインド料理メニューをご覧になりますか？{% else %}Which restaurant\'s Indian cuisine menu would you like to view?{% endif %}';
+    } else if (cuisine === 'asian') {
+        popupTitle.textContent = '{% if lang == "jp" %}アジアンフュージョンメニュー{% else %}Asian Fusion Menu{% endif %}';
+        popupMessage.textContent = '{% if lang == "jp" %}どの店舗のアジアンフュージョンメニューをご覧になりますか？{% else %}Which restaurant\'s Asian fusion menu would you like to view?{% endif %}';
+    } else if (cuisine === 'pizza') {
+        popupTitle.textContent = '{% if lang == "jp" %}ピザメニュー{% else %}Pizza Menu{% endif %}';
+        popupMessage.textContent = '{% if lang == "jp" %}どの店舗のピザメニューをご覧になりますか？{% else %}Which restaurant\'s pizza menu would you like to view?{% endif %}';
+    }
+    
+    popup.classList.add('show');
+}
+
+function selectRestaurant(restaurant) {
+    selectedRestaurant = restaurant;
+    
+    // Check for restrictions
+    if (restaurant === 'okinawa' && (currentCuisine === 'asian' || currentCuisine === 'pizza')) {
+        showRestrictionMessage(restaurant, currentCuisine);
+    } else {
+        proceedToMenu();
+    }
+}
+
+function showRestrictionMessage(restaurant, cuisine) {
+    const restrictionMessage = document.getElementById('restrictionMessage');
+    const restrictionText = document.getElementById('restrictionText');
+    const restaurantOptions = document.querySelector('.restaurant-options');
+    
+    restaurantOptions.style.display = 'none';
+    restrictionMessage.style.display = 'block';
+    
+    if (cuisine === 'asian') {
+        restrictionText.textContent = '{% if lang == "jp" %}沖縄店ではアジアンフュージョン料理を提供しておりません。それでもメニューをご覧になりますか？{% else %}Okinawa location does not serve Asian Fusion cuisine. Do you still want to view the menu?{% endif %}';
+    } else if (cuisine === 'pizza') {
+        restrictionText.textContent = '{% if lang == "jp" %}沖縄店ではピザを提供しておりません。それでもメニューをご覧になりますか？{% else %}Okinawa location does not serve Pizza. Do you still want to view the menu?{% endif %}';
+    }
+}
+
+function proceedToMenu() {
+    const restaurantUrls = {
+        'nikko': '{{ url_for("taj_nikko") }}/menu',
+        'fuji': '{{ url_for("taj_fuji") }}/menu',
+        'okinawa': '{{ url_for("taj_okinawa") }}/menu'
+    };
+    
+    const sectionMap = {
+        'indian': 'curry-section',
+        'asian': 'fusion-cuisine-section', 
+        'pizza': 'pizza-section'
+    };
+    
+    const url = restaurantUrls[selectedRestaurant];
+    const section = sectionMap[currentCuisine];
+    
+    // Navigate to the menu page with section parameter
+    window.location.href = url + (section ? '#' + section : '');
+}
+
+function closeMenuPopup() {
+    document.getElementById('menuPopup').classList.remove('show');
+}
+
+// Close popup when clicking outside
+document.getElementById('menuPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeMenuPopup();
+    }
+});
+
+</script>
+
+{% endblock %}

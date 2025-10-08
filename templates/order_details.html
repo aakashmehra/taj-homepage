@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order #{{ order.order_number }} - Taj Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    
+    <section class="order-details-page">
+        <div class="container">
+            <div class="order-header">
+                <div class="order-title">
+                    <h1><i class="fas fa-receipt"></i> Order Details</h1>
+                    <div class="order-number">Order #{{ order['order_number'] }}</div>
+                </div>
+                <div class="order-status status-{{ order['status'] }}">
+                    <i class="fas fa-{{ 'check-circle' if order['status'] == 'completed' else 'clock' }}"></i>
+                    {{ order['status']|title }}
+                </div>
+            </div>
+
+            <div class="order-info-grid">
+
+                <div class="order-items-section">
+                    <h2><i class="fas fa-utensils"></i> Order Items</h2>
+                    <div class="items-list">
+                        {% for item in order['items'] %}
+                        <div class="order-item">
+                            <div class="item-main">
+                                <h3 class="item-name">{{ item['name'] }}</h3>
+                                <div class="item-options">
+                                    {% if item.get('spiceLevelText') %}
+                                        <span class="option-tag spice-tag">
+                                            <i class="fas fa-pepper-hot"></i> {{ item['spiceLevelText'] }}
+                                        </span>
+                                    {% endif %}
+                                    {% if item.get('drinkText') %}
+                                        <span class="option-tag drink-tag">
+                                            <i class="fas fa-coffee"></i> {{ item['drinkText'] }}
+                                        </span>
+                                    {% endif %}
+                                    {% if item.get('portion') %}
+                                        <span class="option-tag portion-tag">
+                                            <i class="fas fa-users"></i> {{ item['portion'].upper() }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="item-price">¥{{ "{:,}".format(item['price']) }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h2><i class="fas fa-info-circle"></i> Order Information</h2>
+                    <div class="info-row">
+                        <span class="label">Order Number:</span>
+                        <span class="value">{{ order['order_number'] }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Restaurant:</span>
+                        <span class="value">Taj {{ order['restaurant_location']|title }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Order Date:</span>
+                        <span class="value">{{ order['created_at'] }}</span>
+                    </div>
+                    {% if order['completed_at'] %}
+                    <div class="info-row">
+                        <span class="label">Completed:</span>
+                        <span class="value">{{ order['completed_at'] }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="info-row total-row">
+                        <span class="label">Total Amount:</span>
+                        <span class="value total-amount">¥{{ "{:,}".format(order['total_amount']) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-actions">
+                {% if order['status'] == 'pending' %}
+                <form method="POST" action="{{ url_for('complete_order', order_number=order['order_number']) }}">
+                    <button type="submit" class="btn btn-success btn-large">
+                        <i class="fas fa-check"></i> Complete Order
+                    </button>
+                </form>
+                {% endif %}
+                <a href="{{ url_for('admin_orders') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Back to Orders
+                </a>
+                <button onclick="window.print()" class="btn btn-primary">
+                    <i class="fas fa-print"></i> Print Order
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .order-details-page {
+            min-height: 100vh;
+            background: var(--bg);
+            padding: 2rem 0;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .order-title h1 {
+            color: var(--accent);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .order-number {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        .order-status {
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(40, 167, 69, 0.2);
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-summary, .qr-code-display {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid rgba(216, 137, 0, 0.1);
+        }
+
+        .order-summary h2, .qr-code-display h2 {
+            color: var(--accent);
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(216, 137, 0, 0.1);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .total-row {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--accent);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .total-amount {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .qr-image {
+            max-width: 150px;
+            height: auto;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .qr-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
+        }
+
+        .order-items-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(216, 137, 0, 0.1);
+        }
+
+        .order-items-section h2 {
+            color: var(--accent);
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(216, 137, 0, 0.1);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            color: var(--text);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .item-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .option-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .spice-tag {
+            background: rgba(255, 99, 71, 0.1);
+            color: #d63384;
+        }
+
+        .drink-tag {
+            background: rgba(102, 51, 0, 0.1);
+            color: #663300;
+        }
+
+        .portion-tag {
+            background: rgba(32, 201, 151, 0.1);
+            color: #20c997;
+        }
+
+        .item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--muted);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-secondary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .order-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-actions {
+                justify-content: stretch;
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .order-actions {
+                display: none !important;
+            }
+            
+            .order-details-page {
+                background: white !important;
+            }
+            
+            .order-summary, .qr-code-display, .order-items-section {
+                border: 1px solid #000 !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</body>
+</html>

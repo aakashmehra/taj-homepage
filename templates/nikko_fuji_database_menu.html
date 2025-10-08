@@ -1,0 +1,219 @@
+<!-- Database-driven menu template with image support -->
+{% if menu_data %}
+<div class="detailed-menu">
+    <!-- Auto-scroll to section if hash is present in URL -->
+    <script>
+        window.addEventListener('load', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                setTimeout(function() {
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }, 500); // Small delay to ensure page is fully loaded
+            }
+        });
+    </script>
+    
+    <!-- Menu Categories from Database -->
+    {% for category in menu_data['categories'] %}
+    <div class="menu-section" id="{{ category['name_en'].lower().replace(' ', '-') }}-section">
+        <h2 class="section-title">
+            {% if category['icon'] %}
+                <i class="{{ category['icon'] }}"></i>
+            {% endif %}
+            {% if lang == 'jp' %}
+                {{ category['name_jp'] }}
+            {% else %}
+                {{ category['name_en'] }}
+            {% endif %}
+        </h2>
+        
+        <!-- Spice level info for curry categories -->
+        {% if 'curry' in category['name_en'].lower() or 'カレー' in category['name_jp'] %}
+        <div class="spice-level-info">
+            <p class="spice-title">
+                {% if lang == 'jp' %}
+                    辛さ調整できます
+                {% else %}
+                    Pick your favorite level of spicy
+                {% endif %}
+            </p>
+            <div class="spice-levels">
+                <span class="spice-level">①甘口 Mild</span>
+                <span class="spice-level">②普通 Normal</span>
+                <span class="spice-level">③ <i class="fa-solid fa-pepper-hot"></i> 中辛 Little Hot</span>
+                <span class="spice-level">④ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 辛口 Hot</span>
+                <span class="spice-level">⑤ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 激辛 Very Hot</span>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="items-grid">
+            {% for item in category['items'] %}
+            <div class="menu-item">
+                <!-- Menu Item Image -->
+                {% if item['image_url'] %}
+                <div class="menu-item-image">
+                    <img src="{{ item['image_url'] }}" alt="{{ item['image_alt'] or (item['name_jp'] if lang == 'jp' else item['name_en']) }}" loading="lazy">
+                </div>
+                {% endif %}
+                
+                <div class="item-info">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            {{ item['name_jp'] }}
+                        {% else %}
+                            {{ item['name_en'] }}
+                        {% endif %}
+                    </h4>
+                    
+                    {% if item['description_jp'] or item['description_en'] %}
+                    <p class="item-description">
+                        {% if lang == 'jp' and item['description_jp'] %}
+                            {{ item['description_jp'] }}
+                        {% elif item['description_en'] %}
+                            {{ item['description_en'] }}
+                        {% endif %}
+                    </p>
+                    {% endif %}
+                    
+                    <!-- Price Display -->
+                    <div class="price-section">
+                        {% if item['price_2p'] and item['price_4p'] %}
+                        <!-- Multiple price options -->
+                        <div class="price-options">
+                            {% if item['price_2p'] %}
+                                <span class="price">2P ¥{{ "{:,}".format(item['price_2p']) }}</span>
+                            {% endif %}
+                            {% if item['price_4p'] %}
+                                <span class="price">4P ¥{{ "{:,}".format(item['price_4p']) }}</span>
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <!-- Single price -->
+                        <span class="price">¥{{ "{:,}".format(item['display_price']) }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Dietary indicators -->
+                    {% if item['is_spicy'] %}
+                    <div class="dietary-indicators">
+                        <span class="dietary-tag spicy">
+                            <i class="fas fa-pepper-hot"></i>
+                            {% if lang == 'jp' %}
+                                スパイシー
+                            {% else %}
+                                Spicy
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Set Menus from Database -->
+    {% if menu_data['sets'] %}
+    <div class="menu-section">
+        <h2 class="section-title">
+            {% if lang == 'jp' %}
+                <i class="fas fa-utensils"></i> セットメニュー
+            {% else %}
+                <i class="fas fa-utensils"></i> Set Menus
+            {% endif %}
+        </h2>
+        
+        <div class="spice-level-info">
+            <p class="spice-title">
+                {% if lang == 'jp' %}
+                    辛さ調整できます
+                {% else %}
+                    Pick your favorite level of spicy
+                {% endif %}
+            </p>
+            <div class="spice-levels">
+                <span class="spice-level">①甘口 Mild</span>
+                <span class="spice-level">②普通 Normal</span>
+                <span class="spice-level">③ <i class="fa-solid fa-pepper-hot"></i> 中辛 Little Hot</span>
+                <span class="spice-level">④ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 辛口 Hot</span>
+                <span class="spice-level">⑤ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 激辛 Very Hot</span>
+            </div>
+        </div>
+        
+        <div class="items-grid">
+            {% for set_menu in menu_data['sets'] %}
+            <div class="menu-item">
+                <!-- Set Menu Image -->
+                {% if set_menu['image_url'] %}
+                <div class="menu-item-image">
+                    <img src="{{ set_menu['image_url'] }}" alt="{{ set_menu['name_jp'] if lang == 'jp' else set_menu['name_en'] }}" loading="lazy">
+                </div>
+                {% else %}
+                <!-- Image placeholder -->
+                <div class="menu-item-image-placeholder">
+                    <div class="image-placeholder-content">
+                        <i class="fas fa-image"></i>
+                        <span class="placeholder-text">
+                            {% if lang == 'jp' %}
+                                画像準備中
+                            {% else %}
+                                Image Coming Soon
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="item-info">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            {{ set_menu['name_jp'] }}
+                        {% else %}
+                            {{ set_menu['name_en'] }}
+                        {% endif %}
+                    </h4>
+                    
+                    {% if set_menu['description_jp'] or set_menu['description_en'] %}
+                    <p class="item-description">
+                        {% if lang == 'jp' and set_menu['description_jp'] %}
+                            {{ set_menu['description_jp'] }}
+                        {% elif set_menu['description_en'] %}
+                            {{ set_menu['description_en'] }}
+                        {% endif %}
+                    </p>
+                    {% endif %}
+                    
+                    <span class="price">¥{{ "{:,}".format(set_menu['price']) }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="drink-options">
+            <h4>
+                {% if lang == 'jp' %}
+                    ドリンクこちらから選んでください
+                {% else %}
+                    Choose Drink from here
+                {% endif %}
+            </h4>
+            <p>
+                {% if lang == 'jp' %}
+                    ラッシー、マサラチャイ、ウーロン茶、コーヒー
+                {% else %}
+                    Lassie, Masala Tea, Oolong Tea, Coffee
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

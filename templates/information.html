@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.restaurant_nav_info }} — {{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<!-- Restaurant Banner Section -->
+<!-- <section class="banner-section">
+    <div class="banner-container">
+        <img src="{{ url_for('static', filename='images/taj_logo_n_banners/taj_' + restaurant.location + '_banner.jpg') }}" alt="{{ restaurant.name }} - Authentic Indian Cuisine" class="banner-image">
+    </div>
+</section> -->
+
+<section class="restaurant-header">
+    <div class="container">
+        <h1>{{ restaurant.name }}</h1>
+        <div class="restaurant-taglines">
+            {% if lang == 'jp' %}
+                <div class="tagline">{{ content.store_info }}</div>
+            {% else %}
+                <div class="tagline">{{ content.store_info }}</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="restaurant-content">
+    <div class="container">
+        <!-- Store Details -->
+        <div class="store-details-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    店舗詳細
+                {% else %}
+                    Store Details
+                {% endif %}
+            </h2>
+            
+            <div class="store-card-large">
+                    <div class="store-image-large">
+                        <div class="image-placeholder"><i class="fas fa-store"></i></div>
+                    </div>
+                <div class="store-info-large">
+                    <h3>{{ restaurant.name }}</h3>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="detail-content">
+                            {% if lang == 'jp' %}
+                                <h4>住所</h4>
+                            {% else %}
+                                <h4>Address</h4>
+                            {% endif %}
+                            <p>{{ restaurant.address }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon"><i class="fas fa-phone"></i></div>
+                        <div class="detail-content">
+                            {% if lang == 'jp' %}
+                                <h4>電話番号</h4>
+                            {% else %}
+                                <h4>Phone Number</h4>
+                            {% endif %}
+                            <p>{{ restaurant.phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon"><i class="fas fa-clock"></i></div>
+                        <div class="detail-content">
+                            {% if lang == 'jp' %}
+                                <h4>営業時間</h4>
+                                <p><strong>店内飲食:</strong> {{ restaurant.hours_dine }}</p>
+                                <p><strong>テイクアウト・デリバリー:</strong> {{ restaurant.hours_delivery }}</p>
+                            {% else %}
+                                <h4>Operating Hours</h4>
+                                <p><strong>Dine In:</strong> {{ restaurant.hours_dine }}</p>
+                                <p><strong>Takeout & Delivery:</strong> {{ restaurant.hours_delivery }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- Access Information -->
+         <div class="access-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    アクセス
+                {% else %}
+                    Access
+                {% endif %}
+            </h2>
+            
+            <div class="access-card">
+                <div class="map-placeholder">
+                    <div class="map-icon"><i class="fas fa-map"></i></div>
+                    {% if lang == 'jp' %}
+                        <p>地図を表示</p>
+                    {% else %}
+                        <p>Show Map</p>
+                    {% endif %}
+                </div>
+                <div class="access-info">
+                    <div class="access-content">
+                    {% if lang == 'jp' %}
+                        <h4>交通アクセス</h4>
+                        <p><strong>住所:</strong> {{ restaurant.address }}</p>
+                        <p><strong>最寄り駅:</strong> 各店舗により異なります</p>
+                        <p><strong>駐車場:</strong> 店舗前駐車場完備</p>
+                    {% else %}
+                        <h4>Transportation Access</h4>
+                        <p><strong>Address:</strong> {{ restaurant.address }}</p>
+                        <p><strong>Nearest Station:</strong> Varies by location</p>
+                        <p><strong>Parking:</strong> Parking available in front of store</p>
+                    {% endif %}
+                    </div>
+                    <a href="#" class="btn btn-outline">
+                        {% if lang == 'jp' %}
+                            Google マップで開く
+                        {% else %}
+                            Open in Google Maps
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facilities & Services -->
+        <div class="facilities-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    設備・サービス
+                {% else %}
+                    Facilities & Services
+                {% endif %}
+            </h2>
+            
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-parking"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>駐車場</h4>
+                        <p>店舗前に駐車スペース有り</p>
+                    {% else %}
+                        <h4>Parking</h4>
+                        <p>Parking spaces available in front of store</p>
+                    {% endif %}
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-wheelchair"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>バリアフリー</h4>
+                        <p>車椅子でのご来店も可能</p>
+                    {% else %}
+                        <h4>Accessible</h4>
+                        <p>Wheelchair accessible</p>
+                    {% endif %}
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-wifi"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>Wi-Fi</h4>
+                        <p>無料Wi-Fi完備</p>
+                    {% else %}
+                        <h4>Wi-Fi</h4>
+                        <p>Free Wi-Fi available</p>
+                    {% endif %}
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-credit-card"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>お支払い方法</h4>
+                        <p>現金・クレジットカード・電子マネー対応</p>
+                    {% else %}
+                        <h4>Payment Methods</h4>
+                        <p>Cash, Credit Cards, Electronic Money</p>
+                    {% endif %}
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-smoking-ban"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>禁煙・喫煙</h4>
+                        <p>店内完全禁煙</p>
+                    {% else %}
+                        <h4>Smoking Policy</h4>
+                        <p>Non-smoking establishment</p>
+                    {% endif %}
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon"><i class="fas fa-users"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>お子様連れ</h4>
+                        <p>お子様連れ歓迎・キッズチェア有り</p>
+                    {% else %}
+                        <h4>Family Friendly</h4>
+                        <p>Children welcome, high chairs available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Special Features -->
+        <div class="special-features-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    店舗の特徴
+                {% else %}
+                    Special Features
+                {% endif %}
+            </h2>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-user"></i></div>
+                    <div class="feature-content">
+                        {% if lang == 'jp' %}
+                            <h4>本格インド人シェフ</h4>
+                            <p>インド出身の経験豊富なシェフが、伝統的なレシピで本格的な味をお届けします。</p>
+                        {% else %}
+                            <h4>Authentic Indian Chef</h4>
+                            <p>Experienced chefs from India bring authentic flavors using traditional recipes.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-fire"></i></div>
+                    <div class="feature-content">
+                        {% if lang == 'jp' %}
+                            <h4>タンドール窯</h4>
+                            <p>本格的なタンドール窯で焼き上げるナンやタンドリー料理をお楽しみください。</p>
+                        {% else %}
+                            <h4>Tandoor Oven</h4>
+                            <p>Enjoy naan and tandoori dishes cooked in our authentic tandoor oven.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-pepper-hot"></i></div>
+                    <div class="feature-content">
+                        {% if lang == 'jp' %}
+                            <h4>辛さ調整可能</h4>
+                            <p>お客様のお好みに合わせて辛さレベルを調整いたします。お気軽にお申し付けください。</p>
+                        {% else %}
+                            <h4>Customizable Spice Level</h4>
+                            <p>We can adjust spice levels to your preference. Please let us know your preferred level.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                    <div class="feature-content">
+                        {% if lang == 'jp' %}
+                            <h4>ベジタリアン対応</h4>
+                            <p>豊富なベジタリアンメニューをご用意しております。ヴィーガン対応も可能です。</p>
+                        {% else %}
+                            <h4>Vegetarian Options</h4>
+                            <p>Wide selection of vegetarian dishes available. Vegan options also possible.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-star-and-crescent"></i></div>
+                    <div class="feature-content">
+                        {% if lang == 'jp' %}
+                            <h4>{{ content.halal_title }}</h4>
+                            <p>{{ content.halal_desc }}</p>
+                        {% else %}
+                            <h4>{{ content.halal_title }}</h4>
+                            <p>{{ content.halal_desc }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

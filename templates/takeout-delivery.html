@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.restaurant_nav_takeout }} — {{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<!-- Restaurant Banner Section -->
+<!-- <section class="banner-section">
+    <div class="banner-container">
+        <img src="{{ url_for('static', filename='images/taj_logo_n_banners/taj_' + restaurant.location + '_banner.jpg') }}" alt="{{ restaurant.name }} - Authentic Indian Cuisine" class="banner-image">
+    </div>
+</section> -->
+
+<section class="restaurant-header">
+    <div class="container">
+        <h1>{{ restaurant.name }}</h1>
+        <div class="restaurant-taglines">
+            {% if lang == 'jp' %}
+                <div class="tagline">{{ content.takeout_delivery }}</div>
+            {% else %}
+                <div class="tagline">{{ content.takeout_delivery }}</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="restaurant-content">
+    <div class="container">
+        <!-- Ordering Options -->
+        <div class="ordering-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    ご注文方法
+                {% else %}
+                    How to Order
+                {% endif %}
+            </h2>
+            
+            <div class="ordering-cards">
+                {% if restaurant.location == 'okinawa' %}
+                    <div class="ordering-card">
+                        <div class="ordering-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Uber Eats</h3>
+                        {% if lang == 'jp' %}
+                            <p>アプリから簡単注文</p>
+                            <p class="service-desc">Uber Eatsアプリを使って、いつでもどこでも簡単にご注文いただけます。</p>
+                        {% else %}
+                            <p>Easy app ordering</p>
+                            <p class="service-desc">Order easily anytime, anywhere using the Uber Eats app.</p>
+                        {% endif %}
+                        <a href="#" class="btn">
+                            {% if lang == 'jp' %}
+                                Uber Eatsで注文
+                            {% else %}
+                                Order on Uber Eats
+                            {% endif %}
+                        </a>
+                    </div>
+                    
+                    <div class="ordering-card">
+                        <div class="ordering-icon"><i class="fas fa-truck"></i></div>
+                        <h3></h3>
+                        {% if lang == 'jp' %}
+                            <h3>Wolt</h3>
+                            <p>最大のデリバリーサービス</p>
+                            <p class="service-desc">出前館アプリやウェブサイトから簡単にご注文いただけます。</p>
+                        {% else %}
+                            <h3>Wolt</h3>
+                            <p>Easy app ordering</p>
+                            <p class="service-desc">Order easily through Wolt app or website.</p>
+                        {% endif %}
+                        <a href="#" class="btn">
+                            {% if lang == 'jp' %}
+                                Woltで注文
+                            {% else %}
+                                Order on Wolt
+                            {% endif %}
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="ordering-card" style="max-width: 400px; margin: 0 auto;">
+                        <div class="ordering-icon"><i class="fas fa-store"></i></div>
+                        {% if lang == 'jp' %}
+                            <h3>テイクアウトのみ</h3>
+                            <p>店頭でのお受け取り</p>
+                            <p class="service-desc">こちらの店舗では、店頭でのお受け取りのみとなります。お電話でご注文ください。</p>
+                        {% else %}
+                            <h3>Takeout Only</h3>
+                            <p>In-store pickup</p>
+                            <p class="service-desc">This location offers takeout only. Please call to place your order.</p>
+                        {% endif %}
+                        <a href="tel:{{ restaurant.phone }}" class="btn">
+                            {% if lang == 'jp' %}
+                                電話で注文
+                            {% else %}
+                                Call to Order
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endif %}
+                
+                <div class="ordering-card">
+                    <div class="ordering-icon"><i class="fas fa-phone"></i></div>
+                    {% if lang == 'jp' %}
+                        <h3>電話注文</h3>
+                        <p>直接お電話でご注文</p>
+                        <p class="service-desc">お電話でのご注文も承っております。お気軽にお電話ください。</p>
+                    {% else %}
+                        <h3>Phone Order (Takeout Only)</h3>
+                        <p>Call us directly</p>
+                        <p class="service-desc">We also accept phone orders. Feel free to call us.</p>
+                    {% endif %}
+                    <a href="tel:{{ restaurant.phone }}" class="btn btn-outline">{{ restaurant.phone }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Information -->
+        <div class="delivery-info-section">
+            <h2 class="section-title">
+                {% if restaurant.location == 'okinawa' %}
+                    {% if lang == 'jp' %}
+                        配達・テイクアウト情報
+                    {% else %}
+                        Delivery & Takeout Information
+                    {% endif %}
+                {% else %}
+                    {% if lang == 'jp' %}
+                        テイクアウト情報
+                    {% else %}
+                        Takeout Information
+                    {% endif %}
+                {% endif %}
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>営業時間</h4>
+                        {% if restaurant.location == 'okinawa' %}
+                            <p><strong>テイクアウト・デリバリー:</strong><br>{{ restaurant.hours_delivery }}</p>
+                        {% else %}
+                            <p><strong>テイクアウト:</strong><br>{{ restaurant.hours_delivery }}</p>
+                        {% endif %}
+                        <p><strong>店内飲食:</strong><br>{{ restaurant.hours_dine }}</p>
+                    {% else %}
+                        <h4>Operating Hours</h4>
+                        {% if restaurant.location == 'okinawa' %}
+                            <p><strong>Takeout & Delivery:</strong><br>{{ restaurant.hours_delivery }}</p>
+                        {% else %}
+                            <p><strong>Takeout:</strong><br>{{ restaurant.hours_delivery }}</p>
+                        {% endif %}
+                        <p><strong>Dine In:</strong><br>{{ restaurant.hours_dine }}</p>
+                    {% endif %}
+                </div>
+                
+                {% if restaurant.location == 'okinawa' %}
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-car"></i></div>
+                        {% if lang == 'jp' %}
+                            <h4>配達エリア</h4>
+                            <p>店舗周辺エリア</p>
+                            <p class="info-desc">詳細な配達エリアについては、各デリバリーアプリでご確認ください。</p>
+                        {% else %}
+                            <h4>Delivery Area</h4>
+                            <p>Areas around the restaurant</p>
+                            <p class="info-desc">Please check delivery apps for detailed delivery areas.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-dollar-sign"></i></div>
+                        {% if lang == 'jp' %}
+                            <h4>配達料金</h4>
+                            <p>サービスにより異なります</p>
+                            <p class="info-desc">配達料金は各デリバリーサービスの規定に従います。</p>
+                        {% else %}
+                            <h4>Delivery Fee</h4>
+                            <p>Varies by service</p>
+                            <p class="info-desc">Delivery fees follow each delivery service's pricing.</p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-store"></i></div>
+                        {% if lang == 'jp' %}
+                            <h4>テイクアウト方法</h4>
+                            <p>店頭でのお受け取りのみ</p>
+                            <p class="info-desc">お電話でご注文後、店舗にてお受け取りください。</p>
+                        {% else %}
+                            <h4>Takeout Method</h4>
+                            <p>In-store pickup only</p>
+                            <p class="info-desc">Please call to order and pick up at the restaurant.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        {% if lang == 'jp' %}
+                            <h4>ご注文方法</h4>
+                            <p>お電話でのご注文</p>
+                            <p class="info-desc">{{ restaurant.phone }}までお電話ください。</p>
+                        {% else %}
+                            <h4>How to Order</h4>
+                            <p>Phone orders only</p>
+                            <p class="info-desc">Please call {{ restaurant.phone }} to place your order.</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-stopwatch"></i></div>
+                    {% if lang == 'jp' %}
+                        <h4>お渡し時間</h4>
+                        <p>テイクアウト: 15-20分</p>
+                        <p>デリバリー: 30-45分</p>
+                        <p class="info-desc">※混雑状況により変動する場合があります</p>
+                    {% else %}
+                        <h4>Preparation Time</h4>
+                        <p>Takeout: 15-20 minutes</p>
+                        <p>Delivery: 30-45 minutes</p>
+                        <p class="info-desc">※May vary depending on busy periods</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Takeout Items -->
+        <div class="popular-takeout-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    テイクアウト人気メニュー
+                {% else %}
+                    Popular Takeout Items
+                {% endif %}
+            </h2>
+            
+            <div class="takeout-items-grid">
+                <div class="takeout-item">
+                    <div class="item-image">
+                        <div class="image-placeholder"><i class="fas fa-utensils"></i></div>
+                    </div>
+                    {% if lang == 'jp' %}
+                        <h4>カレーセット</h4>
+                        <p>カレー + ナン + ライス</p>
+                    {% else %}
+                        <h4>Curry Set</h4>
+                        <p>Curry + Naan + Rice</p>
+                    {% endif %}
+                </div>
+                
+                <div class="takeout-item">
+                    <div class="item-image">
+                        <div class="image-placeholder"><i class="fas fa-bowl-rice"></i></div>
+                    </div>
+                    {% if lang == 'jp' %}
+                        <h4>ビリヤニ</h4>
+                        <p>スパイス香るバスマティライス</p>
+                    {% else %}
+                        <h4>Biryani</h4>
+                        <p>Aromatic basmati rice dish</p>
+                    {% endif %}
+                </div>
+                
+                <div class="takeout-item">
+                    <div class="item-image">
+                        <div class="image-placeholder"><i class="fas fa-drumstick-bite"></i></div>
+                    </div>
+                    {% if lang == 'jp' %}
+                        <h4>タンドリーチキン</h4>
+                        <p>スパイス焼きチキン</p>
+                    {% else %}
+                        <h4>Tandoori Chicken</h4>
+                        <p>Spiced grilled chicken</p>
+                    {% endif %}
+                </div>
+                
+                <div class="takeout-item">
+                    <div class="item-image">
+                        <div class="image-placeholder"><i class="fas fa-bread-slice"></i></div>
+                    </div>
+                    {% if lang == 'jp' %}
+                        <h4>ナン各種</h4>
+                        <p>プレーン・ガーリック・チーズ</p>
+                    {% else %}
+                        <h4>Assorted Naan</h4>
+                        <p>Plain, Garlic, Cheese</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact for Orders -->
+        <div class="contact-order-section">
+            <div class="contact-card">
+                {% if lang == 'jp' %}
+                    <h3>お電話でのご注文・お問い合わせ</h3>
+                    <p>お気軽にお電話ください。スタッフが丁寧にご対応いたします。</p>
+                {% else %}
+                    <h3>Phone Orders & Inquiries</h3>
+                    <p>Feel free to call us. Our staff will assist you politely.</p>
+                {% endif %}
+                <div class="contact-details">
+                    <p class="phone-number"><i class="fas fa-phone"></i> {{ restaurant.phone }}</p>
+                    <p class="address"><i class="fas fa-map-marker-alt"></i> {{ restaurant.address }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

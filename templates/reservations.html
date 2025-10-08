@@ -1,0 +1,942 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if lang == 'jp' %}
+        ご予約 - Taj Restaurants
+    {% else %}
+        Reservations - Taj Restaurants
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="root">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-title">
+                {% if lang == 'jp' %}
+                    ご<span class="hero-title-gold">予約</span>
+                {% else %}
+                    Make a <span class="hero-title-gold">Reservation</span>
+                {% endif %}
+            </div>
+            <p class="hero-subtitle">
+                {% if lang == 'jp' %}
+                    個人・グループ予約、旅行会社様のご予約も承っております
+                {% else %}
+                    We accept individual, group, and travel agency reservations
+                {% endif %}
+            </p>
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section class="reservations-section" id="reservations-section">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">
+                    {% if lang == 'jp' %}
+                        ご<span class="text-luxury-gold">予約</span>
+                    {% else %}
+                        Make a <span class="text-luxury-gold">Reservation</span>
+                    {% endif %}
+                </h3>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        個人・グループ予約、旅行会社様のご予約も承っております
+                    {% else %}
+                        We accept individual, group, and travel agency reservations
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div class="reservation-tabs">
+                <button class="tab-button active" onclick="switchReservationTab('individual')">
+                    {% if lang == 'jp' %}
+                        個人・グループ予約
+                    {% else %}
+                        Individual/Group
+                    {% endif %}
+                </button>
+                <button class="tab-button" onclick="switchReservationTab('travel')">
+                    {% if lang == 'jp' %}
+                        旅行会社様予約
+                    {% else %}
+                        Travel Agency
+                    {% endif %}
+                </button>
+            </div>
+
+            <!-- Individual/Group Reservation Form -->
+            <div id="individual-form" class="reservation-form active">
+                <form class="reservation-form-content" action="{{ url_for('contact_page') }}" method="post">
+                    <input type="hidden" name="reservation_type" value="individual">
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                １. レストラン選択
+                            {% else %}
+                                1. Choose Restaurant
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label required">
+                                {% if lang == 'jp' %}
+                                    レストラン選択
+                                {% else %}
+                                    Select Restaurant
+                                {% endif %}
+                            </label>
+                            <select class="form-input" name="restaurant_location" required>
+                                <option value="">
+                                    {% if lang == 'jp' %}
+                                        レストランを選択してください
+                                    {% else %}
+                                        Please select a restaurant
+                                    {% endif %}
+                                </option>
+                                <option value="nikko">
+                                    Taj Nikko - {% if lang == 'jp' %}日光店 (0288-25-7766, 11:00-21:00){% else %}Nikko Branch (0288-25-7766, 11:00 AM - 9:00 PM){% endif %}
+                                </option>
+                                <option value="fuji">
+                                    Taj Fuji - {% if lang == 'jp' %}河口湖店 (070-9197-2306, 11:00-21:30){% else %}Kawaguchiko Branch (070-9197-2306, 11:00 AM - 9:30 PM){% endif %}
+                                </option>
+                                <option value="okinawa">
+                                    Taj Okinawa - {% if lang == 'jp' %}沖縄店 (098-923-1312, 11:00-22:00){% else %}Okinawa Branch (098-923-1312, 11:00 AM - 10:00 PM){% endif %}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                ２. ご予約内容について
+                            {% else %}
+                                2. Reservation Details
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご予約日
+                                    {% else %}
+                                        Reservation Date
+                                    {% endif %}
+                                </label>
+                                <input type="date" class="form-input" name="reservation_date" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※予約の締め切りはご利用日の3日前までになります。
+                                    {% else %}
+                                        *Reservations must be made at least 3 days in advance.
+                                    {% endif %}
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご予約時間
+                                    {% else %}
+                                        Reservation Time
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="reservation_time" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="20:00">20:00</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        代表者様氏名
+                                    {% else %}
+                                        Representative Name
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="representative_name" placeholder="{% if lang == 'jp' %}磐梯　太郎{% else %}John Doe{% endif %}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        団体名（団体様の場合）
+                                    {% else %}
+                                        Group Name (if applicable)
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="group_name" placeholder="{% if lang == 'jp' %}日光カステラ本舗 磐梯日光店{% else %}Company Name{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご利用人数
+                                    {% else %}
+                                        Number of Guests
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="guest_count" min="1" max="50" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※3歳未満の方は除きます。
+                                    {% else %}
+                                        *Children under 3 years old are not counted.
+                                    {% endif %}
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        お食事内容
+                                    {% else %}
+                                        Dining Preference
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="dining_preference" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="a-la-carte">
+                                        {% if lang == 'jp' %}
+                                            アラカルト
+                                        {% else %}
+                                            A la carte
+                                        {% endif %}
+                                    </option>
+                                    <option value="set-menu">
+                                        {% if lang == 'jp' %}
+                                            セットメニュー
+                                        {% else %}
+                                            Set menu
+                                        {% endif %}
+                                    </option>
+                                    <option value="buffet">
+                                        {% if lang == 'jp' %}
+                                            ビュッフェ
+                                        {% else %}
+                                            Buffet
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご利用交通機関
+                                    {% else %}
+                                        Transportation
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="transportation" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="car">
+                                        {% if lang == 'jp' %}
+                                            自家用車
+                                        {% else %}
+                                            Private car
+                                        {% endif %}
+                                    </option>
+                                    <option value="bus">
+                                        {% if lang == 'jp' %}
+                                            バス
+                                        {% else %}
+                                            Bus
+                                        {% endif %}
+                                    </option>
+                                    <option value="train">
+                                        {% if lang == 'jp' %}
+                                            電車
+                                        {% else %}
+                                            Train
+                                        {% endif %}
+                                    </option>
+                                    <option value="walking">
+                                        {% if lang == 'jp' %}
+                                            徒歩
+                                        {% else %}
+                                            Walking
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        駐車台数
+                                    {% else %}
+                                        Number of Parking Spaces
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="parking_spaces" min="0" max="10">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                連絡先情報
+                            {% else %}
+                                Contact Information
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        メールアドレス
+                                    {% else %}
+                                        Email Address
+                                    {% endif %}
+                                </label>
+                                <input type="email" class="form-input" name="email" placeholder="example@example.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        電話番号
+                                    {% else %}
+                                        Phone Number
+                                    {% endif %}
+                                </label>
+                                <input type="tel" class="form-input" name="phone" placeholder="{% if lang == 'jp' %}0288-53-2555{% else %}123-456-7890{% endif %}" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※ご予約当日に連絡が取れる電話番号を入力してください。
+                                    {% else %}
+                                        *Please provide a phone number where we can reach you on the day of reservation.
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        郵便番号
+                                    {% else %}
+                                        Postal Code
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="postal_code" placeholder="{% if lang == 'jp' %}〒321-1434{% else %}12345{% endif %}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        ご住所
+                                    {% else %}
+                                        Address
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="address" placeholder="{% if lang == 'jp' %}栃木県日光市本町1-1{% else %}123 Main Street, City, State{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                {% if lang == 'jp' %}
+                                    備考欄
+                                {% else %}
+                                    Additional Notes
+                                {% endif %}
+                            </label>
+                            <textarea class="form-textarea" name="notes" rows="4" placeholder="{% if lang == 'jp' %}アレルギー、特別なご要望などがございましたらご記入ください。{% else %}Please let us know about any allergies or special requests.{% endif %}"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="privacy_agreement" required>
+                                <span class="checkbox-text">
+                                    {% if lang == 'jp' %}
+                                        個人情報の取り扱いについて同意する。
+                                    {% else %}
+                                        I agree to the privacy policy and terms of service.
+                                    {% endif %}
+                                </span>
+                            </label>
+                            <small class="form-note">
+                                {% if lang == 'jp' %}
+                                    このフォームに入力いただく個人情報は、ご予約のみに利用します。また、情報の取り扱いには本サイトのプライバシーポリシーが適用されます。
+                                {% else %}
+                                    The personal information provided in this form will only be used for reservation purposes. Our privacy policy applies to the handling of this information.
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-location-primary">
+                            {% if lang == 'jp' %}
+                                予約を送信
+                            {% else %}
+                                Submit Reservation
+                            {% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Travel Agency Reservation Form -->
+            <div id="travel-form" class="reservation-form">
+                <form class="reservation-form-content" action="{{ url_for('contact_page') }}" method="post">
+                    <input type="hidden" name="reservation_type" value="travel_agency">
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                １. レストラン選択
+                            {% else %}
+                                1. Choose Restaurant
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label required">
+                                {% if lang == 'jp' %}
+                                    レストラン選択
+                                {% else %}
+                                    Select Restaurant
+                                {% endif %}
+                            </label>
+                            <select class="form-input" name="restaurant_location" required>
+                                <option value="">
+                                    {% if lang == 'jp' %}
+                                        レストランを選択してください
+                                    {% else %}
+                                        Please select a restaurant
+                                    {% endif %}
+                                </option>
+                                <option value="nikko">
+                                    Taj Nikko - {% if lang == 'jp' %}日光店 (0288-25-7766, 11:00-21:00){% else %}Nikko Branch (0288-25-7766, 11:00 AM - 9:00 PM){% endif %}
+                                </option>
+                                <option value="fuji">
+                                    Taj Fuji - {% if lang == 'jp' %}河口湖店 (070-9197-2306, 11:00-21:30){% else %}Kawaguchiko Branch (070-9197-2306, 11:00 AM - 9:30 PM){% endif %}
+                                </option>
+                                <option value="okinawa">
+                                    Taj Okinawa - {% if lang == 'jp' %}沖縄店 (098-923-1312, 11:00-22:00){% else %}Okinawa Branch (098-923-1312, 11:00 AM - 10:00 PM){% endif %}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                ２. ご予約内容について
+                            {% else %}
+                                2. Reservation Details
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご予約日
+                                    {% else %}
+                                        Reservation Date
+                                    {% endif %}
+                                </label>
+                                <input type="date" class="form-input" name="reservation_date" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※予約の締め切りはご利用日の3日前までになります。
+                                    {% else %}
+                                        *Reservations must be made at least 3 days in advance.
+                                    {% endif %}
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご予約時間
+                                    {% else %}
+                                        Reservation Time
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="reservation_time" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="20:00">20:00</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        代表者様氏名
+                                    {% else %}
+                                        Representative Name
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="representative_name" placeholder="{% if lang == 'jp' %}磐梯　太郎{% else %}John Doe{% endif %}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        団体名（団体様の場合）
+                                    {% else %}
+                                        Group Name (if applicable)
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="group_name" placeholder="{% if lang == 'jp' %}日光カステラ本舗 磐梯日光店{% else %}Company Name{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご利用人数
+                                    {% else %}
+                                        Number of Guests
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="guest_count" min="1" max="50" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※3歳未満の方は除きます。
+                                    {% else %}
+                                        *Children under 3 years old are not counted.
+                                    {% endif %}
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        お食事内容
+                                    {% else %}
+                                        Dining Preference
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="dining_preference" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="a-la-carte">
+                                        {% if lang == 'jp' %}
+                                            アラカルト
+                                        {% else %}
+                                            A la carte
+                                        {% endif %}
+                                    </option>
+                                    <option value="set-menu">
+                                        {% if lang == 'jp' %}
+                                            セットメニュー
+                                        {% else %}
+                                            Set menu
+                                        {% endif %}
+                                    </option>
+                                    <option value="buffet">
+                                        {% if lang == 'jp' %}
+                                            ビュッフェ
+                                        {% else %}
+                                            Buffet
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        ご利用交通機関
+                                    {% else %}
+                                        Transportation
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="transportation" required>
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="car">
+                                        {% if lang == 'jp' %}
+                                            自家用車
+                                        {% else %}
+                                            Private car
+                                        {% endif %}
+                                    </option>
+                                    <option value="bus">
+                                        {% if lang == 'jp' %}
+                                            バス
+                                        {% else %}
+                                            Bus
+                                        {% endif %}
+                                    </option>
+                                    <option value="train">
+                                        {% if lang == 'jp' %}
+                                            電車
+                                        {% else %}
+                                            Train
+                                        {% endif %}
+                                    </option>
+                                    <option value="walking">
+                                        {% if lang == 'jp' %}
+                                            徒歩
+                                        {% else %}
+                                            Walking
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        駐車台数
+                                    {% else %}
+                                        Number of Parking Spaces
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="parking_spaces" min="0" max="10">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                ３. 旅行会社様について
+                            {% else %}
+                                3. Travel Agency Information
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        旅行会社様名
+                                    {% else %}
+                                        Travel Agency Name
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="travel_agency_name" placeholder="{% if lang == 'jp' %}磐梯日光トラベル{% else %}Travel Agency Name{% endif %}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        旅行会社様 ご担当者様氏名
+                                    {% else %}
+                                        Travel Agency Contact Person
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="travel_agency_contact" placeholder="{% if lang == 'jp' %}日光　太郎{% else %}Contact Person Name{% endif %}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        ご利用バス会社様名
+                                    {% else %}
+                                        Bus Company Name
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="bus_company" placeholder="{% if lang == 'jp' %}磐梯日光バス{% else %}Bus Company Name{% endif %}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        乗務員人数
+                                    {% else %}
+                                        Number of Drivers
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="driver_count" min="0" max="5">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        乗務員様お食事
+                                    {% else %}
+                                        Driver Meals
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="driver_meals">
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="included">
+                                        {% if lang == 'jp' %}
+                                            含む
+                                        {% else %}
+                                            Included
+                                        {% endif %}
+                                    </option>
+                                    <option value="separate">
+                                        {% if lang == 'jp' %}
+                                            別食で¥500（税込）
+                                        {% else %}
+                                            Separate meal ¥500 (tax included)
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        添乗員人数
+                                    {% else %}
+                                        Number of Tour Guides
+                                    {% endif %}
+                                </label>
+                                <input type="number" class="form-input" name="guide_count" min="0" max="5">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        添乗員様お食事
+                                    {% else %}
+                                        Tour Guide Meals
+                                    {% endif %}
+                                </label>
+                                <select class="form-input" name="guide_meals">
+                                    <option value="">
+                                        {% if lang == 'jp' %}
+                                            選択してください
+                                        {% else %}
+                                            Please select
+                                        {% endif %}
+                                    </option>
+                                    <option value="included">
+                                        {% if lang == 'jp' %}
+                                            含む
+                                        {% else %}
+                                            Included
+                                        {% endif %}
+                                    </option>
+                                    <option value="separate">
+                                        {% if lang == 'jp' %}
+                                            別食で¥500（税込）
+                                        {% else %}
+                                            Separate meal ¥500 (tax included)
+                                        {% endif %}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            {% if lang == 'jp' %}
+                                ４. 連絡先情報
+                            {% else %}
+                                4. Contact Information
+                            {% endif %}
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        メールアドレス
+                                    {% else %}
+                                        Email Address
+                                    {% endif %}
+                                </label>
+                                <input type="email" class="form-input" name="email" placeholder="example@bandai-nikko.jp" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    {% if lang == 'jp' %}
+                                        電話番号
+                                    {% else %}
+                                        Phone Number
+                                    {% endif %}
+                                </label>
+                                <input type="tel" class="form-input" name="phone" placeholder="{% if lang == 'jp' %}0288-53-2555{% else %}123-456-7890{% endif %}" required>
+                                <small class="form-note">
+                                    {% if lang == 'jp' %}
+                                        ※ご予約当日に連絡が取れる電話番号を入力してください。
+                                    {% else %}
+                                        *Please provide a phone number where we can reach you on the day of reservation.
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        郵便番号
+                                    {% else %}
+                                        Postal Code
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="postal_code" placeholder="{% if lang == 'jp' %}〒321-1434{% else %}12345{% endif %}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        ご住所
+                                    {% else %}
+                                        Address
+                                    {% endif %}
+                                </label>
+                                <input type="text" class="form-input" name="address" placeholder="{% if lang == 'jp' %}栃木県日光市本町1-1{% else %}123 Main Street, City, State{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                {% if lang == 'jp' %}
+                                    備考欄
+                                {% else %}
+                                    Additional Notes
+                                {% endif %}
+                            </label>
+                            <textarea class="form-textarea" name="notes" rows="4" placeholder="{% if lang == 'jp' %}アレルギー、特別なご要望などがございましたらご記入ください。{% else %}Please let us know about any allergies or special requests.{% endif %}"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="privacy_agreement" required>
+                                <span class="checkbox-text">
+                                    {% if lang == 'jp' %}
+                                        個人情報の取り扱いについて同意する。
+                                    {% else %}
+                                        I agree to the privacy policy and terms of service.
+                                    {% endif %}
+                                </span>
+                            </label>
+                            <small class="form-note">
+                                {% if lang == 'jp' %}
+                                    このフォームに入力いただく個人情報は、ご予約のみに利用します。また、情報の取り扱いには本サイトのプライバシーポリシーが適用されます。
+                                {% else %}
+                                    The personal information provided in this form will only be used for reservation purposes. Our privacy policy applies to the handling of this information.
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions" class="form-actions">
+                        <button type="submit" class="btn btn-location-primary">
+                            {% if lang == 'jp' %}
+                                予約を送信
+                            {% else %}
+                                Submit Reservation
+                            {% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+// Reservation form tab switching
+function switchReservationTab(tabType) {
+    // Remove active class from all tabs and forms
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.reservation-form').forEach(form => form.classList.remove('active'));
+    
+    // Add active class to selected tab and form
+    document.querySelector(`[onclick="switchReservationTab('${tabType}')"]`).classList.add('active');
+    document.getElementById(`${tabType}-form`).classList.add('active');
+}
+</script>
+{% endblock %}

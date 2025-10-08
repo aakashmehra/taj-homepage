@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.restaurant_nav_contact }} — {{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<div id="root">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background" style="background-image: url('{{ url_for('static', filename='images/taj_logo_n_banners/taj_' + restaurant.location + '_banner.jpg') }}');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-gold">{{ restaurant.name }}</span>
+            </h1>
+            <p class="hero-subtitle">
+                {% if lang == 'jp' %}
+                    お問い合わせ・ご予約
+                {% else %}
+                    Contact & Reservations
+                {% endif %}
+            </p>
+            <p class="hero-description">
+                {% if lang == 'jp' %}
+                    お気軽にお問い合わせください。心よりお待ちしております
+                {% else %}
+                    Get in touch with us. We look forward to hearing from you
+                {% endif %}
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('contact-section')">
+                    {% if lang == 'jp' %}
+                        お問い合わせ
+                    {% else %}
+                        Contact Us
+                    {% endif %}
+                </button>
+                <button class="btn btn-outline" onclick="alert('{% if lang == 'jp' %}お電話: {{ restaurant.phone }}{% else %}Phone: {{ restaurant.phone }}{% endif %}')">
+                    {% if lang == 'jp' %}
+                        今すぐお電話
+                    {% else %}
+                        Call Now
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h2 class="contact-title">
+                    {% if lang == 'jp' %}
+                        お<span class="text-luxury-gold">問い合わせ</span>
+                    {% else %}
+                        Get In <span class="text-luxury-gold">Touch</span>
+                    {% endif %}
+                </h2>
+                <p class="contact-description">
+                    {% if lang == 'jp' %}
+                        ご予約、お問い合わせ、特別なご要望など、お気軽にご連絡ください
+                    {% else %}
+                        Contact us for reservations, inquiries, or special requests
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-info-section">
+                        <h3 class="contact-info-title">
+                            {% if lang == 'jp' %}
+                                お問い合わせ情報
+                            {% else %}
+                                Contact Information
+                            {% endif %}
+                        </h3>
+                        <p class="contact-info-description" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                お客様のお食事体験を素晴らしいものにするために、私たちはここにいます。ご予約、ケータリングサービス、メニューや店舗についてのお問い合わせは、お気軽にご連絡ください。
+                            {% else %}
+                                We're here to make your dining experience exceptional. Reach out to us for reservations, catering services, or any inquiries about our menu and locations.
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-phone contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        お電話
+                                    {% else %}
+                                        Call Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">{{ restaurant.phone }}</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-envelope contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        メール
+                                    {% else %}
+                                        Email Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">info@taj-restaurants.jp</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-store contact-icon" style="color: hsl(var(--luxury-black));"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <p class="contact-method-title" style="color: hsl(var(--luxury-cream));">
+                                    {% if lang == 'jp' %}
+                                        店舗
+                                    {% else %}
+                                        Visit Us
+                                    {% endif %}
+                                </p>
+                                <p class="contact-method-detail" style="color: hsl(var(--luxury-cream));">{{ restaurant.address }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-special">
+                        <h4 class="special-title" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                特別イベント
+                            {% else %}
+                                Special Events
+                            {% endif %}
+                        </h4>
+                        <p class="special-description" style="color: hsl(var(--luxury-cream));">
+                            {% if lang == 'jp' %}
+                                特別なイベントをご計画ですか？私たちのケータリングサービスで、タージの本格的な味をお客様のお祝いにお届けします。カスタムメニューの企画やイベントコーディネートについては、お問い合わせください。
+                            {% else %}
+                                Planning a special event? Our catering services bring the authentic taste of Taj to your celebrations. Contact us for custom menu planning and event coordination.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="contact-form-card">
+                    <div class="contact-form-content">
+                        <h3 class="form-title">
+                            {% if lang == 'jp' %}
+                                メッセージを送る
+                            {% else %}
+                                Send us a message
+                            {% endif %}
+                        </h3>
+                        <form class="contact-form" action="{{ url_for('contact_page') }}" method="post">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        {% if lang == 'jp' %}
+                                            名
+                                        {% else %}
+                                            First Name
+                                        {% endif %}
+                                    </label>
+                                    <input type="text" class="form-input" placeholder="{% if lang == 'jp' %}お名前（名）{% else %}Your first name{% endif %}" name="first_name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        {% if lang == 'jp' %}
+                                            姓
+                                        {% else %}
+                                            Last Name
+                                        {% endif %}
+                                    </label>
+                                    <input type="text" class="form-input" placeholder="{% if lang == 'jp' %}お名前（姓）{% else %}Your last name{% endif %}" name="last_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        メールアドレス <span style="color: red;">*</span>
+                                    {% else %}
+                                        Email <span style="color: red;">*</span>
+                                    {% endif %}
+                                </label>
+                                <input type="email" class="form-input" placeholder="{% if lang == 'jp' %}your@email.com{% else %}your@email.com{% endif %}" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        電話番号
+                                    {% else %}
+                                        Phone
+                                    {% endif %}
+                                </label>
+                                <input type="tel" class="form-input" placeholder="{% if lang == 'jp' %}お電話番号{% else %}Your phone number{% endif %}" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {% if lang == 'jp' %}
+                                        メッセージ <span style="color: red;">*</span>
+                                    {% else %}
+                                        Message <span style="color: red;">*</span>
+                                    {% endif %}
+                                </label>
+                                <textarea class="form-textarea" placeholder="{% if lang == 'jp' %}お食事のご希望、特別な機会、ご質問などをお聞かせください...{% else %}Tell us about your dining preferences, special occasions, or any questions...{% endif %}" rows="4" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-contact-submit">
+                                {% if lang == 'jp' %}
+                                    メッセージを送信
+                                {% else %}
+                                    Send Message
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<script>
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+</script>
+{% endblock %}

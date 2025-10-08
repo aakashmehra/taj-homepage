@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.about_us }} — Taj Restaurants{% endblock %}
+
+{% block content %}
+<div id="root">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background" style="background-image: url('{{ url_for('static', filename='images/taj_logo_n_banners/taj_banner.jpg') }}');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-gold">{{ content.about_us }}</span>
+            </h1>
+            <p class="hero-subtitle">
+                {% if lang == 'jp' %}
+                    私たちの物語とビジョン
+                {% else %}
+                    Our Story and Vision
+                {% endif %}
+            </p>
+            <p class="hero-description">
+                {% if lang == 'jp' %}
+                    日本で本格的なインド料理の伝統を守り続けています
+                {% else %}
+                    Preserving the tradition of authentic Indian cuisine in Japan
+                {% endif %}
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('story-section')">
+                    {% if lang == 'jp' %}
+                        私たちの物語
+                    {% else %}
+                        Our Story
+                    {% endif %}
+                </button>
+                <button class="btn btn-outline" onclick="navigateToContact()">
+                    {% if lang == 'jp' %}
+                        お問い合わせ
+                    {% else %}
+                        Contact Us
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section" id="story-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        私たちの<span class="text-luxury-red">物語</span>
+                    {% else %}
+                        Our <span class="text-luxury-red">Story</span>
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        情熱と伝統が出会う場所で、本格的なインド料理の味をお届けしています
+                    {% else %}
+                        Where passion meets tradition to bring you authentic Indian flavors
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="story-content">
+                <div class="menu-card" style="max-width: 900px; margin: 0 auto;">
+                    <div class="menu-card-content">
+                        {% for paragraph in content.about_us_desc %}
+                            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: hsl(var(--luxury-black));">
+                                {{ paragraph }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        私たちの<span class="text-luxury-gold">価値観</span>
+                    {% else %}
+                        Our <span class="text-luxury-gold">Values</span>
+                    {% endif %}
+                </h2>
+                <p class="section-description">
+                    {% if lang == 'jp' %}
+                        これらの価値観が私たちの料理とサービスの基盤となっています
+                    {% else %}
+                        These values form the foundation of our cuisine and service
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <div style="font-size: 3rem; color: hsl(var(--luxury-gold)); margin-bottom: 1rem;">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3 class="location-city">
+                                {% if lang == 'jp' %}
+                                    情熱
+                                {% else %}
+                                    Passion
+                                {% endif %}
+                            </h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    40年以上にわたる料理への情熱が、すべての料理に込められています。
+                                {% else %}
+                                    Over 40 years of culinary passion infused into every dish we create.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <div style="font-size: 3rem; color: hsl(var(--luxury-gold)); margin-bottom: 1rem;">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h3 class="location-city">
+                                {% if lang == 'jp' %}
+                                    品質
+                                {% else %}
+                                    Quality
+                                {% endif %}
+                            </h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    新鮮な食材と本格的なスパイスで、最高品質の料理をお届けします。
+                                {% else %}
+                                    Fresh ingredients and authentic spices ensure the highest quality in every meal.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <div class="location-card-content">
+                        <div class="location-header">
+                            <div style="font-size: 3rem; color: hsl(var(--luxury-gold)); margin-bottom: 1rem;">
+                                <i class="fas fa-globe-asia"></i>
+                            </div>
+                            <h3 class="location-city">
+                                {% if lang == 'jp' %}
+                                    伝統
+                                {% else %}
+                                    Tradition
+                                {% endif %}
+                            </h3>
+                            <p class="location-description">
+                                {% if lang == 'jp' %}
+                                    インドの伝統的なレシピと調理法を大切に守り続けています。
+                                {% else %}
+                                    We honor and preserve traditional Indian recipes and cooking methods.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+            <!-- Our Journey Section -->
+            <div class="journey-section" style="margin: 4rem 0;">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
+                    {% if lang == 'jp' %}
+                        私たちの歩み
+                    {% else %}
+                        Our Journey
+                    {% endif %}
+                </h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item card">
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background: var(--accent); color: var(--luxury-black); padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; margin-right: 1rem;">
+                                {% if lang == 'jp' %}
+                                    40年以上前
+                                {% else %}
+                                    40+ Years Ago
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if lang == 'jp' %}
+                            <p>インド料理への情熱から始まった私たちの物語。豊かな風味と伝統への愛が出発点でした。</p>
+                        {% else %}
+                            <p>Our story began with a simple passion for the rich flavors and traditions of Indian cooking.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="timeline-item card">
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background: var(--accent); color: var(--luxury-black); padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; margin-right: 1rem;">
+                                {% if lang == 'jp' %}
+                                    33年前
+                                {% else %}
+                                    33 Years Ago
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if lang == 'jp' %}
+                            <p>創設者が日本を故郷とし、インド料理の技術を完璧にすることに人生を捧げ始めました。</p>
+                        {% else %}
+                            <p>Our founder made Japan his home, dedicating his life to perfecting the art of Indian cuisine.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="timeline-item card">
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background: var(--accent); color: var(--luxury-black); padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; margin-right: 1rem;">
+                                {% if lang == 'jp' %}
+                                    現在
+                                {% else %}
+                                    Today
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if lang == 'jp' %}
+                            <p>沖縄、日光、河口湖の3店舗で、本格的なインド料理をお客様にお届けしています。</p>
+                        {% else %}
+                            <p>We serve authentic Indian cuisine across three locations: Okinawa, Nikko, and Kawaguchiko.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visit Us Section -->
+            <div class="visit-us-section" style="text-align: center; margin: 4rem 0;">
+                <h2 class="section-title" style="margin-bottom: 2rem;">
+                    {% if lang == 'jp' %}
+                        ぜひお越しください
+                    {% else %}
+                        Visit Us
+                    {% endif %}
+                </h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    {% if lang == 'jp' %}
+                        遺産、情熱、そして真正性の物語をすべての皿が語るタージで、本格的なインド料理の旅をお楽しみください。
+                    {% else %}
+                        Experience the journey of authentic Indian cuisine at Taj, where every plate tells a story of heritage, passion, and authenticity.
+                    {% endif %}
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="{{ url_for('taj_okinawa') }}" class="btn">{{ content.nav_okinawa }}</a>
+                    <a href="{{ url_for('taj_nikko') }}" class="btn">{{ content.nav_nikko }}</a>
+                    <a href="{{ url_for('taj_fuji') }}" class="btn">{{ content.nav_fuji }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<script>
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+</script>
+{% endblock %}

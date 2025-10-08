@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner - Taj Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+</head>
+<body class="scanner-body">
+    <!-- Top Navigation Bar -->
+    <div class="scanner-nav">
+        <div class="nav-title">
+            <i class="fas fa-qrcode"></i> Order Scanner
+        </div>
+        <div class="nav-buttons">
+            <button id="refresh-page-btn" class="nav-btn">
+                <i class="fas fa-refresh"></i> Refresh
+            </button>
+            <button id="manual-entry-btn" class="nav-btn">
+                <i class="fas fa-keyboard"></i>
+            </button>
+            <a href="{{ url_for('staff_orders') }}" class="nav-btn">
+                <i class="fas fa-bell"></i> New
+            </a>
+            {% if restaurant_location %}
+                <a href="{{ url_for('admin_orders_by_location', restaurant_location=restaurant_location) }}" class="nav-btn">
+                    <i class="fas fa-list"></i> {{ restaurant_location|title }} Orders
+                </a>
+            {% else %}
+                <a href="{{ url_for('admin_orders') }}" class="nav-btn">
+                    <i class="fas fa-list"></i> All
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Full Screen Camera Scanner -->
+    <div id="qr-scanner" class="fullscreen-scanner">
+        <div class="scanner-overlay">
+            <div class="scanner-frame">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+            </div>
+            <div class="scanner-instructions">
+                <p>Point camera at QR code</p>
+                <button id="start-camera" class="start-btn">
+                    <i class="fas fa-camera"></i> Start Camera
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Entry Modal -->
+    <div id="manual-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Enter Order Number</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-input-group">
+                    <span class="input-prefix">TAJ-</span>
+                    <input type="text" id="order-suffix" placeholder="20241201-ABC12345" 
+                           maxlength="17" class="order-suffix-input">
+                </div>
+                <button id="lookup-btn" class="lookup-btn">
+                    <i class="fas fa-search"></i> Find Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Result Modal -->
+    <div id="order-result-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Order Found</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="order-details">
+                <!-- Order details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button id="reject-order-btn" class="btn-reject">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+                <button id="accept-order-btn" class="btn-accept">
+                    <i class="fas fa-check"></i> Accept
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .scanner-body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .scanner-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: rgba(216, 137, 0, 0.9);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(216, 137, 0, 1);
+            transform: scale(1.05);
+        }
+
+        .fullscreen-scanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        
+        /* Ensure camera video fills the screen */
+        #qr-scanner video {
+            width: 100vw !important;
+            height: 100vh !important;
+            object-fit: cover !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1 !important;
+        }
+        
+        /* QR code scanning box overlay */
+        #qr-scanner canvas {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 5 !important;
+            border: 3px solid #d88900 !important;
+            border-radius: 12px !important;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .scanner-frame {
+            width: 280px;
+            height: 280px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #d8890;
+            border-radius: 4px;
+        }
+
+        .corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+        .corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+        .corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+        .corner.br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+        .scanner-instructions {
+            text-align: center;
+            color: white;
+        }
+
+        .scanner-instructions p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .start-btn {
+            background: #d88900;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #b8790;
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #d88900;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .order-input-group {
+            display: flex;
+            align-items: center;
+            border: 2px solid #d88900;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .input-prefix {
+            background: #d88900;
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .order-suffix-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            outline: none;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .lookup-btn, .btn-accept, .btn-reject {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lookup-btn {
+            background: #d88900;
+            color: white;
+        }
+
+        .lookup-btn:hover {
+            background: #b8790;
+        }
+
+        .modal-actions {
+            padding: 0 1.5rem 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-accept {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #218838;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+        }
+
+        /* Top Action Buttons Styles */
+        .order-actions-top {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            justify-content: center;
+        }
+
+        .btn-accept-top, .btn-reject-top {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .btn-accept-top {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-accept-top:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .btn-reject-top {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reject-top:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .order-details-content {
+            padding: 1.5rem;
+        }
+
+        .order-header-simple {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #d88900;
+        }
+
+        .order-header-simple h2 {
+            color: #d88900;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .order-details-content h1,
+        .order-details-content h2,
+        .order-details-content h3 {
+            color: #d88900;
+            margin-top: 0;
+        }
+
+        .order-details-content .order-items-section {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0;
+        }
+
+        .order-details-content .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(216, 137, 0, 0.1);
+        }
+
+        .order-details-content .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-details-content .item-name {
+            color: #333;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .order-details-content .item-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .order-details-content .option-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .order-details-content .spice-tag {
+            background: rgba(255, 99, 71, 0.1);
+            color: #d63384;
+        }
+
+        .order-details-content .drink-tag {
+            background: rgba(102, 51, 0, 0.1);
+            color: #663300;
+        }
+
+        .order-details-content .portion-tag {
+            background: rgba(32, 201, 151, 0.1);
+            color: #20c997;
+        }
+
+        .order-details-content .item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #d88900;
+        }
+
+        @media (max-width: 768px) {
+            .scanner-frame {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
+                max-width: 95vw;
+            }
+            
+            .order-actions-top {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 1rem;
+            }
+            
+            .btn-accept-top, .btn-reject-top {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            
+            .order-details-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        class FullscreenScanner {
+            constructor() {
+                this.html5QrCode = null;
+                this.isScanning = false;
+                this.currentOrderNumber = null;
+                this.availableCameras = [];
+                this.currentCameraIndex = 0;
+                this.lastScannedCode = null;
+                this.lastScanTime = 0;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.autoStartCamera();
+            }
+
+            bindEvents() {
+                // Start camera button
+                document.getElementById('start-camera').addEventListener('click', () => {
+                    this.startScanner();
+                });
+
+
+                // Refresh page button
+                document.getElementById('refresh-page-btn').addEventListener('click', () => {
+                    this.refreshPage();
+                });
+
+                // Manual entry modal
+                document.getElementById('manual-entry-btn').addEventListener('click', () => {
+                    this.showManualEntry();
+                });
+
+                // Modal close buttons
+                document.querySelectorAll('.modal-close').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.closeAllModals();
+                    });
+                });
+
+                // Click outside modal to close
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            this.closeAllModals();
+                        }
+                    });
+                });
+
+                // Lookup button
+                document.getElementById('lookup-btn').addEventListener('click', () => {
+                    this.lookupOrder();
+                });
+
+                // Enter key in order input
+                document.getElementById('order-suffix').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.lookupOrder();
+                    }
+                });
+
+                // Accept/Reject buttons
+                document.getElementById('accept-order-btn').addEventListener('click', () => {
+                    console.log('Bottom Accept button clicked!');
+                    this.acceptOrderAndRedirect();
+                });
+
+                document.getElementById('reject-order-btn').addEventListener('click', () => {
+                    this.rejectOrder();
+                });
+            }
+
+            async autoStartCamera() {
+                // Auto-start camera after 1 second
+                setTimeout(() => {
+                    this.startScanner();
+                }, 1000);
+            }
+
+            // Test method to verify QR code patterns work
+            testQRPatterns() {
+                const testUrls = [
+                    'https://192.168.0.108:5200/admin/order/TAJ-20241201-ABC123',
+                    'http://localhost:5200/admin/order/TAJ-20241201-ABC123',
+                    '/admin/order/TAJ-20241201-ABC123',
+                    'TAJ-20241201-ABC123'
+                ];
+                
+                testUrls.forEach(url => {
+                    console.log(`Testing URL: ${url}`);
+                    this.handleQRScan(url);
+                });
+            }
+
+            async startScanner() {
+                try {
+                    const startBtn = document.getElementById('start-camera');
+                    startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting...';
+                    startBtn.disabled = true;
+
+                    this.html5QrCode = new Html5Qrcode("qr-scanner");
+                    
+                    this.availableCameras = await Html5Qrcode.getCameras();
+                    if (this.availableCameras && this.availableCameras.length) {
+                        // Find back camera (environment facing)
+                        let cameraId = this.availableCameras[0].id; // Default to first camera
+                        this.currentCameraIndex = 0;
+                        
+                        // Look for back/environment camera
+                        const backCameraIndex = this.availableCameras.findIndex(camera => 
+                            camera.label.toLowerCase().includes('back') ||
+                            camera.label.toLowerCase().includes('environment') ||
+                            camera.label.toLowerCase().includes('rear')
+                        );
+                        
+                        if (backCameraIndex !== -1) {
+                            cameraId = this.availableCameras[backCameraIndex].id;
+                            this.currentCameraIndex = backCameraIndex;
+                        } else if (this.availableCameras.length > 1) {
+                            // If no explicit back camera found, use the second camera (usually back on mobile)
+                            cameraId = this.availableCameras[1].id;
+                            this.currentCameraIndex = 1;
+                        }
+                        
+                        console.log('Available cameras:', this.availableCameras);
+                        console.log('Using camera:', cameraId, 'at index:', this.currentCameraIndex);
+                        
+                        
+                        await this.html5QrCode.start(
+                            cameraId,
+                            {
+                                fps: 20,
+                                qrbox: function(viewfinderWidth, viewfinderHeight) {
+                                    // Larger scanning area for faster detection
+                                    const minEdgePercentage = 0.8;
+                                    const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+                                    const qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+                                    return {
+                                        width: qrboxSize,
+                                        height: qrboxSize
+                                    };
+                                },
+                                aspectRatio: 1.0,
+                                // Optimize for speed
+                                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                                experimentalFeatures: {
+                                    useBarCodeDetectorIfSupported: true
+                                }
+                            },
+                            (decodedText) => {
+                                this.handleQRScan(decodedText);
+                            },
+                            () => {
+                                // Ignore scan errors
+                            }
+                        );
+                        
+                        this.isScanning = true;
+                        const overlay = document.querySelector('.scanner-overlay');
+                        if (overlay) {
+                            overlay.style.display = 'none';
+                        }
+                        
+                    } else {
+                        throw new Error('No cameras found');
+                    }
+                    
+                } catch (err) {
+                    console.error('Camera error:', err);
+                    const startBtn = document.getElementById('start-camera');
+                    if (startBtn) {
+                        startBtn.innerHTML = '<i class="fas fa-camera"></i> Camera Error - Try Again';
+                        startBtn.disabled = false;
+                    }
+                    
+                    // Show more detailed error
+                    this.showTemporaryMessage('Camera Error: ' + err.message + '\nPlease check camera permissions.');
+                }
+            }
+
+            async switchCamera() {
+                if (!this.availableCameras || this.availableCameras.length <= 1) return;
+                
+                try {
+                    // Stop current scanner
+                    if (this.html5QrCode && this.isScanning) {
+                        await this.html5QrCode.stop();
+                        this.isScanning = false;
+                    }
+                    
+                    // Switch to next camera
+                    this.currentCameraIndex = (this.currentCameraIndex + 1) % this.availableCameras.length;
+                    const cameraId = this.availableCameras[this.currentCameraIndex].id;
+                    
+                    console.log('Switching to camera:', cameraId, 'at index:', this.currentCameraIndex);
+                    
+                    // Start with new camera
+                    await this.html5QrCode.start(
+                        cameraId,
+                        {
+                            fps: 20,
+                            qrbox: function(viewfinderWidth, viewfinderHeight) {
+                                const minEdgePercentage = 0.8;
+                                const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+                                const qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+                                return {
+                                    width: qrboxSize,
+                                    height: qrboxSize
+                                };
+                            },
+                            aspectRatio: 1.0,
+                            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                            experimentalFeatures: {
+                                useBarCodeDetectorIfSupported: true
+                            }
+                        },
+                        (decodedText) => {
+                            this.handleQRScan(decodedText);
+                        },
+                        () => {
+                            // Ignore scan errors
+                        }
+                    );
+                    
+                    this.isScanning = true;
+                    
+                } catch (err) {
+                    console.error('Camera switch error:', err);
+                    this.showTemporaryMessage('Error switching camera: ' + err.message);
+                }
+            }
+
+            handleQRScan(decodedText) {
+                console.log('QR Code scanned:', decodedText);
+                
+                // Prevent duplicate scans of the same code within 2 seconds
+                const now = Date.now();
+                if (this.lastScannedCode === decodedText && (now - this.lastScanTime) < 2000) {
+                    console.log('Ignoring duplicate scan');
+                    return;
+                }
+                
+                this.lastScannedCode = decodedText;
+                this.lastScanTime = now;
+                
+                // Check if it's a valid order number (TAJ-XXXXXXXX format)
+                let orderNumber = null;
+                
+                // Pattern: Direct order number (TAJ-XXXXXXXX)
+                const orderMatch = decodedText.match(/(TAJ-[A-Za-z0-9\-]+)/);
+                if (orderMatch) {
+                    orderNumber = orderMatch[1];
+                    console.log('Found order number:', orderNumber);
+                }
+                
+                if (orderNumber) {
+                    // Stop scanning while processing
+                    if (this.html5QrCode && this.isScanning) {
+                        this.html5QrCode.pause(true);
+                    }
+                    
+                    this.lookupOrderByNumber(orderNumber);
+                } else {
+                    console.log('No valid order number found in QR code:', decodedText);
+                    // Show a brief message but don't stop scanning
+                    this.showTemporaryMessage('Invalid QR code. Please scan a valid order QR code.');
+                }
+            }
+
+            refreshPage() {
+                console.log('Refreshing page...');
+                window.location.reload();
+            }
+
+            showManualEntry() {
+                document.getElementById('manual-modal').classList.add('show');
+                document.getElementById('order-suffix').focus();
+            }
+
+            closeAllModals() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('show');
+                });
+            }
+
+            showTemporaryMessage(message) {
+                // Create or update temporary message overlay
+                let messageOverlay = document.getElementById('temp-message-overlay');
+                if (!messageOverlay) {
+                    messageOverlay = document.createElement('div');
+                    messageOverlay.id = 'temp-message-overlay';
+                    messageOverlay.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: rgba(0, 0, 0, 0.9);
+                        color: white;
+                        padding: 1.5rem 2rem;
+                        border-radius: 12px;
+                        z-index: 3000;
+                        text-align: center;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        max-width: 80%;
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                        backdrop-filter: blur(10px);
+                    `;
+                    document.body.appendChild(messageOverlay);
+                }
+                
+                messageOverlay.textContent = message;
+                messageOverlay.style.display = 'block';
+                
+                // Auto-hide after 3 seconds
+                setTimeout(() => {
+                    messageOverlay.style.display = 'none';
+                }, 3000);
+            }
+
+            async lookupOrder() {
+                const suffix = document.getElementById('order-suffix').value.trim();
+                if (!suffix) {
+                    this.showTemporaryMessage('Please enter the order number');
+                    return;
+                }
+                
+                const orderNumber = 'TAJ-' + suffix;
+                this.lookupOrderByNumber(orderNumber);
+            }
+
+            async lookupOrderByNumber(orderNumber) {
+                try {
+                    this.currentOrderNumber = orderNumber;
+                    
+                    console.log('Looking up order:', orderNumber);
+                    
+                    const response = await fetch(`/admin/order/${orderNumber}`);
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+                    
+                    if (response.ok) {
+                        const html = await response.text();
+                        console.log('Order found, showing details');
+                        this.showOrderDetails(orderNumber, html);
+                    } else {
+                        console.log('Order not found, status:', response.status);
+                        
+                        // Resume scanning after error
+                        if (this.html5QrCode && this.isScanning) {
+                            setTimeout(() => {
+                                this.html5QrCode.resume();
+                            }, 2000);
+                        }
+                        
+                        if (response.status === 404) {
+                            this.showTemporaryMessage(`Order ${orderNumber} not found or already processed`);
+                        } else {
+                            this.showTemporaryMessage(`Error ${response.status}: Unable to load order`);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Lookup error:', error);
+                    
+                    // Resume scanning after error
+                    if (this.html5QrCode && this.isScanning) {
+                        setTimeout(() => {
+                            this.html5QrCode.resume();
+                        }, 2000);
+                    }
+                    
+                    this.showTemporaryMessage('Network error: Unable to lookup order');
+                }
+            }
+
+            showOrderDetails(orderNumber, html) {
+                this.closeAllModals();
+                
+                // Parse the HTML to extract only order items
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extract only the order items section
+                const orderItemsSection = doc.querySelector('.order-items-section');
+                const orderItemsHTML = orderItemsSection ? orderItemsSection.innerHTML : 
+                    '<h2><i class="fas fa-utensils"></i> Order Items</h2><p>No items found</p>';
+                
+                const modal = document.getElementById('order-result-modal');
+                const details = document.getElementById('order-details');
+                
+                // Create the order details view with only items (no top buttons)
+                details.innerHTML = `
+                    <div class="order-details-content">
+                        <div class="order-header-simple">
+                            <h2><i class="fas fa-receipt"></i> Order #${orderNumber}</h2>
+                        </div>
+                        <div class="order-items-section">
+                            ${orderItemsHTML}
+                        </div>
+                    </div>
+                `;
+                
+                modal.classList.add('show');
+            }
+
+            showOrderResult(orderNumber, found) {
+                this.closeAllModals();
+                
+                const modal = document.getElementById('order-result-modal');
+                const details = document.getElementById('order-details');
+                
+                if (found) {
+                    details.innerHTML = `
+                        <div class="order-found">
+                            <div class="order-info">
+                                <h4>Order #${orderNumber}</h4>
+                                <p>Order found and ready for processing</p>
+                            </div>
+                        </div>
+                    `;
+                    modal.classList.add('show');
+                } else {
+                    this.showTemporaryMessage('Order not found or already processed');
+                }
+            }
+
+            async acceptOrderAndRedirect() {
+                if (!this.currentOrderNumber) {
+                    console.log('No current order number');
+                    return;
+                }
+                
+                console.log('Accepting order:', this.currentOrderNumber);
+                
+                try {
+                    const response = await fetch(`/admin/order/${this.currentOrderNumber}/accept`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    console.log('Accept response status:', response.status);
+                    
+                    if (response.ok) {
+                        console.log('Order accepted, redirecting immediately...');
+                        // Close modal first
+                        this.closeAllModals();
+                        
+                        // Immediate redirect - don't wait for JSON parsing
+                        this.performRedirect();
+                        
+                        // Still parse result for logging
+                        try {
+                            const result = await response.json();
+                            console.log('Accept result:', result);
+                        } catch (e) {
+                            console.log('JSON parsing failed, but redirect should work');
+                        }
+                    } else {
+                        console.log('HTTP error:', response.status);
+                        this.showTemporaryMessage(`HTTP Error ${response.status}: Failed to accept order`);
+                    }
+                } catch (error) {
+                    console.error('Accept order error:', error);
+                    this.showTemporaryMessage('Network error: Unable to accept order');
+                }
+            }
+
+            performRedirect() {
+                console.log('Performing redirect to admin orders...');
+                {% if restaurant_location %}
+                const targetUrl = '/admin/orders/{{ restaurant_location }}';
+                {% else %}
+                const targetUrl = '/admin/orders';
+                {% endif %}
+                
+                // Method 1: Standard href
+                try {
+                    console.log('Trying window.location.href...');
+                    window.location.href = targetUrl;
+                    return;
+                } catch (e) {
+                    console.log('window.location.href failed:', e);
+                }
+                
+                // Method 2: location.assign
+                try {
+                    console.log('Trying location.assign...');
+                    location.assign(targetUrl);
+                    return;
+                } catch (e) {
+                    console.log('location.assign failed:', e);
+                }
+                
+                // Method 3: location.replace
+                try {
+                    console.log('Trying location.replace...');
+                    location.replace(targetUrl);
+                    return;
+                } catch (e) {
+                    console.log('location.replace failed:', e);
+                }
+                
+                // Method 4: window.open with _self
+                try {
+                    console.log('Trying window.open...');
+                    window.open(targetUrl, '_self');
+                    return;
+                } catch (e) {
+                    console.log('window.open failed:', e);
+                }
+                
+                // Method 5: Create and click a link
+                try {
+                    console.log('Trying link click method...');
+                    const link = document.createElement('a');
+                    link.href = targetUrl;
+                    link.target = '_self';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (e) {
+                    console.log('Link click method failed:', e);
+                }
+                
+                console.log('All redirect methods failed!');
+                this.showTemporaryMessage('Order accepted! Please manually navigate to admin orders.');
+            }
+
+            async acceptOrder() {
+                if (!this.currentOrderNumber) return;
+                
+                try {
+                    const response = await fetch(`/admin/order/${this.currentOrderNumber}/accept`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        this.closeAllModals();
+                        this.currentOrderNumber = null;
+                    } else {
+                        this.showTemporaryMessage('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    this.showTemporaryMessage('Error accepting order');
+                }
+            }
+
+            async rejectOrder() {
+                if (!this.currentOrderNumber) return;
+                
+                try {
+                    const response = await fetch(`/admin/order/${this.currentOrderNumber}/reject`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        this.showTemporaryMessage('Order rejected');
+                        this.closeAllModals();
+                        this.currentOrderNumber = null;
+                        
+                        // Refresh the page after rejection
+                        setTimeout(() => {
+                            this.refreshPage();
+                        }, 1500);
+                    } else {
+                        this.showTemporaryMessage('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    this.showTemporaryMessage('Error rejecting order');
+                }
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scanner = new FullscreenScanner();
+            
+            // Add console helper for testing
+            window.testQR = (qrText) => {
+                console.log('Testing QR:', qrText);
+                window.scanner.handleQRScan(qrText);
+            };
+            
+            // Test redirect function
+            window.testRedirect = () => {
+                console.log('Testing redirect...');
+                window.scanner.performRedirect();
+            };
+            
+            console.log('QR Scanner loaded.');
+            console.log('Use testQR("your-qr-text") to test QR code parsing.');
+            console.log('Use testRedirect() to test the redirect functionality.');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% if content %}{{ content.site_title }}{% else %}Taj — Taste of Authentic India{% endif %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Authentic Indian cuisine in Japan. Visit our restaurants in Okinawa, Nikko, and Fuji.">
+</head>
+<body>
+    <!-- Floating Language Toggle -->
+    <div class="floating-language-toggle">
+        <div class="language-toggle-container">
+            <span class="language-label english {% if lang != 'jp' %}active{% endif %}">EN</span>
+            <div class="toggle-switch" onclick="toggleLanguage()">
+                <div class="toggle-slider {% if lang == 'jp' %}active{% endif %}"></div>
+            </div>
+            <span class="language-label japanese {% if lang == 'jp' %}active{% endif %}">JP</span>
+        </div>
+    </div>
+
+    <!-- Floating Home Button -->
+    <div class="floating-home-button">
+        <button class="home-btn" onclick="navigateToHome()" title="{% if lang == 'jp' %}ホームページに戻る{% else %}Go to Homepage{% endif %}">
+            <i class="fas fa-home"></i>
+        </button>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <span class="flash-text">{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p> <a href="mailto:vinnindia@gmail.com">Email: vinnindia@gmail.com</a></p>
+                    <p>Follow us on social media</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Locations</h4>
+                    <p><a href="{{ url_for('taj_okinawa') }}">Taj Okinawa</a></p>
+                    <p><a href="{{ url_for('taj_nikko') }}">Taj Nikko</a></p>
+                    <p><a href="{{ url_for('taj_fuji') }}">Taj Fuji</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <p>Dine-in • Takeout • Delivery</p>
+                    <p>Table Reservations</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Taj. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Language selector functionality
+        function changeLanguage(lang) {
+            // Simply redirect to the set_language route
+            window.location.href = '/set_language/' + lang;
+        }
+
+        function toggleLanguage() {
+            // Get current language and toggle to the other
+            const currentLang = '{{ lang }}';
+            const newLang = currentLang === 'jp' ? 'en' : 'jp';
+            changeLanguage(newLang);
+        }
+
+        // Initialize language toggle on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure language toggle elements exist
+            const toggleContainer = document.querySelector('.language-toggle-container');
+            
+            if (toggleContainer) {
+                console.log('Language toggle initialized successfully');
+            } else {
+                console.warn('Language toggle elements not found');
+            }
+        });
+
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Page navigation functions
+        function navigateToHome() {
+            window.location.href = '{{ url_for("homepage") }}';
+        }
+
+        function navigateToRestaurant(location) {
+            window.location.href = '/taj-' + location;
+        }
+
+        function navigateToMenu(location) {
+            window.location.href = '/taj-' + location + '/menu';
+        }
+
+        function navigateToContact() {
+            window.location.href = '{{ url_for("contact_page") }}';
+        }
+
+        function navigateToAbout() {
+            window.location.href = '{{ url_for("about_page") }}';
+        }
+    </script>
+    
+    <!-- Main JavaScript functionality -->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    
+    <!-- Cart functionality -->
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+</html>

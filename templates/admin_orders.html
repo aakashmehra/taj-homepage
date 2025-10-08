@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders - Taj Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <section class="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <h1><i class="fas fa-clipboard-list"></i> Order Management
+                    {% if restaurant_location %}
+                        - {{ restaurant_location|title }}
+                    {% endif %}
+                </h1>
+                <div class="admin-nav">
+                    {% if restaurant_location %}
+                        <a href="{{ url_for('collect_order_by_location', restaurant_location=restaurant_location) }}" class="btn btn-outline">
+                            <i class="fas fa-qrcode"></i> Scan QR Code
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('collect_order') }}" class="btn btn-outline">
+                            <i class="fas fa-qrcode"></i> Scan QR Code
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Restaurant Navigation
+            <div class="restaurant-nav">
+                <h3>Select Restaurant:</h3>
+                <div class="restaurant-buttons">
+                    <a href="{{ url_for('admin_orders_by_location', restaurant_location='nikko') }}" 
+                       class="restaurant-btn {% if restaurant_location == 'nikko' %}active{% endif %}">
+                        <i class="fas fa-store"></i> Nikko
+                    </a>
+                    <a href="{{ url_for('admin_orders_by_location', restaurant_location='fuji') }}" 
+                       class="restaurant-btn {% if restaurant_location == 'fuji' %}active{% endif %}">
+                        <i class="fas fa-store"></i> Fuji
+                    </a>
+                    <a href="{{ url_for('admin_orders_by_location', restaurant_location='okinawa') }}" 
+                       class="restaurant-btn {% if restaurant_location == 'okinawa' %}active{% endif %}">
+                        <i class="fas fa-store"></i> Okinawa
+                    </a>
+                    <a href="{{ url_for('admin_orders') }}" 
+                       class="restaurant-btn {% if not restaurant_location %}active{% endif %}">
+                        <i class="fas fa-globe"></i> All Locations
+                    </a>
+                </div>
+            </div> -->
+
+            {% if orders %}
+            <div class="orders-list">
+                <h2>Pending Orders ({{ orders|length }})</h2>
+                
+                {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3>Order #{{ order['order_number'] }}</h3>
+                            <p class="order-meta">
+                                <i class="fas fa-clock"></i> {{ order['created_at'] }}
+                                <span class="restaurant-location">
+                                    <i class="fas fa-map-marker-alt"></i> {{ order['restaurant_location']|title }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="order-total">
+                            <strong>¥{{ "{:,}".format(order['total_amount']) }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="order-items">
+                        {% for item in order['items'] %}
+                        <div class="order-item">
+                            <div class="item-details">
+                                <strong>{{ item['name'] }}</strong>
+                                {% if item.get('spiceLevelText') %}
+                                    <span class="item-option">Spice: {{ item['spiceLevelText'] }}</span>
+                                {% endif %}
+                                {% if item.get('drinkText') %}
+                                    <span class="item-option">Drink: {{ item['drinkText'] }}</span>
+                                {% endif %}
+                                {% if item.get('portion') %}
+                                    <span class="item-option">{{ item['portion'].upper() }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="item-price">¥{{ "{:,}".format(item['price']) }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="order-actions">
+                        <a href="{{ url_for('view_order', order_number=order['order_number']) }}" 
+                           class="btn btn-outline" target="_blank">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
+                        {% if restaurant_location %}
+                        <form method="POST" action="{{ url_for('complete_order_by_location', order_number=order['order_number'], restaurant_location=restaurant_location) }}" 
+                              style="display: inline;">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i> Complete Order
+                            </button>
+                        </form>
+                        {% else %}
+                        <form method="POST" action="{{ url_for('complete_order', order_number=order['order_number']) }}" 
+                              style="display: inline;">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i> Complete Order
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-clipboard-check empty-icon"></i>
+                <h3>No Pending Orders</h3>
+                <p>All orders have been completed. New orders will appear here automatically.</p>
+                <a href="{{ url_for('collect_order') }}" class="btn btn-primary">
+                    <i class="fas fa-qrcode"></i> Scan QR Code for Orders
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <style>
+        .admin-panel {
+            min-height: 100vh;
+            background: hsl(var(--luxury-cream));
+            padding: 2rem 0;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: hsl(var(--card));
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid hsl(var(--border));
+        }
+
+        .admin-header h1 {
+            color: hsl(var(--luxury-red));
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header h1 i {
+            color: hsl(var(--luxury-gold));
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .restaurant-nav {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: hsl(var(--card));
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .restaurant-nav h3 {
+            color: hsl(var(--luxury-red));
+            margin: 0 0 1.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .restaurant-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .restaurant-btn {
+            padding: 1rem 2rem;
+            border: 2px solid hsl(var(--border));
+            border-radius: 50px;
+            text-decoration: none;
+            color: hsl(var(--foreground));
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: hsl(var(--card));
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .restaurant-btn:hover {
+            border-color: hsl(var(--luxury-gold));
+            background: hsl(var(--luxury-gold) / 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .restaurant-btn.active {
+            background: hsl(var(--luxury-gold));
+            color: hsl(var(--luxury-black));
+            border-color: hsl(var(--luxury-gold));
+            box-shadow: 0 4px 15px hsl(var(--luxury-gold) / 0.3);
+        }
+
+        .orders-list h2 {
+            color: hsl(var(--luxury-red));
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid hsl(var(--luxury-gold));
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .order-card {
+            background: hsl(var(--card));
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red)));
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-info h3 {
+            color: hsl(var(--luxury-red));
+            margin: 0 0 0.75rem 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .order-meta {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.95rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .restaurant-location {
+            background: hsl(var(--luxury-gold) / 0.1);
+            color: hsl(var(--luxury-red));
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .order-total {
+            font-size: 1.5rem;
+            color: hsl(var(--luxury-red));
+            font-weight: 700;
+            background: hsl(var(--luxury-gold) / 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .order-items {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: hsl(var(--luxury-cream));
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-details strong {
+            display: block;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .item-option {
+            display: inline-block;
+            background: hsl(var(--luxury-gold) / 0.1);
+            color: hsl(var(--luxury-red));
+            padding: 0.3rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            border: 1px solid hsl(var(--luxury-gold) / 0.2);
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: hsl(var(--luxury-red));
+            font-size: 1.1rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: hsl(var(--foreground));
+            border: 2px solid hsl(var(--border));
+        }
+
+        .btn-outline:hover {
+            background: hsl(var(--luxury-cream));
+            border-color: hsl(var(--luxury-gold));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: hsl(var(--luxury-gold));
+            color: hsl(var(--luxury-black));
+            border: 2px solid hsl(var(--luxury-gold));
+        }
+
+        .btn-primary:hover {
+            background: hsl(var(--luxury-gold-dark));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px hsl(var(--luxury-gold) / 0.3);
+        }
+
+        .btn-success {
+            background: hsl(var(--luxury-red));
+            color: white;
+            border: 2px solid hsl(var(--luxury-red));
+        }
+
+        .btn-success:hover {
+            background: hsl(var(--luxury-red-dark));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px hsl(var(--luxury-red) / 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: hsl(var(--muted-foreground));
+            background: hsl(var(--card));
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: hsl(var(--luxury-gold));
+        }
+
+        .empty-state h3 {
+            color: hsl(var(--luxury-red));
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.5rem;
+            }
+
+            .admin-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .order-actions {
+                justify-content: flex-start;
+            }
+
+            .admin-nav {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .restaurant-buttons {
+                flex-direction: column;
+            }
+
+            .restaurant-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .order-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Auto-refresh every 30 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>

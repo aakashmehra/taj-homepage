@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.restaurant_nav_menu }} — {{ restaurant.name }}{% endblock %}
+
+{% block content %}
+<!-- Restaurant Banner Section -->
+<!-- <section class="banner-section">
+    <div class="banner-container">
+        <img src="{{ url_for('static', filename='images/taj_logo_n_banners/taj_' + restaurant.location + '_banner.jpg') }}" alt="{{ restaurant.name }} - Authentic Indian Cuisine" class="banner-image">
+    </div>
+</section> -->
+
+<section class="restaurant-header">
+    <div class="container">
+        <h1>{{ restaurant.name }}</h1>
+        <div class="restaurant-taglines">
+            {% if lang == 'jp' %}
+                <div class="tagline">{{ restaurant.tagline_jp }}</div>
+            {% else %}
+                <div class="tagline">{{ restaurant.tagline_en }}</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="restaurant-content">
+    <div class="container">
+        <!-- Detailed Menu for Taj Okinawa, Nikko & Fuji -->
+        {% if restaurant.location in ['okinawa', 'nikko', 'fuji'] %}
+            {% include 'database_menu.html' %}
+        {% else %}
+        <!-- Menu Categories for other locations -->
+        <div class="menu-categories">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    メニューカテゴリー
+                {% else %}
+                    Menu Categories
+                {% endif %}
+            </h2>
+            
+            <div class="categories-grid">
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-bowl-rice"></i> カレー
+                        {% else %}
+                            <i class="fas fa-bowl-rice"></i> Curries
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-fire"></i> タンドール料理
+                        {% else %}
+                            <i class="fas fa-fire"></i> Tandoor Dishes
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-seedling"></i> 前菜・サラダ
+                        {% else %}
+                            <i class="fas fa-seedling"></i> Appetizers & Salads
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-bread-slice"></i> ナン・ライス
+                        {% else %}
+                            <i class="fas fa-bread-slice"></i> Naan & Rice
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-mug-hot"></i> ドリンク
+                        {% else %}
+                            <i class="fas fa-mug-hot"></i> Beverages
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="category-item">
+                    <h4>
+                        {% if lang == 'jp' %}
+                            <i class="fas fa-ice-cream"></i> デザート
+                        {% else %}
+                            <i class="fas fa-ice-cream"></i> Desserts
+                        {% endif %} 
+                    </h4>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Menu Section -->
+        <div class="menu-section" id="menu">
+            <h2 class="section-title">{{ content.menu_sections }}</h2>
+            <div class="menu-cards">
+                <div class="menu-page-card">
+                    <h3>{{ content.grand_menu }}</h3>
+                    {% if lang == 'jp' %}
+                        <p>通常メニュー</p>
+                        <p class="menu-description">豊富な種類のカレー、タンドール料理、前菜、デザートまで幅広くご用意しております。</p>
+                    {% else %}
+                        <p>Full dinner menu</p>
+                        <p class="menu-description">Complete selection of curries, tandoor dishes, appetizers, and desserts.</p>
+                    {% endif %}
+                    <a href="#" class="btn btn-outline">{{ content.view_menu_pdf }}</a>
+                </div>
+
+                <div class="menu-page-card">
+                    <h3>{{ content.takeout_menu }}</h3>
+                    {% if lang == 'jp' %}
+                        <p>お持ち帰り・お届けメニュー</p>
+                        <p class="menu-description">手軽にお楽しみいただけるテイクアウト専用メニューです。ご自宅でも本格的なインド料理をお楽しみください。</p>
+                    {% else %}
+                        <p>Take out & delivery options</p>
+                        <p class="menu-description">Convenient takeout menu for enjoying authentic Indian cuisine at home.</p>
+                    {% endif %}
+                    <a href="#" class="btn btn-outline">{{ content.view_menu_pdf }}</a>
+                </div>
+
+               <!-- <div class="menu-page-card">
+                    <h3>{{ content.lunch_menu }}</h3>
+                    {% if lang == 'jp' %}
+                        <p>ランチメニュー</p>
+                        <p class="menu-description">お得なランチセットをご用意しております。カレー、ナン、ライス、サラダがセットになったお得なメニューです。</p>
+                    {% else %}
+                        <p>Lunch specials and sets</p>
+                        <p class="menu-description">Great value lunch sets including curry, naan, rice, and salad combinations.</p>
+                    {% endif %}
+                    <a href="#" class="btn btn-outline">{{ content.view_menu_pdf }}</a>
+                </div> -->
+            </div>
+            </div>            
+        </div>
+
+        <!-- Popular Dishes Section -->
+        <div class="popular-dishes-section">
+            <h2 class="section-title">
+                {% if lang == 'jp' %}
+                    人気メニュー
+                {% else %} 
+                    Popular Dishes
+                {% endif %}
+            </h2>
+            
+            <div class="dishes-grid">
+                <div class="dish-card">
+                    <div class="dish-image">
+                        <div class="image-placeholder"><i class="fas fa-bowl-rice"></i></div>
+                    </div>
+                    <div class="dish-info">
+                        {% if lang == 'jp' %}
+                            <h4>バターチキンカレー</h4>
+                            <p>まろやかなトマトベースのクリーミーなカレー</p>
+                        {% else %}
+                            <h4>Butter Chicken Curry</h4>
+                            <p>Creamy tomato-based curry with tender chicken</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <div class="dish-image">
+                        <div class="image-placeholder"><i class="fas fa-bread-slice"></i></div>
+                    </div>
+                    <div class="dish-info">
+                        {% if lang == 'jp' %}
+                            <h4>ナン</h4>
+                            <p>タンドール窯で焼いた本格的なインドパン</p>
+                        {% else %}
+                            <h4>Naan</h4>
+                            <p>Authentic Indian bread baked in tandoor oven</p>
+                        {% endif %}
+                    </div>
+                </div>
+                 
+                <div class="dish-card">
+                    <div class="dish-image">
+                        <div class="image-placeholder"><i class="fas fa-utensils"></i></div>
+                    </div>
+                    <div class="dish-info">
+                        {% if lang == 'jp' %}
+                            <h4>ビリヤニ</h4>
+                            <p>スパイス香るバスマティライスの炊き込みご飯</p>
+                        {% else %}
+                            <h4>Biryani</h4>
+                            <p>Aromatic basmati rice with spices and meat</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <div class="dish-image">
+                        <div class="image-placeholder"><i class="fas fa-drumstick-bite"></i></div>
+                    </div>
+                    <div class="dish-info">
+                        {% if lang == 'jp' %}
+                            <h4>タンドリーチキン</h4>
+                            <p>スパイスに漬け込んだタンドール焼きチキン</p>
+                        {% else %}
+                            <h4>Tandoori Chicken</h4>
+                            <p>Spice-marinated chicken grilled in tandoor</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

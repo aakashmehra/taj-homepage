@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Set Menus Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .admin-header {
+            background: var(--gradient-gold);
+            color: hsl(var(--luxury-black));
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .admin-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .admin-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.8;
+        }
+        
+        .set-menu-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid hsl(var(--border));
+        }
+        
+        .set-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .set-menu-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: hsl(var(--luxury-black));
+            font-size: 1.3rem;
+        }
+        
+        .set-menu-info p {
+            margin: 0;
+            color: hsl(var(--text-secondary));
+            font-size: 0.9rem;
+        }
+        
+        .set-menu-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: hsl(var(--luxury-gold));
+        }
+        
+        .location-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid hsl(var(--border));
+        }
+        
+        .location-select {
+            padding: 0.5rem;
+            border: 1px solid hsl(var(--border));
+            border-radius: 6px;
+            background: white;
+            min-width: 150px;
+        }
+        
+        .update-btn {
+            background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-gold-dark)));
+            color: hsl(var(--luxury-black));
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+        
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .current-location {
+            background: hsl(var(--luxury-cream));
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: hsl(var(--luxury-black));
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: hsl(var(--luxury-gold));
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .back-link:hover {
+            color: hsl(var(--luxury-gold-dark));
+            transform: translateX(-2px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: hsl(var(--text-secondary));
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="{{ url_for('admin_menu') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Menu Management
+        </a>
+        
+        <div class="admin-header">
+            <h1><i class="fas fa-utensils"></i> Set Menus Management</h1>
+            <p>Manage restaurant locations for set menus</p>
+            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem; font-size: 0.9rem;">
+                <strong>Location Rules:</strong><br>
+                • <strong>All Locations:</strong> Shows in all restaurants<br>
+                • <strong>Nikko/Fuji:</strong> Shows in both Nikko and Fuji (not Okinawa)<br>
+                • <strong>Okinawa:</strong> Shows only in Okinawa
+            </div>
+        </div>
+        
+        {% if set_menus %}
+            {% for set_menu in set_menus %}
+            <div class="set-menu-card">
+                <div class="set-menu-header">
+                    <div class="set-menu-info">
+                        <h3>{{ set_menu.name_en }}</h3>
+                        <p>{{ set_menu.name_jp }}</p>
+                        {% if set_menu.description_en %}
+                        <p style="margin-top: 0.5rem; font-style: italic;">{{ set_menu.description_en }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="set-menu-price">¥{{ "{:,}".format(set_menu.price) }}</div>
+                </div>
+                
+                <div class="location-form">
+                    <div class="current-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Current: <strong>{{ set_menu.restaurant_location.title() }}</strong>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('update_set_menu_location', set_id=set_menu.id) }}" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <select name="restaurant_location" class="location-select" required>
+                            <option value="">Select Location</option>
+                            <option value="all" {% if set_menu.restaurant_location == 'all' %}selected{% endif %}>All Locations</option>
+                            <option value="nikko" {% if set_menu.restaurant_location == 'nikko' %}selected{% endif %}>Nikko</option>
+                            <option value="fuji" {% if set_menu.restaurant_location == 'fuji' %}selected{% endif %}>Fuji</option>
+                            <option value="okinawa" {% if set_menu.restaurant_location == 'okinawa' %}selected{% endif %}>Okinawa</option>
+                        </select>
+                        
+                        <button type="submit" class="update-btn">
+                            <i class="fas fa-save"></i> Update Location
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-utensils"></i>
+                <h3>No Set Menus Found</h3>
+                <p>There are no set menus in the database yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

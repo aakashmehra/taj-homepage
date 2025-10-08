@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Admin - Taj Restaurant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <h1 style="text-align: center; margin-bottom: 2rem; color: var(--accent);">
+            <i class="fas fa-cogs"></i> Menu Image Management
+        </h1>
+        
+        <!-- <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="{{ url_for('admin_set_menus') }}" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gradient-gold); color: hsl(var(--luxury-black)); padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition-smooth);">
+                <i class="fas fa-utensils"></i>
+                Manage Set Menus
+            </a>
+        </div> -->
+        
+        <div style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+            <h2 style="color: var(--accent); margin-bottom: 1.5rem;">Items Without Images ({{ items|length }})</h2>
+            
+            {% if items %}
+            <div style="display: grid; gap: 1rem;">
+                {% for item in items %}
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius); border-left: 4px solid var(--accent);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem;">
+                        <div style="flex: 1;">
+                            <h3 style="color: var(--accent); margin: 0 0 0.5rem 0;">
+                                {{ item.name_en }}
+                                {% if item.name_jp %}
+                                    <span style="color: var(--text-secondary); font-size: 0.9em;">({{ item.name_jp }})</span>
+                                {% endif %}
+                            </h3>
+                            <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">
+                                <i class="fas fa-tag"></i> {{ item.category_name }}
+                            </p>
+                        </div>
+                        
+                        <form method="POST" action="{{ url_for('update_menu_image', item_id=item.id) }}" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <input 
+                                type="text" 
+                                name="image_url" 
+                                placeholder="images/taj_nikko_fuji_menu_images/filename.png" 
+                                required
+                                style="padding: 0.5rem; border: 1px solid var(--muted); border-radius: 4px; min-width: 350px;"
+                                title="Enter path relative to static folder (e.g., images/taj_nikko_fuji_menu_images/filename.png)"
+                            >
+                            <input 
+                                type="text" 
+                                name="image_alt" 
+                                placeholder="Alt text (optional)"
+                                style="padding: 0.5rem; border: 1px solid var(--muted); border-radius: 4px; min-width: 200px;"
+                            >
+                            <button 
+                                type="submit" 
+                                style="background: var(--accent); color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s;"
+                                onmouseover="this.style.background='var(--primary)'"
+                                onmouseout="this.style.background='var(--accent)'"
+                            >
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                <h3>All menu items have images!</h3>
+                <p>Every menu item now has an associated image.</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('homepage') }}" style="color: var(--accent); text-decoration: none; font-size: 1.1rem;">
+                <i class="fas fa-home"></i> Back to Homepage
+            </a>
+        </div>
+        
+        <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius); margin-top: 2rem;">
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">
+                <i class="fas fa-info-circle"></i> Image Path Guidelines
+            </h3>
+            <ul style="color: var(--text-secondary); line-height: 1.6;">
+                <li><strong>Path Format:</strong> Enter path relative to <code>static/</code> folder</li>
+                <li><strong>Example:</strong> <code>images/taj_nikko_fuji_menu_images/0 Salad Tandoori 1.png</code></li>
+                <li><strong>Don't include:</strong> <code>static/</code> prefix or full URLs</li>
+                <li><strong>Image Quality:</strong> Use high-quality images (minimum 800x600 pixels)</li>
+                <li><strong>File Size:</strong> Keep images under 500KB for fast loading</li>
+                <li><strong>Alt Text:</strong> Add descriptive text for accessibility</li>
+            </ul>
+            <div style="background: var(--card); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <h4 style="color: var(--accent); margin: 0 0 0.5rem 0; font-size: 0.9rem;">
+                    <i class="fas fa-lightbulb"></i> Quick Examples:
+                </h4>
+                <div style="font-family: monospace; font-size: 0.8rem; color: var(--text);">
+                    <div>✅ <code>images/taj_nikko_fuji_menu_images/3 Curry 1.png</code></div>
+                    <div>✅ <code>images/taj_nikko_fuji_menu_images/1 Snacks 2.png</code></div>
+                    <div>❌ <code>/static/images/...</code> (don't include /static/)</div>
+                    <div>❌ <code>http://localhost:5000/static/...</code> (don't use full URLs)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
