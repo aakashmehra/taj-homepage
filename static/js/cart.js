@@ -132,11 +132,12 @@ class ShoppingCart {
             category: button.dataset.itemCategory,
             type: button.dataset.itemType,
             hasPortions: button.dataset.hasPortions === 'true',
-            price2p: button.dataset.price2p ? parseInt(button.dataset.price2p) : null,
-            price4p: button.dataset.price4p ? parseInt(button.dataset.price4p) : null
+            price2p: button.getAttribute('data-price-2p') ? parseInt(button.getAttribute('data-price-2p')) : null,
+            price4p: button.getAttribute('data-price-4p') ? parseInt(button.getAttribute('data-price-4p')) : null
         };
 
         console.log('Adding to cart:', itemData);
+        console.log('price2p:', itemData.price2p, 'price4p:', itemData.price4p);
 
         // Store current item data for modal use
         this.currentItem = itemData;
@@ -154,8 +155,8 @@ class ShoppingCart {
                 this.showDrinkModal(itemData);
             }
         }
-        // Check if it's a curry item (category 7 or 17)
-        else if (itemData.category === '7' || itemData.category === '17') {
+        // Check if it's a curry item (category 11 or 17)
+        else if (itemData.category === '11' || itemData.category === '17') {
             this.showSpiceModal(itemData);
         }
         else {
@@ -266,9 +267,9 @@ class ShoppingCart {
 
         itemNameEl.textContent = itemData.name;
 
-        // Fetch curry items from categories 7 and 17
+        // Fetch curry items from categories 11 and 17 (Curry and Indian Curries)
         try {
-            const response = await fetch('/api/menu-items?categories=7,17');
+            const response = await fetch('/api/menu-items?categories=11,17');
             const data = await response.json();
 
             // Clear previous options
@@ -276,14 +277,16 @@ class ShoppingCart {
 
             // Check if we got a valid array
             if (Array.isArray(data) && data.length > 0) {
-                // Add curry options
+                // Add curry options (exclude Pulao - id 43, as it's rice not curry)
                 data.forEach(curry => {
-                    const button = document.createElement('button');
-                    button.className = 'curry-option';
-                    button.dataset.curryId = curry.id;
-                    button.dataset.curryName = curry.name;
-                    button.textContent = curry.name;
-                    curryList.appendChild(button);
+                    if (curry.id !== '43') {  // Skip Pulao
+                        const button = document.createElement('button');
+                        button.className = 'curry-option';
+                        button.dataset.curryId = curry.id;
+                        button.dataset.curryName = curry.name;
+                        button.textContent = curry.name;
+                        curryList.appendChild(button);
+                    }
                 });
             } else {
                 curryList.innerHTML = '<p>No curry options available.</p>';
@@ -325,7 +328,7 @@ class ShoppingCart {
                 this.currentItem = itemData; // Update current item with price selection
                 this.showDrinkModal(itemData);
             }
-        } else if (itemData.category === '7' || itemData.category === '17') {
+        } else if (itemData.category === '11' || itemData.category === '17') {
             this.currentItem = itemData; // Update current item with price selection
             this.showSpiceModal(itemData);
         } else {
