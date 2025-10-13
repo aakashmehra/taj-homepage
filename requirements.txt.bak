@@ -1,0 +1,6 @@
+Flask==2.3.3
+Werkzeug==2.3.7
+qrcode[pil]==7.4.2
+pillow==11.1.0
+pyOpenSSL==24.3.0
+cryptography==43.0.2
