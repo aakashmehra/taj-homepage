@@ -48,7 +48,7 @@ sleep 1
 
 # 2) Stash local changes (if any) and remember stash id
 STASHED=0
-if ! git diff --quiet || ! git ls-files --others --exclude-standard --quiet; then
+if ! git diff  || ! git ls-files --others --exclude-standard ; then
   echo "$(TIMESTAMP) Local changes detected. Stashing..." | tee -a "$LOG"
   git stash push -u -m "emergency_restart_stash_$(date +%s)" >/dev/null 2>&1 || true
   STASHED=1
