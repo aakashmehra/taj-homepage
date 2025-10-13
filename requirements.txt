@@ -4,3 +4,4 @@ qrcode[pil]==7.4.2
 pillow==11.1.0
 pyOpenSSL==24.3.0
 cryptography==43.0.2
+dotenv==1.0.1
