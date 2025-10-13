@@ -755,18 +755,36 @@ def admin_orders_by_location(restaurant_location):
 @app.route('/admin/order/<order_number>')
 def view_order(order_number):
     """View specific order details"""
-    order = db.get_order(order_number)
-    if not order:
-        return "Order not found", 404
-    
-    # Convert item names to English for staff viewing
-    for item in order['items']:
-        if 'id' in item and 'type' in item:
-            english_name = db.get_english_name_for_item(item['id'], item.get('type', 'menu_item'))
-            if english_name:
-                item['name'] = english_name
-    
-    return render_template('order_details.html', order=order)
+    try:
+        order = db.get_order(order_number)
+        print(f"Looking up order: {order_number}")
+        print(f"Order found: {order is not None}")
+        
+        if not order:
+            print(f"Order {order_number} not found in database")
+            return "Order not found", 404
+        
+        print(f"Order status: {order.get('status')}")
+        
+        # Only show orders with 'new' status in the collect interface
+        # Already processed orders should not be shown
+        if order.get('status') not in ['new', 'pending']:
+            print(f"Order {order_number} already processed (status: {order.get('status')})")
+            return "Order already processed", 404
+        
+        # Convert item names to English for staff viewing
+        for item in order['items']:
+            if 'id' in item and 'type' in item:
+                english_name = db.get_english_name_for_item(item['id'], item.get('type', 'menu_item'))
+                if english_name:
+                    item['name'] = english_name
+        
+        return render_template('order_details.html', order=order)
+    except Exception as e:
+        print(f"Error in view_order: {e}")
+        import traceback
+        traceback.print_exc()
+        return f"Error loading order: {str(e)}", 500
 
 @app.route('/admin/order/<order_number>/complete', methods=['POST'])
 def complete_order(order_number):
@@ -829,10 +847,11 @@ def api_gallery_images(location):
 def api_menu_items():
     """API endpoint to get menu items by category"""
     try:
+        import sqlite3
         category = request.args.get('category')
         categories = request.args.get('categories')  # Support multiple categories
         
-        conn = get_db_connection()
+        conn = sqlite3.connect('taj_menu.db')
         cursor = conn.cursor()
         
         if categories:

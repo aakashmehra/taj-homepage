@@ -1,6 +1,6 @@
 <!-- Database-driven menu template with image support -->
 {% if menu_data %}
-<div class="detailed-menu">
+<div class="detailed-menu" data-restaurant-location="{{ restaurant.location if restaurant else 'okinawa' }}">
     <!-- Time-based Lunch Menu Section -->
     <script>
         // Get current time and determine if it's lunch time (11:00-14:30)
@@ -172,6 +172,7 @@
                     <button class="add-to-cart-btn" 
                             data-item-id="{{ item['id'] }}"
                             data-item-name="{{ item['name_jp'] if lang == 'jp' else item['name_en'] }}"
+                            data-item-name-en="{{ item['name_en'] }}"
                             data-item-price="{{ item['display_price'] }}"
                             data-item-category="{{ category['id'] }}"
                             data-item-type="menu_item"
@@ -260,6 +261,7 @@
                     <button class="add-to-cart-btn" 
                             data-item-id="{{ set_menu['id'] }}"
                             data-item-name="{{ set_menu['name_jp'] if lang == 'jp' else set_menu['name_en'] }}"
+                            data-item-name-en="{{ set_menu['name_en'] }}"
                             data-item-price="{{ set_menu['price'] }}"
                             data-item-category="set_menu"
                             data-item-type="set_menu">
@@ -408,11 +410,14 @@ document.addEventListener('click', function(e) {
 });
 
 // Close modal when clicking outside
-document.getElementById('item-info-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeItemInfo();
-    }
-});
+const itemInfoModal = document.getElementById('item-info-modal');
+if (itemInfoModal) {
+    itemInfoModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeItemInfo();
+        }
+    });
+}
 </script>
 
 <!-- Floating Cart Widget -->
@@ -501,18 +506,32 @@ document.getElementById('item-info-modal').addEventListener('click', function(e)
 <div id="drink-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>
-                {% if lang == 'jp' %}
-                    ドリンクを選択
-                {% else %}
-                    Choose Drink
-                {% endif %}
-            </h3>
+            <h3 class="modal-item-name"></h3>
             <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
-            <p class="modal-item-name"></p>
+            <div class="spice-options-for-set">
+                <h4>
+                    {% if lang == 'jp' %}
+                        辛さレベル
+                    {% else %}
+                        Spice Level
+                    {% endif %}
+                </h4>
+                <button class="spice-option" data-spice="1">①甘口 Mild</button>
+                <button class="spice-option" data-spice="2">②普通 Normal</button>
+                <button class="spice-option" data-spice="3">③ <i class="fa-solid fa-pepper-hot"></i> 中辛 Little Hot</button>
+                <button class="spice-option" data-spice="4">④ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 辛口 Hot</button>
+                <button class="spice-option" data-spice="5">⑤ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 激辛 Very Hot</button>
+            </div>
             <div class="drink-options-modal">
+                <h4>
+                    {% if lang == 'jp' %}
+                        ドリンクを選択
+                    {% else %}
+                        Choose a Drink
+                    {% endif %}
+                </h4>
                 <button class="drink-option" data-drink="lassie">
                     {% if lang == 'jp' %}
                         ラッシー
@@ -555,20 +574,6 @@ document.getElementById('item-info-modal').addEventListener('click', function(e)
                         Apple Juice
                     {% endif %}
                 </button>
-            </div>
-            <div class="spice-options-for-set">
-                <h4>
-                    {% if lang == 'jp' %}
-                        辛さレベル
-                    {% else %}
-                        Spice Level
-                    {% endif %}
-                </h4>
-                <button class="spice-option" data-spice="1">①甘口 Mild</button>
-                <button class="spice-option" data-spice="2">②普通 Normal</button>
-                <button class="spice-option" data-spice="3">③ <i class="fa-solid fa-pepper-hot"></i> 中辛 Little Hot</button>
-                <button class="spice-option" data-spice="4">④ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 辛口 Hot</button>
-                <button class="spice-option" data-spice="5">⑤ <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> <i class="fa-solid fa-pepper-hot"></i> 激辛 Very Hot</button>
             </div>
         </div>
     </div>

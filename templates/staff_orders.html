@@ -51,6 +51,12 @@
                         <div class="order-item">
                             <div class="item-details">
                                 <strong>{{ item['name'] }}</strong>
+                                {% if item.get('selectedCurry') %}
+                                    <span class="item-option">Curry: {{ item['selectedCurry'] }}</span>
+                                {% endif %}
+                                {% if item.get('selectedCurry2') %}
+                                    <span class="item-option">Curry 2: {{ item['selectedCurry2'] }}</span>
+                                {% endif %}
                                 {% if item.get('spiceLevelText') %}
                                     <span class="item-option">Spice: {{ item['spiceLevelText'] }}</span>
                                 {% endif %}

@@ -33,6 +33,16 @@
                             <div class="item-main">
                                 <h3 class="item-name">{{ item['name'] }}</h3>
                                 <div class="item-options">
+                                    {% if item.get('selectedCurry') %}
+                                        <span class="option-tag curry-tag">
+                                            <i class="fas fa-bowl-rice"></i> {{ item['selectedCurry'] }}
+                                        </span>
+                                    {% endif %}
+                                    {% if item.get('selectedCurry2') %}
+                                        <span class="option-tag curry-tag">
+                                            <i class="fas fa-bowl-rice"></i> Curry 2: {{ item['selectedCurry2'] }}
+                                        </span>
+                                    {% endif %}
                                     {% if item.get('spiceLevelText') %}
                                         <span class="option-tag spice-tag">
                                             <i class="fas fa-pepper-hot"></i> {{ item['spiceLevelText'] }}

@@ -128,6 +128,7 @@ class ShoppingCart {
         const itemData = {
             id: button.dataset.itemId,
             name: button.dataset.itemName,
+            name_en: button.dataset.itemNameEn || button.dataset.itemName, // English name for orders
             price: parseInt(button.dataset.itemPrice),
             category: button.dataset.itemCategory,
             type: button.dataset.itemType,
@@ -187,13 +188,16 @@ class ShoppingCart {
         modal.classList.add('show');
     }
 
-    showDrinkModal(itemData) {
+    showDrinkModal(itemData, isSecondCurry = false) {
         const modal = document.getElementById('drink-modal');
         const itemNameEl = modal.querySelector('.modal-item-name');
         const spiceSection = modal.querySelector('.spice-options-for-set');
         const drinkOptions = modal.querySelectorAll('.drink-option');
 
         itemNameEl.textContent = itemData.name;
+        
+        // Store if this is the second curry selection
+        itemData.isSecondCurry = isSecondCurry;
 
         // Clear previous selections
         modal.querySelectorAll('.drink-option, .spice-option').forEach(btn => {
@@ -260,16 +264,30 @@ class ShoppingCart {
         modal.classList.add('show');
     }
 
-    async showCurryModal(itemData) {
+    async showCurryModal(itemData, isSecondCurry = false) {
         const modal = document.getElementById('curry-modal');
         const itemNameEl = modal.querySelector('.modal-item-name');
         const curryList = document.getElementById('curry-options-list');
 
-        itemNameEl.textContent = itemData.name;
+        // Update modal title based on whether this is first or second curry selection
+        if (isSecondCurry) {
+            itemNameEl.textContent = itemData.name + ' - Select Second Curry';
+        } else {
+            itemNameEl.textContent = itemData.name + (itemData.id === '1' || itemData.id === '8' ? ' - Select First Curry' : '');
+        }
 
-        // Fetch curry items from categories 11 and 17 (Curry and Indian Curries)
+        // Get restaurant location from the page
+        const menuElement = document.querySelector('.detailed-menu');
+        const location = menuElement ? menuElement.getAttribute('data-restaurant-location') : 'okinawa';
+        
+        // Determine curry categories based on location
+        // Nikko & Fuji: category 11 (Curry)
+        // Okinawa: category 17 (Indian Curries)
+        const categories = (location === 'nikko' || location === 'fuji') ? '11' : '17';
+
+        // Fetch curry items from appropriate categories
         try {
-            const response = await fetch('/api/menu-items?categories=11,17');
+            const response = await fetch(`/api/menu-items?categories=${categories}`);
             const data = await response.json();
 
             // Clear previous options
@@ -346,13 +364,38 @@ class ShoppingCart {
         button.classList.add('selected');
 
         const itemData = { ...this.currentItem };
-        itemData.selectedCurry = button.dataset.curryName;
-        itemData.selectedCurryId = button.dataset.curryId;
+        
+        // Check if this is the first curry selection for items that need 2 curries (id 1 and 8)
+        if ((itemData.id === '1' || itemData.id === '8') && !itemData.selectedCurry) {
+            // This is the first curry
+            itemData.selectedCurry = button.dataset.curryName;
+            itemData.selectedCurryId = button.dataset.curryId;
+            
+            // Update current item and ask for second curry
+            this.currentItem = itemData;
+            this.closeAllModals();
+            
+            // Show curry modal again for second selection
+            this.showCurryModal(itemData, true); // Pass true to indicate second selection
+        } else if ((itemData.id === '1' || itemData.id === '8') && itemData.selectedCurry) {
+            // This is the second curry
+            itemData.selectedCurry2 = button.dataset.curryName;
+            itemData.selectedCurryId2 = button.dataset.curryId;
+            
+            // Update current item and proceed to drink modal
+            this.currentItem = itemData;
+            this.closeAllModals();
+            this.showDrinkModal(itemData);
+        } else {
+            // Regular single curry selection
+            itemData.selectedCurry = button.dataset.curryName;
+            itemData.selectedCurryId = button.dataset.curryId;
 
-        // Update current item and proceed to drink modal
-        this.currentItem = itemData;
-        this.closeAllModals();
-        this.showDrinkModal(itemData);
+            // Update current item and proceed to drink modal
+            this.currentItem = itemData;
+            this.closeAllModals();
+            this.showDrinkModal(itemData);
+        }
     }
 
     handleSpiceSelection(button) {
@@ -496,9 +539,18 @@ class ShoppingCart {
     }
 
     removeFromCart(index) {
+        // Store dropdown state before update
+        const cartDropdown = document.getElementById('cart-dropdown');
+        const wasOpen = cartDropdown && cartDropdown.classList.contains('active');
+        
         this.cart.splice(index, 1);
         this.saveCart();
         this.updateCartDisplay();
+        
+        // Restore dropdown state if it was open
+        if (wasOpen && cartDropdown) {
+            cartDropdown.classList.add('active');
+        }
     }
 
     clearCart() {
@@ -607,22 +659,40 @@ class ShoppingCart {
             itemsEl.innerHTML = `<div style="padding: 2rem; text-align: center; color: hsl(var(--luxury-black));">${isJapanese ? 'カートは空です' : 'Your cart is empty'}</div>`;
             checkoutBtn.disabled = true;
         } else {
-            itemsEl.innerHTML = this.cart.map((item, index) => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-details">
-                            ${item.spiceLevelText ? `${isJapanese ? '辛さ' : 'Spice'}: ${item.spiceLevelText}` : ''}
-                            ${item.drinkText ? ` | ${isJapanese ? 'ドリンク' : 'Drink'}: ${item.drinkText}` : ''}
-                            ${item.portion ? ` | ${item.portion.toUpperCase()}` : ''}
+            itemsEl.innerHTML = this.cart.map((item, index) => {
+                // Build details array
+                const details = [];
+                if (item.selectedCurry) {
+                    details.push(`${isJapanese ? 'カレー' : 'Curry'}: ${item.selectedCurry}`);
+                }
+                if (item.selectedCurry2) {
+                    details.push(`${isJapanese ? 'カレー2' : 'Curry 2'}: ${item.selectedCurry2}`);
+                }
+                if (item.spiceLevelText) {
+                    details.push(`${isJapanese ? '辛さ' : 'Spice'}: ${item.spiceLevelText}`);
+                }
+                if (item.drinkText) {
+                    details.push(`${isJapanese ? 'ドリンク' : 'Drink'}: ${item.drinkText}`);
+                }
+                if (item.portion) {
+                    details.push(item.portion.toUpperCase());
+                }
+                
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-details">
+                                ${details.join(' | ')}
+                            </div>
                         </div>
+                        <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
+                        <button class="cart-item-remove" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
-                    <button class="cart-item-remove" data-index="${index}">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
             checkoutBtn.disabled = false;
         }
 
@@ -669,8 +739,15 @@ class ShoppingCart {
 
             // Prepare order data
             const total = this.cart.reduce((sum, item) => sum + item.price, 0);
+            
+            // Map cart items to use English names for orders
+            const orderItems = this.cart.map(item => ({
+                ...item,
+                name: item.name_en || item.name // Use English name for orders
+            }));
+            
             const orderData = {
-                items: this.cart,
+                items: orderItems,
                 total_amount: total,
                 restaurant_location: this.getCurrentRestaurantLocation(),
                 customer_info: {}
