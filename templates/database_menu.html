@@ -574,6 +574,99 @@ document.getElementById('item-info-modal').addEventListener('click', function(e)
     </div>
 </div>
 
+<!-- Price Selection Modal -->
+<div id="price-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>
+                {% if lang == 'jp' %}
+                    個数を選択
+                {% else %}
+                    Select Pieces
+                {% endif %}
+            </h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-item-name"></p>
+            <div class="price-options" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                <button class="price-option" data-portion="2p" style="padding: 1.5rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; transition: all 0.3s;">
+                    <div class="price-option-content" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price-option-label" style="font-size: 1.1rem; font-weight: 500;">2人前 (2 Persons)</span>
+                        <span class="price-option-price" style="font-size: 1.2rem; font-weight: bold; color: var(--luxury-gold);"></span>
+                    </div>
+                </button>
+                <button class="price-option" data-portion="4p" style="padding: 1.5rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; transition: all 0.3s;">
+                    <div class="price-option-content" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price-option-label" style="font-size: 1.1rem; font-weight: 500;">4人前 (4 Persons)</span>
+                        <span class="price-option-price" style="font-size: 1.2rem; font-weight: bold; color: var(--luxury-gold);"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.price-option:hover {
+    border-color: hsl(var(--luxury-gold)) !important;
+    background: rgba(218, 165, 32, 0.1) !important;
+    transform: translateY(-2px);
+}
+
+.price-option.selected {
+    border-color: hsl(var(--luxury-gold)) !important;
+    background: rgba(218, 165, 32, 0.2) !important;
+}
+</style>
+
+<!-- Curry Selection Modal for Set Menus -->
+<div id="curry-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>
+                {% if lang == 'jp' %}
+                    カレーを選択
+                {% else %}
+                    Select Curry
+                {% endif %}
+            </h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-item-name"></p>
+            <div id="curry-options-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; max-height: 400px; overflow-y: auto;">
+                <!-- Curry options will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.curry-option {
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.curry-option:hover {
+    border-color: hsl(var(--luxury-gold));
+    background: rgba(218, 165, 32, 0.1);
+    transform: translateY(-2px);
+}
+
+.curry-option.selected {
+    border-color: hsl(var(--luxury-gold));
+    background: rgba(218, 165, 32, 0.2);
+    font-weight: bold;
+}
+</style>
+
 <!-- Item Info Modal -->
 <div id="item-info-modal" class="modal">
     <div class="modal-content">

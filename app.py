@@ -825,7 +825,43 @@ def api_gallery_images(location):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/menu-items')
+def api_menu_items():
+    """API endpoint to get menu items by category"""
+    try:
+        category = request.args.get('category')
+        categories = request.args.get('categories')  # Support multiple categories
+        
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        if categories:
+            # Handle multiple categories (comma-separated)
+            category_list = categories.split(',')
+            placeholders = ','.join('?' * len(category_list))
+            cursor.execute(f'SELECT id, name, price FROM menu_items WHERE category_id IN ({placeholders})', category_list)
+        elif category:
+            cursor.execute('SELECT id, name, price FROM menu_items WHERE category_id = ?', (category,))
+        else:
+            cursor.execute('SELECT id, name, price FROM menu_items')
+        
+        items = []
+        for row in cursor.fetchall():
+            items.append({
+                'id': str(row[0]),
+                'name': row[1],
+                'price': row[2]
+            })
+        
+        conn.close()
+        return jsonify(items)
+    except Exception as e:
+        print(f"Error in api_menu_items: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     localhost = '0.0.0.0'
     # For HTTPS with self-signed certificate 
-    app.run(debug=True, host=localhost, ssl_context='adhoc')
+    app.run(port=5200, debug=True, host=localhost, ssl_context='adhoc')

@@ -93,6 +93,22 @@ class ShoppingCart {
             }
         });
 
+        // Price selection (for items with 2p/4p prices)
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('price-option') || e.target.closest('.price-option')) {
+                const priceOption = e.target.classList.contains('price-option') ? e.target : e.target.closest('.price-option');
+                this.handlePriceSelection(priceOption);
+            }
+        });
+
+        // Curry selection (for set menus)
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('curry-option') || e.target.closest('.curry-option')) {
+                const curryOption = e.target.classList.contains('curry-option') ? e.target : e.target.closest('.curry-option');
+                this.handleCurrySelection(curryOption);
+            }
+        });
+
         // Remove cart item
         document.addEventListener('click', (e) => {
             if (e.target.closest('.cart-item-remove')) {
@@ -123,15 +139,25 @@ class ShoppingCart {
         // Store current item data for modal use
         this.currentItem = itemData;
 
-        // Check if it's a curry item (category 11) or set menu
-        if (itemData.category === '11' || itemData.type === 'set_menu') {
-            if (itemData.type === 'set_menu') {
-                this.showDrinkModal(itemData);
+        // Check if item has multiple piece prices (2 pieces and 4 pieces)
+        if (itemData.price2p && itemData.price4p && !itemData.type) {
+            this.showPriceModal(itemData);
+        }
+        // Check if it's a set menu item that needs curry selection
+        else if (itemData.type === 'set_menu') {
+            const excludedIds = ['2', '4', '5', '6', '7', '8', '9', '17', '18'];
+            if (!excludedIds.includes(itemData.id)) {
+                this.showCurryModal(itemData);
             } else {
-                this.showSpiceModal(itemData);
+                this.showDrinkModal(itemData);
             }
-        } else {
-            // Add directly to cart for non-curry items
+        }
+        // Check if it's a curry item (category 7 or 17)
+        else if (itemData.category === '7' || itemData.category === '17') {
+            this.showSpiceModal(itemData);
+        }
+        else {
+            // Add directly to cart for other items
             this.addToCart(itemData);
         }
     }
@@ -201,6 +227,127 @@ class ShoppingCart {
         }
 
         modal.classList.add('show');
+    }
+
+    showPriceModal(itemData) {
+        const modal = document.getElementById('price-modal');
+        const itemNameEl = modal.querySelector('.modal-item-name');
+        const priceOptions = modal.querySelectorAll('.price-option');
+
+        itemNameEl.textContent = itemData.name;
+
+        // Update price displays for pieces
+        priceOptions.forEach(option => {
+            const portion = option.dataset.portion;
+            const priceEl = option.querySelector('.price-option-price');
+            const labelEl = option.querySelector('.price-option-label');
+            
+            if (portion === '2p') {
+                priceEl.textContent = `¥${itemData.price2p}`;
+                labelEl.textContent = '2 Pieces (2個)';
+            } else if (portion === '4p') {
+                priceEl.textContent = `¥${itemData.price4p}`;
+                labelEl.textContent = '4 Pieces (4個)';
+            }
+        });
+
+        // Clear previous selections
+        priceOptions.forEach(btn => btn.classList.remove('selected'));
+
+        modal.classList.add('show');
+    }
+
+    async showCurryModal(itemData) {
+        const modal = document.getElementById('curry-modal');
+        const itemNameEl = modal.querySelector('.modal-item-name');
+        const curryList = document.getElementById('curry-options-list');
+
+        itemNameEl.textContent = itemData.name;
+
+        // Fetch curry items from categories 7 and 17
+        try {
+            const response = await fetch('/api/menu-items?categories=7,17');
+            const data = await response.json();
+
+            // Clear previous options
+            curryList.innerHTML = '';
+
+            // Check if we got a valid array
+            if (Array.isArray(data) && data.length > 0) {
+                // Add curry options
+                data.forEach(curry => {
+                    const button = document.createElement('button');
+                    button.className = 'curry-option';
+                    button.dataset.curryId = curry.id;
+                    button.dataset.curryName = curry.name;
+                    button.textContent = curry.name;
+                    curryList.appendChild(button);
+                });
+            } else {
+                curryList.innerHTML = '<p>No curry options available.</p>';
+            }
+        } catch (error) {
+            console.error('Error loading curry options:', error);
+            curryList.innerHTML = '<p>Error loading curry options. Please try again.</p>';
+        }
+
+        modal.classList.add('show');
+    }
+
+    handlePriceSelection(button) {
+        // Remove selection from siblings
+        button.parentElement.querySelectorAll('.price-option').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        // Select current option
+        button.classList.add('selected');
+
+        const portion = button.dataset.portion;
+        const itemData = { ...this.currentItem };
+        
+        // Set the selected price and piece count
+        itemData.portion = portion;
+        itemData.pieces = portion === '2p' ? 2 : 4;
+        itemData.price = portion === '2p' ? itemData.price2p : itemData.price4p;
+
+        // Continue to next step based on item type
+        this.closeAllModals();
+        
+        if (itemData.type === 'set_menu') {
+            const excludedIds = ['2', '4', '5', '6', '7', '8', '9', '17', '18'];
+            if (!excludedIds.includes(itemData.id)) {
+                this.currentItem = itemData; // Update current item with price selection
+                this.showCurryModal(itemData);
+            } else {
+                this.currentItem = itemData; // Update current item with price selection
+                this.showDrinkModal(itemData);
+            }
+        } else if (itemData.category === '7' || itemData.category === '17') {
+            this.currentItem = itemData; // Update current item with price selection
+            this.showSpiceModal(itemData);
+        } else {
+            this.addToCart(itemData);
+        }
+    }
+
+    handleCurrySelection(button) {
+        // Remove selection from siblings
+        button.parentElement.querySelectorAll('.curry-option').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        // Select current option
+        button.classList.add('selected');
+
+        const itemData = { ...this.currentItem };
+        itemData.selectedCurry = button.dataset.curryName;
+        itemData.selectedCurryId = button.dataset.curryId;
+
+        // Update current item and proceed to drink modal
+        this.currentItem = itemData;
+        this.closeAllModals();
+        this.showDrinkModal(itemData);
     }
 
     handleSpiceSelection(button) {
@@ -583,9 +730,7 @@ class ShoppingCart {
                 <div class="modal-body qr-modal-body">
                     <div class="order-success">
                         <i class="fas fa-check-circle success-icon"></i>
-                        <h3>${isJapanese ? '注文が生成されました！' : 'Order Generated!'}</h3>
-                        <h4>${isJapanese ? '注文番号' : 'Order'} #${orderNumber}</h4>
-                        <p class="order-total">${isJapanese ? '合計' : 'Total'}: ¥${total.toLocaleString()}</p>
+                        <h4>${isJapanese ? '注文が生成されました！' : 'Order Generated!'}</h4>
                         
                         <div class="qr-code-section">
                             <h4>${isJapanese ? 'スタッフにこのQRコードを提示してください：' : 'Show this QR code to staff:'}</h4>
@@ -599,6 +744,8 @@ class ShoppingCart {
                                 }
                             </p>
                         </div>
+                        <p class="order-total">${isJapanese ? '合計' : 'Total'}: ¥${total.toLocaleString()}</p>
+                        <h4>${isJapanese ? '注文番号' : 'Order'} #${orderNumber}</h4>
                     </div>
                 </div>
             </div>

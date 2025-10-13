@@ -651,6 +651,7 @@
                             {% endif %}
                         </h3>
                         <form class="contact-form" action="{{ url_for('contact_page') }}" method="post">
+                            <input type="hidden" name="reservation_type" value="contact">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label">

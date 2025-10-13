@@ -18,6 +18,28 @@
 
 <section class="restaurant-content">
 
+        {% if restaurant.location == 'fuji' %}
+        <!-- Opening Notice for Taj Fuji -->
+        <div class="container" style="margin-top: 2rem;">
+            <div style="background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red))); padding: 2rem; border-radius: var(--radius); text-align: center; color: white; box-shadow: var(--shadow);">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+                    {% if lang == 'jp' %}
+                        🎉 グランドオープン予定 🎉
+                    {% else %}
+                        🎉 Grand Opening Soon 🎉
+                    {% endif %}
+                </h3>
+                <p style="font-size: 1.2rem; line-height: 1.6;">
+                    {% if lang == 'jp' %}
+                        このレストランは2025年11月12日にオープン予定です
+                    {% else %}
+                        This restaurant will open on November 12th, 2025
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Menu Section -->
         <section class="menu-section" id="menu-section">
             <div class="container">
