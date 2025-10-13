@@ -10,7 +10,7 @@ GIT_REMOTE="origin"
 GIT_BRANCH="main"
 TIMESTAMP() { date "+%Y-%m-%d %H:%M:%S"; }
 
-echo
+echo "--------------------------------------------" | tee -a "$LOG"
 echo "=== emergency_restart started at $(TIMESTAMP) ===" | tee -a "$LOG"
 echo "Working dir: $REPO_DIR" | tee -a "$LOG"
 
