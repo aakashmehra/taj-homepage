@@ -839,11 +839,13 @@ def api_menu_items():
             # Handle multiple categories (comma-separated)
             category_list = categories.split(',')
             placeholders = ','.join('?' * len(category_list))
-            cursor.execute(f'SELECT id, name, price FROM menu_items WHERE category_id IN ({placeholders})', category_list)
+            query = f'SELECT id, name_en, price FROM menu_items WHERE category_id IN ({placeholders})'
+            print(f"Executing query: {query} with params: {category_list}")
+            cursor.execute(query, category_list)
         elif category:
-            cursor.execute('SELECT id, name, price FROM menu_items WHERE category_id = ?', (category,))
+            cursor.execute('SELECT id, name_en, price FROM menu_items WHERE category_id = ?', (category,))
         else:
-            cursor.execute('SELECT id, name, price FROM menu_items')
+            cursor.execute('SELECT id, name_en, price FROM menu_items')
         
         items = []
         for row in cursor.fetchall():
@@ -854,6 +856,7 @@ def api_menu_items():
             })
         
         conn.close()
+        print(f"Returning {len(items)} items: {items}")
         return jsonify(items)
     except Exception as e:
         print(f"Error in api_menu_items: {e}")

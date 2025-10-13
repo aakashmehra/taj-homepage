@@ -136,11 +136,13 @@ class ShoppingCart {
             price4p: button.dataset.price4p ? parseInt(button.dataset.price4p) : null
         };
 
+        console.log('Adding to cart:', itemData);
+
         // Store current item data for modal use
         this.currentItem = itemData;
 
-        // Check if item has multiple piece prices (2 pieces and 4 pieces)
-        if (itemData.price2p && itemData.price4p && !itemData.type) {
+        // Check if item has multiple piece prices (items 4, 5, 6 specifically or any with both prices)
+        if (itemData.price2p && itemData.price4p) {
             this.showPriceModal(itemData);
         }
         // Check if it's a set menu item that needs curry selection
