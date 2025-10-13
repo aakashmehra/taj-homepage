@@ -154,15 +154,14 @@
                                 Order on Wolt
                             {% endif %}
                         </button>
-                    {% else %}
-                        <button class="btn btn-location-outline" onclick="window.open('https://tabelog.com/en/okinawa/A4703/A470304/47010971/', '_blank')">
-                            {% if lang == 'jp' %}
-                                テイクアウト注文
-                            {% else %}
-                                Takeout Orders
-                            {% endif %}
-                        </button>
                     {% endif %}
+                    <button class="btn btn-location-outline" onclick="showTakeoutModal('{{ restaurant.phone }}', '{{ restaurant.location }}')">
+                        {% if lang == 'jp' %}
+                            テイクアウト注文
+                        {% else %}
+                            Takeout Orders
+                        {% endif %}
+                    </button>
                 </div>
             </div>
         </section>
@@ -619,5 +618,162 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Takeout Modal Function
+function showTakeoutModal(phone, location) {
+    const isJapanese = '{{ lang }}' === 'jp';
+    
+    const message = isJapanese 
+        ? 'テイクアウト注文方法を選択してください：'
+        : 'How would you like to place your takeout order?';
+    
+    const callOption = isJapanese 
+        ? '電話で注文'
+        : 'Call to Order';
+    
+    const visitOption = isJapanese 
+        ? '店舗で注文'
+        : 'Visit Restaurant to Order';
+    
+    const callMessage = isJapanese
+        ? `電話番号: ${phone}\n\n電話をかけますか？`
+        : `Phone: ${phone}\n\nWould you like to call now?`;
+    
+    const visitMessage = isJapanese
+        ? 'メニューページにアクセスして注文を選択し、最後にスタッフにQRコードを提示してください。\n\nメニューページに移動しますか？'
+        : 'Please go to the menu page, select your order, and present your QR code to the staff at the end.\n\nGo to menu page now?';
+    
+    // Create custom modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        ">
+            <h3 style="
+                margin: 0 0 1.5rem 0;
+                font-size: 1.5rem;
+                color: #333;
+                text-align: center;
+            ">${message}</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button onclick="handleCallOrder('${phone}')" style="
+                    padding: 1rem 2rem;
+                    background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red)));
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: transform 0.2s;
+                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-phone"></i> ${callOption}
+                </button>
+                
+                <button onclick="handleVisitOrder('${location}')" style="
+                    padding: 1rem 2rem;
+                    background: white;
+                    color: #333;
+                    border: 2px solid hsl(var(--luxury-gold));
+                    border-radius: 8px;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                " onmouseover="this.style.background='hsl(var(--luxury-gold)/0.1)'" onmouseout="this.style.background='white'">
+                    <i class="fas fa-store"></i> ${visitOption}
+                </button>
+                
+                <button onclick="this.closest('[style*=position]').remove()" style="
+                    padding: 0.75rem 2rem;
+                    background: transparent;
+                    color: #999;
+                    border: none;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: color 0.2s;
+                " onmouseover="this.style.color='#333'" onmouseout="this.style.color='#999'">
+                    ${isJapanese ? 'キャンセル' : 'Cancel'}
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+function handleCallOrder(phone) {
+    const isJapanese = '{{ lang }}' === 'jp';
+    const confirmMsg = isJapanese
+        ? `電話番号: ${phone}\n\n電話をかけますか？`
+        : `Phone: ${phone}\n\nWould you like to call now?`;
+    
+    if (confirm(confirmMsg)) {
+        window.location.href = `tel:${phone}`;
+    }
+    
+    // Close modal
+    document.querySelector('[style*="position: fixed"]').remove();
+}
+
+function handleVisitOrder(location) {
+    const isJapanese = '{{ lang }}' === 'jp';
+    const confirmMsg = isJapanese
+        ? 'メニューページにアクセスして注文を選択し、最後にスタッフにQRコードを提示してください。\n\nメニューページに移動しますか？'
+        : 'Please go to the menu page, select your order, and present your QR code to the staff at the end.\n\nGo to menu page now?';
+    
+    if (confirm(confirmMsg)) {
+        window.location.href = `/taj-${location}/menu`;
+    }
+    
+    // Close modal
+    document.querySelector('[style*="position: fixed"]').remove();
+}
 </script>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
 {% endblock %}

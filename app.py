@@ -478,9 +478,9 @@ def taj_fuji():
         'name': 'Taj Fuji',
         'tagline_en': 'Taste of Authentic India',
         'tagline_jp': '本格インド料理',
-        'address': '〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F',
+        'address': '6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301',
         'phone': '098-923-1312',
-        'hours_dine': '11:00 – 22:00',
+        'hours_dine': '11:00 – 21:30',
         'hours_delivery': '11:00 – 21:30',
         'location': 'fuji'
     }
@@ -544,8 +544,8 @@ def get_gallery_images(location):
     # Define gallery folders for each location
     gallery_folders = {
         'nikko': 'taj_nikko_gallery',
-        'okinawa': 'taj_okinawa_gallery',  # For future use
-        'fuji': 'taj_fuji_gallery'  # For future use
+        'okinawa': 'taj_okinawa_gallery',
+        'fuji': 'taj_fuji_gallery'
     }
     
     gallery_folder = gallery_folders.get(location)
@@ -608,9 +608,9 @@ def get_restaurant_data(location):
             'name': 'Taj Fuji',
             'tagline_en': 'Taste of Authentic India',
             'tagline_jp': '本格インド料理',
-            'address': '〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F',
+            'address': '6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301',
             'phone': '098-923-1312',
-            'hours_dine': '11:00 – 22:00',
+            'hours_dine': '11:00 – 21:30',
             'hours_delivery': '11:00 – 21:30',
             'location': 'fuji'
         }

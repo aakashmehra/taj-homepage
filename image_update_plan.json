@@ -1,0 +1,751 @@
+{
+  "plan": [
+    [
+      20,
+      "/static/images/taj_okinawa_menu_images/naan2.webp",
+      "static/images/taj_okinawa_menu_images/naan2.webp"
+    ],
+    [
+      70,
+      "/static/images/taj_okinawa_menu_images/fries.webp",
+      "static/images/taj_okinawa_menu_images/fries.webp"
+    ],
+    [
+      120,
+      "/static/images/taj_okinawa_menu_images/raja_set.avif",
+      "static/images/taj_okinawa_menu_images/raja_set.avif"
+    ],
+    [
+      91,
+      "/static/images/taj_okinawa_menu_images/mushroom_curry.webp",
+      "static/images/taj_okinawa_menu_images/mushroom_curry.webp"
+    ],
+    [
+      20,
+      "/static/images/taj_okinawa_menu_images/naan.webp",
+      "static/images/taj_okinawa_menu_images/naan.webp"
+    ],
+    [
+      82,
+      "/static/images/taj_okinawa_menu_images/chicken_zanjiri.avif",
+      "static/images/taj_okinawa_menu_images/chicken_zanjiri.avif"
+    ],
+    [
+      94,
+      "/static/images/taj_okinawa_menu_images/sag_paneer.avif",
+      "static/images/taj_okinawa_menu_images/sag_paneer.avif"
+    ],
+    [
+      100,
+      "/static/images/taj_okinawa_menu_images/garlic_cheese_naan.webp",
+      "static/images/taj_okinawa_menu_images/garlic_cheese_naan.webp"
+    ],
+    [
+      101,
+      "/static/images/taj_okinawa_menu_images/masala_kulcha.webp",
+      "static/images/taj_okinawa_menu_images/masala_kulcha.webp"
+    ],
+    [
+      61,
+      "/static/images/taj_okinawa_menu_images/kabuli-naan.webp",
+      "static/images/taj_okinawa_menu_images/kabuli-naan.webp"
+    ],
+    [
+      55,
+      "/static/images/taj_okinawa_menu_images/chicken_wings.webp",
+      "static/images/taj_okinawa_menu_images/chicken_wings.webp"
+    ],
+    [
+      93,
+      "/static/images/taj_okinawa_menu_images/butter_paneer.avif",
+      "static/images/taj_okinawa_menu_images/butter_paneer.avif"
+    ],
+    [
+      74,
+      "/static/images/taj_okinawa_menu_images/chicken_tagri_kebab.avif",
+      "static/images/taj_okinawa_menu_images/chicken_tagri_kebab.avif"
+    ],
+    [
+      81,
+      "/static/images/taj_okinawa_menu_images/coconut_chicken.avif",
+      "static/images/taj_okinawa_menu_images/coconut_chicken.avif"
+    ],
+    [
+      22,
+      "/static/images/taj_okinawa_menu_images/cheese_naan.webp",
+      "static/images/taj_okinawa_menu_images/cheese_naan.webp"
+    ],
+    [
+      122,
+      "/static/images/taj_okinawa_menu_images/taj_set.avif",
+      "static/images/taj_okinawa_menu_images/taj_set.avif"
+    ],
+    [
+      121,
+      "/static/images/taj_okinawa_menu_images/delhi_set.avif",
+      "static/images/taj_okinawa_menu_images/delhi_set.avif"
+    ],
+    [
+      88,
+      "/static/images/taj_okinawa_menu_images/seafood_curry.avif",
+      "static/images/taj_okinawa_menu_images/seafood_curry.avif"
+    ],
+    [
+      9,
+      "/static/images/taj_okinawa_menu_images/taj_nikko_fuji3.webp",
+      "static/images/taj_okinawa_menu_images/taj_nikko_fuji3.webp"
+    ],
+    [
+      21,
+      "/static/images/taj_okinawa_menu_images/garlic_naan.webp",
+      "static/images/taj_okinawa_menu_images/garlic_naan.webp"
+    ],
+    [
+      104,
+      "/static/images/taj_okinawa_menu_images/saffron_rice.webp",
+      "static/images/taj_okinawa_menu_images/saffron_rice.webp"
+    ],
+    [
+      65,
+      "/static/images/taj_okinawa_menu_images/minestrone.webp",
+      "static/images/taj_okinawa_menu_images/minestrone.webp"
+    ],
+    [
+      78,
+      "/static/images/taj_okinawa_menu_images/spe_butter_chicken.avif",
+      "static/images/taj_okinawa_menu_images/spe_butter_chicken.avif"
+    ],
+    [
+      66,
+      "/static/images/taj_okinawa_menu_images/taj_salad.webp",
+      "static/images/taj_okinawa_menu_images/taj_salad.webp"
+    ],
+    [
+      120,
+      "/static/images/taj_okinawa_gallery/Raja.avif",
+      "static/images/taj_okinawa_gallery/Raja.avif"
+    ],
+    [
+      121,
+      "/static/images/taj_okinawa_gallery/Delhi.avif",
+      "static/images/taj_okinawa_gallery/Delhi.avif"
+    ],
+    [
+      51,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai3.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai3.webp"
+    ],
+    [
+      57,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji10.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji10.webp"
+    ],
+    [
+      11,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji6.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji6.webp"
+    ],
+    [
+      4,
+      "/static/images/taj_nikko_fuji_menu_images/taj_seekh.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_seekh.webp"
+    ],
+    [
+      35,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry3.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry3.webp"
+    ],
+    [
+      6,
+      "/static/images/taj_nikko_fuji_menu_images/taj_tikka.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_tikka.webp"
+    ],
+    [
+      38,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji26.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji26.webp"
+    ],
+    [
+      46,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry2.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry2.webp"
+    ],
+    [
+      32,
+      "/static/images/taj_nikko_fuji_menu_images/vanilla_ice.webp",
+      "static/images/taj_nikko_fuji_menu_images/vanilla_ice.webp"
+    ],
+    [
+      12,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji7.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji7.webp"
+    ],
+    [
+      10,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji46.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji46.webp"
+    ],
+    [
+      58,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji11.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji11.webp"
+    ],
+    [
+      3,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai2.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai2.webp"
+    ],
+    [
+      34,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry5.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry5.webp"
+    ],
+    [
+      54,
+      "/static/images/taj_nikko_fuji_menu_images/taj_karage.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_karage.webp"
+    ],
+    [
+      41,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai5.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai5.webp"
+    ],
+    [
+      37,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry8.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry8.webp"
+    ],
+    [
+      28,
+      "/static/images/taj_nikko_fuji_menu_images/taj_margherita.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_margherita.webp"
+    ],
+    [
+      2,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji1.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji1.webp"
+    ],
+    [
+      25,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji40.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji40.webp"
+    ],
+    [
+      24,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai4.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai4.webp"
+    ],
+    [
+      62,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji37.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji37.webp"
+    ],
+    [
+      50,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji21.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji21.webp"
+    ],
+    [
+      42,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry4.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry4.webp"
+    ],
+    [
+      40,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry12.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry12.webp"
+    ],
+    [
+      60,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji34.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji34.webp"
+    ],
+    [
+      49,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry7.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry7.webp"
+    ],
+    [
+      8,
+      "/static/images/taj_nikko_fuji_menu_images/taj_prawn.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_prawn.webp"
+    ],
+    [
+      22,
+      "/static/images/taj_nikko_fuji_menu_images/cheese_naan.webp",
+      "static/images/taj_nikko_fuji_menu_images/cheese_naan.webp"
+    ],
+    [
+      122,
+      "/static/images/taj_nikko_fuji_menu_images/taj_set.avif",
+      "static/images/taj_nikko_fuji_menu_images/taj_set.avif"
+    ],
+    [
+      13,
+      "/static/images/taj_nikko_fuji_menu_images/taj_pakoda.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_pakoda.webp"
+    ],
+    [
+      27,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji38.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji38.webp"
+    ],
+    [
+      121,
+      "/static/images/taj_nikko_fuji_menu_images/delhi_set.avif",
+      "static/images/taj_nikko_fuji_menu_images/delhi_set.avif"
+    ],
+    [
+      7,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji2.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji2.webp"
+    ],
+    [
+      33,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji43.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji43.webp"
+    ],
+    [
+      63,
+      "/static/images/taj_nikko_fuji_menu_images/salad_set.webp",
+      "static/images/taj_nikko_fuji_menu_images/salad_set.webp"
+    ],
+    [
+      29,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji42.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji42.webp"
+    ],
+    [
+      9,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji3.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji3.webp"
+    ],
+    [
+      26,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji39.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji39.webp"
+    ],
+    [
+      36,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji19.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji19.webp"
+    ],
+    [
+      48,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry6.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry6.webp"
+    ],
+    [
+      5,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji4.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji4.webp"
+    ],
+    [
+      30,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji45.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji45.webp"
+    ],
+    [
+      59,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji12.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji12.webp"
+    ],
+    [
+      1,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai1.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai1.webp"
+    ],
+    [
+      52,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry14.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry14.webp"
+    ],
+    [
+      40,
+      "/static/images/taj_nikko_fuji_menu_images/taj_curry1.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_curry1.webp"
+    ],
+    [
+      53,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji8.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji8.webp"
+    ],
+    [
+      56,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji9.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji9.webp"
+    ],
+    [
+      120,
+      "/static/images/taj_nikko_fuji_menu_images/taj_raja_set.avif",
+      "static/images/taj_nikko_fuji_menu_images/taj_raja_set.avif"
+    ],
+    [
+      9,
+      "/static/images/taj_nikko_fuji_menu_images/tandoori_mix_grill.avif",
+      "static/images/taj_nikko_fuji_menu_images/tandoori_mix_grill.avif"
+    ],
+    [
+      31,
+      "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji44.webp",
+      "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji44.webp"
+    ]
+  ],
+  "ambiguous": [
+    {
+      "file": "static/images/taj_okinawa_menu_images/samosa.webp",
+      "candidates": [
+        {
+          "id": 11,
+          "name_en": "Samosa",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji6.webp"
+        },
+        {
+          "id": 69,
+          "name_en": "Samosa",
+          "image_url": "/static/images/taj_okinawa_menu_images/samosa.webp"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/chicken_tikka_masala.avif",
+      "candidates": [
+        {
+          "id": 37,
+          "name_en": "Chicken Tikka Masala",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_curry8.webp"
+        },
+        {
+          "id": 79,
+          "name_en": "Chicken Tikka Masala",
+          "image_url": "/static/images/taj_okinawa_menu_images/chicken_tikka_masala.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/chana_masala.avif",
+      "candidates": [
+        {
+          "id": 42,
+          "name_en": "Chana Masala",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_curry4.webp"
+        },
+        {
+          "id": 95,
+          "name_en": "Chana Masala",
+          "image_url": "/static/images/taj_okinawa_menu_images/chana_masala.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/sag_chicken.avif",
+      "candidates": [
+        {
+          "id": 36,
+          "name_en": "Sag Chicken",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji19.webp"
+        },
+        {
+          "id": 84,
+          "name_en": "Sag Chicken",
+          "image_url": "/static/images/taj_okinawa_menu_images/sag_chicken.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/papad.webp",
+      "candidates": [
+        {
+          "id": 12,
+          "name_en": "Papad",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji7.webp"
+        },
+        {
+          "id": 68,
+          "name_en": "Papad",
+          "image_url": "/static/images/taj_okinawa_menu_images/papad.webp"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/chicken_curry.avif",
+      "candidates": [
+        {
+          "id": 15,
+          "name_en": "Chicken Curry",
+          "image_url": null
+        },
+        {
+          "id": 48,
+          "name_en": "Chicken Curry",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_curry6.webp"
+        },
+        {
+          "id": 80,
+          "name_en": "Chicken Curry",
+          "image_url": "/static/images/taj_okinawa_menu_images/chicken_curry.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/prawn_masala.webp",
+      "candidates": [
+        {
+          "id": 39,
+          "name_en": "Prawn Masala",
+          "image_url": "/static/images/taj_okinawa_menu_images/prawn_masala.png"
+        },
+        {
+          "id": 89,
+          "name_en": "Prawn Masala",
+          "image_url": "/static/images/taj_okinawa_menu_images/prawn_masala.png"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/vegetable_curry.avif",
+      "candidates": [
+        {
+          "id": 19,
+          "name_en": "Vegetable Curry",
+          "image_url": null
+        },
+        {
+          "id": 52,
+          "name_en": "Vegetable Curry",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_curry14.webp"
+        },
+        {
+          "id": 90,
+          "name_en": "Vegetable Curry",
+          "image_url": "/static/images/taj_okinawa_menu_images/vegetable_curry.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/tandoori_chicken.webp",
+      "candidates": [
+        {
+          "id": 5,
+          "name_en": "Tandoori Chicken",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji4.webp"
+        },
+        {
+          "id": 72,
+          "name_en": "Tandoori Chicken",
+          "image_url": "/static/images/taj_okinawa_menu_images/tandoori_chicken.webp"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/sag_mutton.avif",
+      "candidates": [
+        {
+          "id": 38,
+          "name_en": "Sag Mutton",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji26.webp"
+        },
+        {
+          "id": 86,
+          "name_en": "Sag Mutton",
+          "image_url": "/static/images/taj_okinawa_menu_images/sag_mutton.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/chicken_do_piaza.webp",
+      "candidates": [
+        {
+          "id": 35,
+          "name_en": "Chicken Do Piaza",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_curry3.webp"
+        },
+        {
+          "id": 83,
+          "name_en": "Chicken do Piaza",
+          "image_url": "/static/images/taj_okinawa_menu_images/chicken_do_piaza.jpg"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/keema_curry.avif",
+      "candidates": [
+        {
+          "id": 18,
+          "name_en": "Keema Curry",
+          "image_url": null
+        },
+        {
+          "id": 51,
+          "name_en": "Keema Curry",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji_ai3.webp"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_menu_images/mutton_curry.avif",
+      "candidates": [
+        {
+          "id": 17,
+          "name_en": "Mutton Curry",
+          "image_url": null
+        },
+        {
+          "id": 50,
+          "name_en": "Mutton Curry",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji21.webp"
+        },
+        {
+          "id": 85,
+          "name_en": "Mutton Curry",
+          "image_url": "/static/images/taj_okinawa_menu_images/mutton_curry.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_okinawa_gallery/Taj.avif",
+      "candidates": [
+        {
+          "id": 2,
+          "name_en": "Taj Green Salad",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji1.webp"
+        },
+        {
+          "id": 66,
+          "name_en": "TAJ Salad",
+          "image_url": "/static/images/taj_okinawa_menu_images/taj_salad.jpg"
+        },
+        {
+          "id": 70,
+          "name_en": "TAJ Fried Potato",
+          "image_url": "/static/images/taj_okinawa_menu_images/fries.webp"
+        },
+        {
+          "id": 105,
+          "name_en": "TAJ Pulao",
+          "image_url": null
+        },
+        {
+          "id": 122,
+          "name_en": "Taj Set",
+          "image_url": "/static/images/taj_okinawa_menu_images/taj_set.avif"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_nikko_fuji_menu_images/taj_g_nan.webp",
+      "candidates": [
+        {
+          "id": 20,
+          "name_en": "Nan",
+          "image_url": "/static/images/taj_okinawa_menu_images/naan2.png"
+        },
+        {
+          "id": 97,
+          "name_en": "Nan",
+          "image_url": "/static/images/taj_okinawa_menu_images/naan2.png"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_nikko_fuji_menu_images/taj_rice.webp",
+      "candidates": [
+        {
+          "id": 23,
+          "name_en": "Rice",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_rice.png"
+        },
+        {
+          "id": 103,
+          "name_en": "Rice",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/taj_rice.png"
+        }
+      ]
+    },
+    {
+      "file": "static/images/taj_nikko_fuji_menu_images/mutton_biryani.webp",
+      "candidates": [
+        {
+          "id": 64,
+          "name_en": "Mutton Biryani",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/mutton_biryani.jpg"
+        },
+        {
+          "id": 108,
+          "name_en": "Mutton Biryani",
+          "image_url": "/static/images/taj_nikko_fuji_menu_images/mutton_biryani.jpg"
+        }
+      ]
+    }
+  ],
+  "no_match": [
+    "static/images/taj_okinawa_menu_images/ladies.webp",
+    "static/images/taj_okinawa_menu_images/taj_nikko_fuji5.webp",
+    "static/images/taj_okinawa_gallery/taj_cu1_small.webp",
+    "static/images/taj_okinawa_gallery/taj_gr1_small.webp",
+    "static/images/taj_okinawa_gallery/wsta.webp",
+    "static/images/taj_okinawa_gallery/xasd.webp",
+    "static/images/taj_okinawa_gallery/Sp Thali.avif",
+    "static/images/taj_nikko_fuji_menu_images/ladies.avif",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji30.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji31.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji27.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji20.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_curry10.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji36.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji16.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_b.avif",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji41.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_curry9.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji17.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_curry11.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji22.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji18.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji14.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_a.avif",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji15.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji23.webp",
+    "static/images/taj_nikko_fuji_menu_images/kids-set.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_curry13.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji35.webp",
+    "static/images/taj_nikko_fuji_menu_images/w_curry.avif",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji28.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji32.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji24.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji25.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji33.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji13.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji5.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_m_biryani.webp",
+    "static/images/taj_nikko_fuji_menu_images/taj_nikko_fuji29.webp",
+    "static/images/taj_logo_n_banners/taj_fuji_banner.webp",
+    "static/images/taj_logo_n_banners/taj_nikko_banner.webp",
+    "static/images/taj_logo_n_banners/taj_okinawa_banner.webp",
+    "static/images/taj_logo_n_banners/taj_banner.webp",
+    "static/images/taj_nikko_gallery/024.webp",
+    "static/images/taj_nikko_gallery/012.webp",
+    "static/images/taj_nikko_gallery/004.webp",
+    "static/images/taj_nikko_gallery/028.webp",
+    "static/images/taj_nikko_gallery/005.webp",
+    "static/images/taj_nikko_gallery/013.webp",
+    "static/images/taj_nikko_gallery/009.webp",
+    "static/images/taj_nikko_gallery/043.webp",
+    "static/images/taj_nikko_gallery/014.webp",
+    "static/images/taj_nikko_gallery/038.webp",
+    "static/images/taj_nikko_gallery/022.webp",
+    "static/images/taj_nikko_gallery/035.webp",
+    "static/images/taj_nikko_gallery/039.webp",
+    "static/images/taj_nikko_gallery/003.webp",
+    "static/images/taj_nikko_gallery/042.webp",
+    "static/images/taj_nikko_gallery/016.webp",
+    "static/images/taj_nikko_gallery/036.webp",
+    "static/images/taj_nikko_gallery/037.webp",
+    "static/images/taj_nikko_gallery/017.webp",
+    "static/images/taj_nikko_gallery/001.webp",
+    "static/images/taj_nikko_gallery/026.webp",
+    "static/images/taj_nikko_gallery/010.webp",
+    "static/images/taj_nikko_gallery/011.webp",
+    "static/images/taj_nikko_gallery/007.webp",
+    "static/images/taj_nikko_gallery/031.webp"
+  ]
+}
