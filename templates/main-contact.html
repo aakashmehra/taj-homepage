@@ -52,124 +52,6 @@
                 </p>
             </div>
 
-            <!-- Restaurant Locations -->
-            <div class="locations-section" style="margin-bottom: 4rem;">
-                <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
-                    {% if lang == 'jp' %}
-                        店舗一覧
-                    {% else %}
-                        Our Locations
-                    {% endif %}
-                </h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-                <!-- Taj Okinawa -->
-                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
-                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
-                        Taj Okinawa
-                    </h3>
-                    <div class="contact-info">
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F
-                        </p>
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            <a href="tel:098-923-1312" style="color: inherit; text-decoration: none;">098-923-1312</a>
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            {% if lang == 'jp' %}
-                                店内: 11:00-22:00 | 配達: 11:00-21:30
-                            {% else %}
-                                Dine-in: 11am-10pm | Delivery: 11am-9:30pm
-                            {% endif %}
-                        </p>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <a href="{{ url_for('taj_okinawa') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-                                {% if lang == 'jp' %}
-                                    詳細を見る
-                                {% else %}
-                                    View Details
-                                {% endif %}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Taj Nikko -->
-                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
-                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
-                        Taj Nikko
-                    </h3>
-                    <div class="contact-info">
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            〒321-1434 Tochigi, Nikko, Honcho 2-32 2F
-                        </p>
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            <a href="tel:0288-25-7766" style="color: inherit; text-decoration: none;">0288-25-7766</a>
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            {% if lang == 'jp' %}
-                                店内・テイクアウト: 11:00-21:00
-                            {% else %}
-                                Dine-in & Takeout: 11am-9pm
-                            {% endif %}
-                        </p>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <a href="{{ url_for('taj_nikko') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-                                {% if lang == 'jp' %}
-                                    詳細を見る
-                                {% else %}
-                                    View Details
-                                {% endif %}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Taj Fuji -->
-                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
-                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
-                        Taj Fuji
-                    </h3>
-                    <div class="contact-info">
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301
-                        </p>
-                        <p style="margin-bottom: 0.5rem;">
-                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            <a href="tel:098-923-1312" style="color: inherit; text-decoration: none;">098-923-1312</a>
-                        </p>
-                        <p style="margin-bottom: 1rem;">
-                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                            {% if lang == 'jp' %}
-                                店内・テイクアウト: 11:00-21:30
-                            {% else %}
-                                Dine-in & Takeout: 11am-9:30pm
-                            {% endif %}
-                        </p>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <a href="{{ url_for('taj_fuji') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-                                {% if lang == 'jp' %}
-                                    詳細を見る
-                                {% else %}
-                                    View Details
-                                {% endif %}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
             <!-- General Contact Information -->
             <div class="general-contact-section" style="margin-bottom: 4rem;">
                 <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
@@ -348,6 +230,125 @@
                         Business hours vary by location. Please check individual restaurant pages or call directly for the most current hours.
                     {% endif %}
                 </p>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+            <!-- Restaurant Locations -->
+            <div class="locations-section" style="margin-bottom: 4rem;">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
+                    {% if lang == 'jp' %}
+                        店舗一覧
+                    {% else %}
+                        Our Locations
+                    {% endif %}
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                <!-- Taj Okinawa -->
+                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
+                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                        Taj Okinawa
+                    </h3>
+                    <div class="contact-info">
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F
+                        </p>
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            <a href="tel:098-923-1312" style="color: inherit; text-decoration: none;">098-923-1312</a>
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            {% if lang == 'jp' %}
+                                店内: 11:00-22:00 | 配達: 11:00-21:30
+                            {% else %}
+                                Dine-in: 11am-10pm | Delivery: 11am-9:30pm
+                            {% endif %}
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="{{ url_for('taj_okinawa') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                                {% if lang == 'jp' %}
+                                    詳細を見る
+                                {% else %}
+                                    View Details
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Taj Nikko -->
+                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
+                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                        Taj Nikko
+                    </h3>
+                    <div class="contact-info">
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            〒321-1434 Tochigi, Nikko, Honcho 2-32 2F
+                        </p>
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            <a href="tel:0288-25-7766" style="color: inherit; text-decoration: none;">0288-25-7766</a>
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            {% if lang == 'jp' %}
+                                店内・テイクアウト: 11:00-21:00
+                            {% else %}
+                                Dine-in & Takeout: 11am-9pm
+                            {% endif %}
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="{{ url_for('taj_nikko') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                                {% if lang == 'jp' %}
+                                    詳細を見る
+                                {% else %}
+                                    View Details
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Taj Fuji -->
+                <div class="location-card" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <h3 style="color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center;">
+                        <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                        Taj Fuji
+                    </h3>
+                    <div class="contact-info">
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301
+                        </p>
+                        <p style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            <a href="tel:098-923-1312" style="color: inherit; text-decoration: none;">098-923-1312</a>
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                            {% if lang == 'jp' %}
+                                店内・テイクアウト: 11:00-21:30
+                            {% else %}
+                                Dine-in & Takeout: 11am-9:30pm
+                            {% endif %}
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="{{ url_for('taj_fuji') }}" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                                {% if lang == 'jp' %}
+                                    詳細を見る
+                                {% else %}
+                                    View Details
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
