@@ -180,68 +180,72 @@
                     {% endif %}
                 </h2>
                 
-                <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 600px; margin: 0 auto;">
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-envelope"></i>
                     </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent); text-align: left;">
                         {% if lang == 'jp' %}
                             メールでのお問い合わせ
                         {% else %}
                             Email Inquiries
                         {% endif %}
                     </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                    <p style="margin-bottom: 1.5rem; line-height: 1.6; text-align: center;">
                         {% if lang == 'jp' %}
                             一般的なご質問、ご要望、メニューについてのお問い合わせはメールでお気軽にご連絡ください。
                         {% else %}
                             For general questions, requests, and menu inquiries, feel free to contact us by email.
                         {% endif %}
                     </p>
-                    <a href="mailto:contact@taj.jp" class="btn btn-location-primary">contact@taj.jp</a>
+                    <div style="text-align: left;">
+                        <a href="mailto:contact@taj.jp" class="btn btn-location-primary">contact@taj.jp</a>
+                    </div>
                 </div>
 
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
+                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-phone"></i>
                     </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent); text-align: left;">
                         {% if lang == 'jp' %}
                             お電話でのお問い合わせ
                         {% else %}
                             Phone Inquiries
                         {% endif %}
                     </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                    <p style="margin-bottom: 1.5rem; line-height: 1.6; text-align: center;">
                         {% if lang == 'jp' %}
                             緊急のお問い合わせや直接お話ししたい場合は、お電話でご連絡ください。
                         {% else %}
                             For urgent inquiries or if you prefer to speak directly, please call us.
                         {% endif %}
                     </p>
-                    <a href="tel:+81-70-9197-2306" class="btn btn-location-primary">+81 70-9197-2306</a>
+                    <div style="text-align: left;">
+                        <a href="tel:+81-70-9197-2306" class="btn btn-location-primary">+81 70-9197-2306</a>
+                    </div>
                 </div>
 
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
+                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent); text-align: left;">
                         {% if lang == 'jp' %}
                             SNSでフォロー
                         {% else %}
                             Follow Us on Social
                         {% endif %}
                     </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                    <p style="margin-bottom: 1.5rem; line-height: 1.6; text-align: center;">
                         {% if lang == 'jp' %}
                             最新情報、お得な情報、イベント情報をSNSでチェックしてください。
                         {% else %}
                             Check our social media for updates, special offers, and event information.
                         {% endif %}
                     </p>
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <div style="display: flex; gap: 1rem; justify-content: flex-start;">
                         <a href="#" class="btn btn-location-outline" style="padding: 0.75rem 1rem;">
                             <i class="fab fa-instagram"></i> Instagram
                         </a>
