@@ -827,5 +827,5 @@ def api_gallery_images(location):
 
 if __name__ == '__main__':
     localhost = '0.0.0.0'
-    # For HTTPS with self-signed certificate
+    # For HTTPS with self-signed certificate 
     app.run(debug=True, host=localhost, ssl_context='adhoc')
