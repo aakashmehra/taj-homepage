@@ -546,6 +546,85 @@
         </div>
     </section>
 
+     <!-- Dietary Options Section -->
+     <section class="dietary-options-section" style="padding: 3rem 0; background: linear-gradient(135deg, hsl(var(--luxury-cream)/0.3), hsl(var(--luxury-gold)/0.2));">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        お食事の<span class="text-luxury-red">オプション</span>
+                    {% else %}
+                        Dietary <span class="text-luxury-red">Options</span>
+                    {% endif %}
+                </h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+                <!-- 100% Halal Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red))); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check-circle" style="font-size: 2.5rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
+                        {% if lang == 'jp' %}
+                            100% ハラール
+                        {% else %}
+                            100% Halal
+                        {% endif %}
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            すべてのお肉はハラール認証を受けています
+                        {% else %}
+                            All our meat is certified Halal
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Vegan Options Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-leaf" style="font-size: 2.5rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
+                        {% if lang == 'jp' %}
+                            ヴィーガン対応
+                        {% else %}
+                            Vegan Options Available
+                        {% endif %}
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            完全植物性のメニューをご用意しています
+                        {% else %}
+                            Plant-based dishes for vegan guests
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Vegetarian Options Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-seedling" style="font-size: 2.5rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
+                        {% if lang == 'jp' %}
+                            ベジタリアン対応
+                        {% else %}
+                            Vegetarian Options Available
+                        {% endif %}
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            豊富なベジタリアンメニューをご用意
+                        {% else %}
+                            Wide variety of vegetarian dishes
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="index-contact-section contact-section">
         <div class="container">
@@ -724,84 +803,7 @@
         </div>
     </section>
 
-    <!-- Dietary Options Section -->
-    <section class="dietary-options-section" style="padding: 3rem 0; background: linear-gradient(135deg, hsl(var(--luxury-cream)/0.3), hsl(var(--luxury-gold)/0.2));">
-        <div class="container">
-            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
-                <h2 class="section-title">
-                    {% if lang == 'jp' %}
-                        お食事の<span class="text-luxury-red">オプション</span>
-                    {% else %}
-                        Dietary <span class="text-luxury-red">Options</span>
-                    {% endif %}
-                </h2>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
-                <!-- 100% Halal Card -->
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
-                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red))); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-check-circle" style="font-size: 2.5rem; color: white;"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
-                        {% if lang == 'jp' %}
-                            100% ハラール
-                        {% else %}
-                            100% Halal
-                        {% endif %}
-                    </h3>
-                    <p style="color: #666; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            すべてのお肉はハラール認証を受けています
-                        {% else %}
-                            All our meat is certified Halal
-                        {% endif %}
-                    </p>
-                </div>
-
-                <!-- Vegan Options Card -->
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
-                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-leaf" style="font-size: 2.5rem; color: white;"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
-                        {% if lang == 'jp' %}
-                            ヴィーガン対応
-                        {% else %}
-                            Vegan Options Available
-                        {% endif %}
-                    </h3>
-                    <p style="color: #666; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            完全植物性のメニューをご用意しています
-                        {% else %}
-                            Plant-based dishes for vegan guests
-                        {% endif %}
-                    </p>
-                </div>
-
-                <!-- Vegetarian Options Card -->
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
-                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-seedling" style="font-size: 2.5rem; color: white;"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
-                        {% if lang == 'jp' %}
-                            ベジタリアン対応
-                        {% else %}
-                            Vegetarian Options Available
-                        {% endif %}
-                    </h3>
-                    <p style="color: #666; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            豊富なベジタリアンメニューをご用意
-                        {% else %}
-                            Wide variety of vegetarian dishes
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+   
 </div>
 
 <!-- Menu Selection Popup Modal -->
