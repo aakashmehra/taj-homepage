@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>QR Scanner - Taj Restaurant</title>
+    
+    <!-- iOS Web App Configuration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TAJ Scanner">
+    
+    <!-- Allow camera access -->
+    <meta http-equiv="Permissions-Policy" content="camera=(self)">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -14,6 +23,14 @@
     
 </head>
 <body class="scanner-body">
+    <!-- iOS Warning Banner (hidden by default, shown via JS) -->
+    <div id="ios-warning-banner" style="display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 999; background: linear-gradient(135deg, #ff9800, #f57c00); color: white; padding: 1rem; text-align: center; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <strong>📱 iOS Web App Mode Detected</strong><br>
+            <span style="font-size: 0.85rem;">Camera may not work. For best results, <a href="/admin/scan" style="color: white; text-decoration: underline; font-weight: bold;">open in Safari browser</a> instead.</span>
+        </div>
+    </div>
+
     <!-- Top Navigation Bar -->
     <div class="scanner-nav">
         <div class="nav-title">
@@ -639,7 +656,34 @@
                     startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting...';
                     startBtn.disabled = true;
 
+                    // Check if running in iOS standalone mode
+                    const isIOSStandalone = window.navigator.standalone === true;
+                    if (isIOSStandalone) {
+                        console.log('Running in iOS standalone mode - requesting camera permissions explicitly');
+                    }
+
                     this.html5QrCode = new Html5Qrcode("qr-scanner");
+                    
+                    // Request camera permissions explicitly for iOS
+                    try {
+                        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                            console.log('Requesting camera permissions...');
+                            await navigator.mediaDevices.getUserMedia({ 
+                                video: { 
+                                    facingMode: { ideal: "environment" },
+                                    width: { ideal: 1280 },
+                                    height: { ideal: 720 }
+                                } 
+                            }).then(stream => {
+                                console.log('Camera permission granted, stopping preview stream');
+                                // Stop the preview stream immediately
+                                stream.getTracks().forEach(track => track.stop());
+                            });
+                        }
+                    } catch (permError) {
+                        console.error('Camera permission error:', permError);
+                        throw new Error('Camera permission denied. Please allow camera access in Settings > Safari > Camera.');
+                    }
                     
                     this.availableCameras = await Html5Qrcode.getCameras();
                     if (this.availableCameras && this.availableCameras.length) {
@@ -714,8 +758,26 @@
                         startBtn.disabled = false;
                     }
                     
-                    // Show more detailed error
-                    this.showTemporaryMessage('Camera Error: ' + err.message + '\nPlease check camera permissions.');
+                    // Check if running in iOS standalone
+                    const isIOSStandalone = window.navigator.standalone === true;
+                    
+                    // Show detailed error with iOS-specific instructions
+                    let errorMessage = 'Camera Error: ' + err.message;
+                    
+                    if (isIOSStandalone) {
+                        errorMessage += '\n\n📱 iOS Web App Mode Detected:\n';
+                        errorMessage += '1. Open in Safari first\n';
+                        errorMessage += '2. Allow camera access\n';
+                        errorMessage += '3. Then add to Home Screen\n\n';
+                        errorMessage += 'Or use Safari directly instead of the home screen app.';
+                    } else {
+                        errorMessage += '\n\nPlease check:\n';
+                        errorMessage += '1. Camera permissions in Settings\n';
+                        errorMessage += '2. Safari has camera access\n';
+                        errorMessage += '3. No other app is using the camera';
+                    }
+                    
+                    this.showTemporaryMessage(errorMessage);
                 }
             }
 
@@ -835,28 +897,38 @@
                         top: 50%;
                         left: 50%;
                         transform: translate(-50%, -50%);
-                        background: rgba(0, 0, 0, 0.9);
+                        background: rgba(0, 0, 0, 0.95);
                         color: white;
-                        padding: 1.5rem 2rem;
+                        padding: 2rem;
                         border-radius: 12px;
                         z-index: 3000;
-                        text-align: center;
-                        font-size: 1.1rem;
-                        font-weight: 600;
-                        max-width: 80%;
+                        text-align: left;
+                        font-size: 0.95rem;
+                        font-weight: 500;
+                        max-width: 90%;
+                        max-height: 80vh;
+                        overflow-y: auto;
                         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
                         backdrop-filter: blur(10px);
+                        white-space: pre-wrap;
+                        line-height: 1.6;
                     `;
                     document.body.appendChild(messageOverlay);
+                    
+                    // Add click to dismiss
+                    messageOverlay.addEventListener('click', () => {
+                        messageOverlay.style.display = 'none';
+                    });
                 }
                 
                 messageOverlay.textContent = message;
                 messageOverlay.style.display = 'block';
                 
-                // Auto-hide after 3 seconds
+                // Auto-hide after 8 seconds for longer messages
+                const displayTime = message.length > 100 ? 8000 : 3000;
                 setTimeout(() => {
                     messageOverlay.style.display = 'none';
-                }, 3000);
+                }, displayTime);
             }
 
             async lookupOrder() {
@@ -1119,6 +1191,27 @@
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
+            // Detect if running in iOS standalone mode
+            const isIOSStandalone = window.navigator.standalone === true;
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            
+            console.log('Device Info:', {
+                isIOS: isIOS,
+                isStandalone: isIOSStandalone,
+                userAgent: navigator.userAgent
+            });
+            
+            if (isIOSStandalone && isIOS) {
+                console.warn('⚠️ Running in iOS standalone mode - Camera access may be limited');
+                console.log('💡 Tip: If camera doesn\'t work, open in Safari browser instead');
+                
+                // Show warning banner
+                const warningBanner = document.getElementById('ios-warning-banner');
+                if (warningBanner) {
+                    warningBanner.style.display = 'block';
+                }
+            }
+            
             window.scanner = new FullscreenScanner();
             
             // Add console helper for testing
@@ -1132,6 +1225,15 @@
                 console.log('Testing redirect...');
                 window.scanner.performRedirect();
             };
+            
+            // Check camera permissions status
+            if (navigator.permissions && navigator.permissions.query) {
+                navigator.permissions.query({ name: 'camera' }).then(result => {
+                    console.log('Camera permission status:', result.state);
+                }).catch(err => {
+                    console.log('Cannot check camera permissions:', err);
+                });
+            }
             
             console.log('QR Scanner loaded.');
             console.log('Use testQR("your-qr-text") to test QR code parsing.');
