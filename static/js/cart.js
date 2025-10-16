@@ -249,12 +249,23 @@ class ShoppingCart {
             const priceEl = option.querySelector('.price-option-price');
             const labelEl = option.querySelector('.price-option-label');
             
+            // Special case for Tandoori Chicken (ID 5) - show 1P/2P instead of 2P/4P
+            const isTandooriChicken = itemData.id === '5';
+            
             if (portion === '2p') {
                 priceEl.textContent = `¥${itemData.price2p}`;
-                labelEl.textContent = '2 Pieces (2個)';
+                if (isTandooriChicken) {
+                    labelEl.textContent = '1 Piece (1個)';
+                } else {
+                    labelEl.textContent = '2 Pieces (2個)';
+                }
             } else if (portion === '4p') {
                 priceEl.textContent = `¥${itemData.price4p}`;
-                labelEl.textContent = '4 Pieces (4個)';
+                if (isTandooriChicken) {
+                    labelEl.textContent = '2 Pieces (2個)';
+                } else {
+                    labelEl.textContent = '4 Pieces (4個)';
+                }
             }
         });
 

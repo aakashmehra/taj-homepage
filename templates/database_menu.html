@@ -142,10 +142,18 @@
                         <!-- Multiple price options -->
                         <div class="price-options">
                             {% if item['price_2p'] %}
-                                <span class="price">2P ¥{{ "{:,}".format(item['price_2p']) }}</span>
+                                {% if item['id'] == 5 %}
+                                    <span class="price">1P ¥{{ "{:,}".format(item['price_2p']) }}</span>
+                                {% else %}
+                                    <span class="price">2P ¥{{ "{:,}".format(item['price_2p']) }}</span>
+                                {% endif %}
                             {% endif %}
                             {% if item['price_4p'] %}
-                                <span class="price">4P ¥{{ "{:,}".format(item['price_4p']) }}</span>
+                                {% if item['id'] == 5 %}
+                                    <span class="price">2P ¥{{ "{:,}".format(item['price_4p']) }}</span>
+                                {% else %}
+                                    <span class="price">4P ¥{{ "{:,}".format(item['price_4p']) }}</span>
+                                {% endif %}
                             {% endif %}
                         </div>
                         {% else %}
