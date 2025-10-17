@@ -213,7 +213,7 @@
         <div class="locations-section" style="margin-bottom: 4rem;">
             <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
                 {% if lang == 'jp' %}
-                    店舗<span class="text-luxury-gold"></span>一覧</span>
+                    店舗<span class="text-luxury-gold">一覧</span>
                 {% else %}
                     Our <span class="text-luxury-gold">Locations</span>
                 {% endif %}
@@ -305,6 +305,10 @@
                         <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
                         <a href="tel:0555-25-7406" style="color: inherit; text-decoration: none;">0555-25-7406</a>
                     </p>
+                    <p style="margin-bottom: 0.5rem;">
+                        <i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                        <a href="tel:070-9197-2306" style="color: inherit; text-decoration: none;">070-9197-2306</a>
+                    </p>
                     <p style="margin-bottom: 1rem;">
                         <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
                         {% if lang == 'jp' %}
@@ -349,4 +353,188 @@
             
     </section>
 </div>
+
+<style>
+/* Mobile-friendly improvements */
+@media (max-width: 768px) {
+    /* General contact section - make single column */
+    .general-contact-section > div {
+        grid-template-columns: 1fr !important;
+        padding: 0 1rem;
+    }
+    
+    /* Contact method cards - better mobile spacing */
+    .contact-method {
+        padding: 1.5rem !important;
+    }
+    
+    .contact-method h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    .contact-method p {
+        font-size: 0.95rem !important;
+    }
+    
+    /* Buttons - make them full width and touch-friendly */
+    .btn {
+        min-height: 44px;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .contact-method .btn {
+        font-size: 1rem !important;
+        padding: 0.75rem 1.5rem !important;
+    }
+    
+    /* Social buttons - stack on very small screens */
+    .contact-method > div {
+        flex-direction: column !important;
+        width: 100%;
+    }
+    
+    .contact-method > div a {
+        width: 100% !important;
+    }
+    
+    /* Reservation options - single column */
+    .reservation-options {
+        grid-template-columns: 1fr !important;
+        padding: 0 1rem;
+    }
+    
+    .reservation-option {
+        padding: 1.5rem !important;
+    }
+    
+    .reservation-option h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Location cards - single column on mobile */
+    .locations-section > div:last-child {
+        grid-template-columns: 1fr !important;
+        padding: 0 1rem;
+    }
+    
+    .location-card {
+        padding: 1.5rem !important;
+    }
+    
+    .location-card h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .location-card p {
+        font-size: 0.9rem !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Icons - slightly smaller on mobile */
+    .contact-method > div:first-child,
+    .reservation-option > div:first-child {
+        font-size: 2.5rem !important;
+    }
+    
+    /* Section titles - adjust size */
+    .section-title {
+        font-size: 1.8rem !important;
+    }
+    
+    .section-description {
+        font-size: 1rem !important;
+    }
+    
+    /* Business hours note */
+    .business-hours-note {
+        padding: 1.5rem !important;
+        margin: 0 1rem;
+    }
+    
+    .business-hours-note h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .business-hours-note p {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Hero section - better mobile text */
+    .hero-title {
+        font-size: 2rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+        padding: 0 1rem;
+    }
+    
+    /* Improve touch targets for phone links */
+    a[href^="tel:"] {
+        display: inline-block;
+        padding: 0.25rem 0;
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-underline-offset: 3px;
+    }
+}
+
+/* Extra small devices (phones in portrait mode) */
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .contact-method,
+    .reservation-option,
+    .location-card {
+        padding: 1rem !important;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem !important;
+    }
+    
+    /* Stack location details more compactly */
+    .location-card .contact-info i {
+        font-size: 0.9rem;
+    }
+    
+    /* Smaller icon circles */
+    .contact-method > div:first-child,
+    .reservation-option > div:first-child {
+        font-size: 2rem !important;
+        width: 60px !important;
+        height: 60px !important;
+    }
+}
+
+/* Tablet improvements */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .locations-section > div:last-child {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .reservation-options {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Improve container spacing on all mobile devices */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    section {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+}
+</style>
+
 {% endblock %}
