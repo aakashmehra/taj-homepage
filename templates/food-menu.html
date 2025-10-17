@@ -141,74 +141,99 @@
         </div>
 
         <!-- Popular Dishes Section -->
-        <div class="popular-dishes-section">
-            <h2 class="section-title">
-                {% if lang == 'jp' %}
-                    人気メニュー
-                {% else %} 
-                    Popular Dishes
-                {% endif %}
-            </h2>
-            
-            <div class="dishes-grid">
-                <div class="dish-card">
-                    <div class="dish-image">
-                        <div class="image-placeholder"><i class="fas fa-bowl-rice"></i></div>
+        <div class="popular-dishes-section" style="padding: 3rem 0; margin-top: 3rem; background: linear-gradient(135deg, hsl(var(--luxury-cream)/0.3), hsl(var(--luxury-gold)/0.2)); border-radius: 12px;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 class="section-title">
+                    {% if lang == 'jp' %}
+                        人気<span class="text-luxury-red">メニュー</span>
+                    {% else %} 
+                        Popular <span class="text-luxury-red">Dishes</span>
+                    {% endif %}
+                </h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+                <!-- Butter Chicken Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-red))); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-bowl-rice" style="font-size: 2.5rem; color: white;"></i>
                     </div>
-                    <div class="dish-info">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
                         {% if lang == 'jp' %}
-                            <h4>バターチキンカレー</h4>
-                            <p>まろやかなトマトベースのクリーミーなカレー</p>
+                            バターチキンカレー
                         {% else %}
-                            <h4>Butter Chicken Curry</h4>
-                            <p>Creamy tomato-based curry with tender chicken</p>
+                            Butter Chicken Curry
                         {% endif %}
-                    </div>
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            まろやかなトマトベースのクリーミーなカレー
+                        {% else %}
+                            Creamy tomato-based curry with tender chicken
+                        {% endif %}
+                    </p>
                 </div>
-                
-                <div class="dish-card">
-                    <div class="dish-image">
-                        <div class="image-placeholder"><i class="fas fa-bread-slice"></i></div>
+
+                <!-- Naan Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-bread-slice" style="font-size: 2.5rem; color: white;"></i>
                     </div>
-                    <div class="dish-info">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
                         {% if lang == 'jp' %}
-                            <h4>ナン</h4>
-                            <p>タンドール窯で焼いた本格的なインドパン</p>
+                            ナン
                         {% else %}
-                            <h4>Naan</h4>
-                            <p>Authentic Indian bread baked in tandoor oven</p>
+                            Naan
                         {% endif %}
-                    </div>
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            タンドール窯で焼いた本格的なインドパン
+                        {% else %}
+                            Authentic Indian bread baked in tandoor oven
+                        {% endif %}
+                    </p>
                 </div>
                  
-                <div class="dish-card">
-                    <div class="dish-image">
-                        <div class="image-placeholder"><i class="fas fa-utensils"></i></div>
+                <!-- Biryani Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-utensils" style="font-size: 2.5rem; color: white;"></i>
                     </div>
-                    <div class="dish-info">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
                         {% if lang == 'jp' %}
-                            <h4>ビリヤニ</h4>
-                            <p>スパイス香るバスマティライスの炊き込みご飯</p>
+                            ビリヤニ
                         {% else %}
-                            <h4>Biryani</h4>
-                            <p>Aromatic basmati rice with spices and meat</p>
+                            Biryani
                         {% endif %}
-                    </div>
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            スパイス香るバスマティライスの炊き込みご飯
+                        {% else %}
+                            Aromatic basmati rice with spices and meat
+                        {% endif %}
+                    </p>
                 </div>
                 
-                <div class="dish-card">
-                    <div class="dish-image">
-                        <div class="image-placeholder"><i class="fas fa-drumstick-bite"></i></div>
+                <!-- Tandoori Chicken Card -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.1)'">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-drumstick-bite" style="font-size: 2.5rem; color: white;"></i>
                     </div>
-                    <div class="dish-info">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: hsl(var(--luxury-black));">
                         {% if lang == 'jp' %}
-                            <h4>タンドリーチキン</h4>
-                            <p>スパイスに漬け込んだタンドール焼きチキン</p>
+                            タンドリーチキン
                         {% else %}
-                            <h4>Tandoori Chicken</h4>
-                            <p>Spice-marinated chicken grilled in tandoor</p>
+                            Tandoori Chicken
                         {% endif %}
-                    </div>
+                    </h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        {% if lang == 'jp' %}
+                            スパイスに漬け込んだタンドール焼きチキン
+                        {% else %}
+                            Spice-marinated chicken grilled in tandoor
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
