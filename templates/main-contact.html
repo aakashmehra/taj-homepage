@@ -53,87 +53,89 @@
             </div>
 
             <!-- General Contact Information -->
-            <div class="general-contact-section" style="margin-bottom: 4rem;">
-                <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
-                    {% if lang == 'jp' %}
-                        一般的な<span class="text-luxury-gold">お問い合わせ</span>
-                    {% else %}
-                        General <span class="text-luxury-gold">Inquiries</span>
-                    {% endif %}
-                </h2>
-                
-                <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 700px; margin: 0 auto;">
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
-                        {% if lang == 'jp' %}
-                            メールでのお問い合わせ
-                        {% else %}
-                            Email Inquiries
-                        {% endif %}
-                    </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            一般的なご質問、ご要望、メニューについてのお問い合わせはメールでお気軽にご連絡ください。
-                        {% else %}
-                            For general questions, requests, and menu inquiries, feel free to contact us by email.
-                        {% endif %}
-                    </p>
-                    <a href="mailto:vinnindia@gmail.com" class="btn btn-location-primary">vinnindia@gmail.com</a>
-                </div>
+<div class="general-contact-section" style="margin-bottom: 4rem;">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">
+        {% if lang == 'jp' %}
+            一般的な<span class="text-luxury-gold">お問い合わせ</span>
+        {% else %}
+            General <span class="text-luxury-gold">Inquiries</span>
+        {% endif %}
+    </h2>
+    
+    <div class="reservation-options" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 2rem;">
+        <div class="reservation-option" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
+            <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                {% if lang == 'jp' %}
+                    メールでのお問い合わせ
+                {% else %}
+                    Email Inquiries
+                {% endif %}
+            </h3>
+            <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                {% if lang == 'jp' %}
+                    一般的なご質問、ご要望、メニューについてのお問い合わせはメールでお気軽にご連絡ください。
+                {% else %}
+                    For general questions, requests, and menu inquiries, feel free to contact us by email.
+                {% endif %}
+            </p>
+            <a href="mailto:vinnindia@gmail.com" class="btn btn-location-primary">vinnindia@gmail.com</a>
+        </div>
 
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
-                        {% if lang == 'jp' %}
-                            お電話でのお問い合わせ
-                        {% else %}
-                            Phone Inquiries
-                        {% endif %}
-                    </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            緊急のお問い合わせや直接お話ししたい場合は、お電話でご連絡ください。
-                        {% else %}
-                            For urgent inquiries or if you prefer to speak directly, please call us.
-                        {% endif %}
-                    </p>
-                    <a href="tel:+81-70-9197-2306" class="btn btn-location-primary">+81 70-9197-2306</a>
-                </div>
-
-                <div class="contact-method" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
-                    <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">
-                        {% if lang == 'jp' %}
-                            SNSでフォロー
-                        {% else %}
-                            Follow Us on Social
-                        {% endif %}
-                    </h3>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-                        {% if lang == 'jp' %}
-                            最新情報、お得な情報、イベント情報をSNSでチェックしてください。
-                        {% else %}
-                            Check our social media for updates, special offers, and event information.
-                        {% endif %}
-                    </p>
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
-                        <a href="#" class="btn btn-location-outline" style="padding: 0.75rem 1rem;">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                        <a href="#" class="btn btn-location-outline" style="padding: 0.75rem 1rem;">
-                            <i class="fab fa-facebook"></i> Facebook
-                        </a>
-                    </div>
-                </div>
+        <div class="reservation-option" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center;">
+            <div style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;">
+                <i class="fas fa-phone"></i>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                {% if lang == 'jp' %}
+                    お電話でのお問い合わせ
+                {% else %}
+                    Phone Inquiries
+                {% endif %}
+            </h3>
+            <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                {% if lang == 'jp' %}
+                    緊急のお問い合わせや直接お話ししたい場合は、お電話でご連絡ください。
+                {% else %}
+                    For urgent inquiries or if you prefer to speak directly, please call us.
+                {% endif %}
+            </p>
+            <a href="tel:+81-70-9197-2306" class="btn btn-location-primary">+81 70-9197-2306</a>
+        </div>
+    </div>
+    
+    <div style="display: flex; justify-content: center;">
+        <div class="reservation-option" style="background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center; max-width: 500px; width: 100%;">
+            <div style="font-size: 1.5rem; color: #dc2626; margin-bottom: 1rem;">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--accent);">
+                {% if lang == 'jp' %}
+                    SNSでフォロー
+                {% else %}
+                    Follow Us on Social
+                {% endif %}
+            </h3>
+            <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                {% if lang == 'jp' %}
+                    最新情報、お得な情報、イベント情報をSNSでチェックしてください。
+                {% else %}
+                    Check our social media for updates, special offers, and event information.
+                {% endif %}
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#" class="btn btn-location-outline" style="padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fab fa-instagram" style="font-size: 1.5rem; color: #dc2626; padding-top: 1rem;"></i> Instagram
+                </a>
+                <a href="#" class="btn btn-location-outline" style="padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fab fa-facebook" style="font-size: 1.5rem; color: #dc2626; padding-top: 1rem;"></i> Facebook
+                </a>
             </div>
         </div>
+    </div>
 
             <!-- Reservations Section -->
             <div class="reservations-section" style="margin-bottom: 4rem;">
@@ -354,187 +356,6 @@
     </section>
 </div>
 
-<style>
-/* Mobile-friendly improvements */
-@media (max-width: 768px) {
-    /* General contact section - make single column */
-    .general-contact-section > div {
-        grid-template-columns: 1fr !important;
-        padding: 0 1rem;
-    }
-    
-    /* Contact method cards - better mobile spacing */
-    .contact-method {
-        padding: 1.5rem !important;
-    }
-    
-    .contact-method h3 {
-        font-size: 1.2rem !important;
-    }
-    
-    .contact-method p {
-        font-size: 0.95rem !important;
-    }
-    
-    /* Buttons - make them full width and touch-friendly */
-    .btn {
-        min-height: 44px;
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-    }
-    
-    .contact-method .btn {
-        font-size: 1rem !important;
-        padding: 0.75rem 1.5rem !important;
-    }
-    
-    /* Social buttons - stack on very small screens */
-    .contact-method > div {
-        flex-direction: column !important;
-        width: 100%;
-    }
-    
-    .contact-method > div a {
-        width: 100% !important;
-    }
-    
-    /* Reservation options - single column */
-    .reservation-options {
-        grid-template-columns: 1fr !important;
-        padding: 0 1rem;
-    }
-    
-    .reservation-option {
-        padding: 1.5rem !important;
-    }
-    
-    .reservation-option h3 {
-        font-size: 1.2rem !important;
-    }
-    
-    /* Location cards - single column on mobile */
-    .locations-section > div:last-child {
-        grid-template-columns: 1fr !important;
-        padding: 0 1rem;
-    }
-    
-    .location-card {
-        padding: 1.5rem !important;
-    }
-    
-    .location-card h3 {
-        font-size: 1.3rem !important;
-    }
-    
-    .location-card p {
-        font-size: 0.9rem !important;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
-    
-    /* Icons - slightly smaller on mobile */
-    .contact-method > div:first-child,
-    .reservation-option > div:first-child {
-        font-size: 2.5rem !important;
-    }
-    
-    /* Section titles - adjust size */
-    .section-title {
-        font-size: 1.8rem !important;
-    }
-    
-    .section-description {
-        font-size: 1rem !important;
-    }
-    
-    /* Business hours note */
-    .business-hours-note {
-        padding: 1.5rem !important;
-        margin: 0 1rem;
-    }
-    
-    .business-hours-note h3 {
-        font-size: 1.1rem !important;
-    }
-    
-    .business-hours-note p {
-        font-size: 0.9rem !important;
-    }
-    
-    /* Hero section - better mobile text */
-    .hero-title {
-        font-size: 2rem !important;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem !important;
-        padding: 0 1rem;
-    }
-    
-    /* Improve touch targets for phone links */
-    a[href^="tel:"] {
-        display: inline-block;
-        padding: 0.25rem 0;
-        text-decoration: underline;
-        text-decoration-color: var(--accent);
-        text-underline-offset: 3px;
-    }
-}
 
-/* Extra small devices (phones in portrait mode) */
-@media (max-width: 480px) {
-    .section-title {
-        font-size: 1.5rem !important;
-    }
-    
-    .contact-method,
-    .reservation-option,
-    .location-card {
-        padding: 1rem !important;
-    }
-    
-    .hero-title {
-        font-size: 1.75rem !important;
-    }
-    
-    /* Stack location details more compactly */
-    .location-card .contact-info i {
-        font-size: 0.9rem;
-    }
-    
-    /* Smaller icon circles */
-    .contact-method > div:first-child,
-    .reservation-option > div:first-child {
-        font-size: 2rem !important;
-        width: 60px !important;
-        height: 60px !important;
-    }
-}
-
-/* Tablet improvements */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .locations-section > div:last-child {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    
-    .reservation-options {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-
-/* Improve container spacing on all mobile devices */
-@media (max-width: 768px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    
-    section {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-    }
-}
-</style>
 
 {% endblock %}

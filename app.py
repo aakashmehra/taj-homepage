@@ -886,4 +886,4 @@ def api_menu_items():
 if __name__ == '__main__':
     localhost = '0.0.0.0'
     # For HTTPS with self-signed certificate 
-    app.run(port=5200, debug=True, host=localhost, ssl_context='adhoc')
+    app.run(port=5300, debug=True, host=localhost, ssl_context='adhoc')
