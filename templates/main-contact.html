@@ -135,7 +135,7 @@
     margin: 0 auto;
 }
 
-/* Locations Section */
+/* Locations Section - using styles from main CSS */
 .locations-section {
     margin-bottom: 4rem;
 }
@@ -143,56 +143,6 @@
 .locations-section .section-title {
     text-align: center;
     margin-bottom: 2rem;
-}
-
-.locations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.location-card {
-    background: var(--card);
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-
-.location-card h3 {
-    color: var(--accent);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.location-card h3 i {
-    margin-right: 0.5rem;
-}
-
-.contact-info p {
-    margin-bottom: 0.5rem;
-}
-
-.contact-info i {
-    color: var(--accent);
-    margin-right: 0.5rem;
-}
-
-.contact-info a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.contact-info a:hover {
-    color: var(--accent);
-}
-
-.contact-info .btn-group {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
 }
 
 /* Business Hours Note */
@@ -260,10 +210,6 @@
         gap: 1.5rem;
     }
     
-    .location-card {
-        padding: 1.5rem;
-    }
-    
     /* Section Spacing */
     .general-contact-section,
     .reservations-section,
@@ -289,10 +235,6 @@
 @media (max-width: 480px) {
     /* Extra Small Devices */
     .reservation-option {
-        padding: 1.25rem;
-    }
-    
-    .location-card {
         padding: 1.25rem;
     }
     
@@ -534,133 +476,183 @@
     <div class="locations-grid">
         <!-- Taj Nikko -->
         <div class="location-card">
-            <h3>
-                <i class="fas fa-store"></i>
-                Taj Nikko
-            </h3>
-            <div class="contact-info">
-                <p>
-                    <i class="fas fa-map-marker-alt"></i>
-                    {% if lang == 'jp' %}
-                        〒321-1434
-                        <br>
-                        栃木県日光市本町2-32 2階
-                    {% else %}
-                        〒321-1434
-                        <br>
-                        Tochigi-ken, Nikko-shi, Honcho 2-32, 2F
-                    {% endif %}
-                </p>
-                <p>
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+81-288-25-7766">0288-25-7766</a>
-                </p>
-                <p>
-                    <i class="fas fa-clock"></i>
-                    {% if lang == 'jp' %}
-                        店内・テイクアウト: 11:00-21:00
-                    {% else %}
-                        Dine-in & Takeout: 11am-9pm
-                    {% endif %}
-                </p>
-                <div class="btn-group">
-                    <a href="{{ url_for('taj_nikko') }}" class="btn">
+            <div class="location-card-content">
+                <div class="location-header">
+                    <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                    <h3 class="location-city">Taj Nikko</h3>
+                    <p class="location-description">
                         {% if lang == 'jp' %}
-                            詳細を見る
+                            インドの香りと日本の静けさが出会うフラッグシップ店舗
                         {% else %}
-                            View Details
+                            Where Indian Spices Meet Nikko's Serenity
                         {% endif %}
-                    </a>
+                    </p>
+                </div>
+                <div class="location-details">
+                    <div class="location-detail">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span class="location-text">
+                            {% if lang == 'jp' %}
+                                〒321-1434
+                                <br>
+                                栃木県日光市本町2-32 2階
+                            {% else %}
+                                〒321-1434
+                                <br>
+                                Tochigi-ken, Nikko-shi, Honcho 2-32, 2F
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-phone location-icon"></i>
+                        <a href="tel:+81-288-25-7766" style="color: inherit; text-decoration: none;">
+                            <span class="location-text" phone="+81-288-25-7766">0288-25-7766</span>
+                        </a>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-clock location-icon"></i>
+                        <span class="location-text">11:00 AM - 9:00 PM</span>
+                    </div>
+                </div>
+                <div class="location-actions">
+                    <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_nikko') }}'">
+                        {% if lang == 'jp' %}
+                            店舗ページ
+                        {% else %}
+                            Visit Page
+                        {% endif %}
+                    </button>
+                    <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/pmnrpPqi8ytgE7a99', '_blank')">
+                        {% if lang == 'jp' %}
+                            道順を取得
+                        {% else %}
+                            Get Directions
+                        {% endif %}
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Taj Fuji -->
         <div class="location-card">
-            <h3>
-                <i class="fas fa-store"></i>
-                Taj Fuji
-            </h3>
-            <div class="contact-info">
-                <p>
-                    <i class="fas fa-map-marker-alt"></i>
-                    {% if lang == 'jp' %}
-                        〒401-0301 
-                        <br>
-                        山梨県南都留郡富士河口湖町船津6713-12
-                    {% else %}
-                        〒401-0301
-                        <br>
-                        Yamanashi-ken, Minamitsuru-gun, Fujikawaguchiko-machi, Funatsu 6713-12
-                    {% endif %}
-                </p>
-                <p>
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:0555-25-7406">0555-25-7406</a>
-                </p>
-                <p>
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:070-9197-2306">070-9197-2306</a>
-                </p>
-                <p>
-                    <i class="fas fa-clock"></i>
-                    {% if lang == 'jp' %}
-                        店内・テイクアウト: 11:00-21:30
-                    {% else %}
-                        Dine-in & Takeout: 11am-9:30pm
-                    {% endif %}
-                </p>
-                <div class="btn-group">
-                    <a href="{{ url_for('taj_fuji') }}" class="btn">
+            <div class="location-card-content">
+                <div class="location-header">
+                    <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                    <h3 class="location-city">Taj Fuji</h3>
+                    <p class="location-description">
                         {% if lang == 'jp' %}
-                            詳細を見る
+                            富士のふもとにあるインドの味
                         {% else %}
-                            View Details
+                            A Taste of India at the foot of Fuji
                         {% endif %}
-                    </a>
+                    </p>
+                </div>
+                <div class="location-details">
+                    <div class="location-detail">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span class="location-text">
+                            {% if lang == 'jp' %}
+                                〒401-0301 
+                                <br>
+                                山梨県南都留郡富士河口湖町船津6713-12
+                            {% else %}
+                                〒401-0301
+                                <br>
+                                Yamanashi-ken, Minamitsuru-gun, Fujikawaguchiko-machi, Funatsu 6713-12
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-phone location-icon"></i>
+                        <a href="tel:0555-25-7406" style="color: inherit; text-decoration: none;">
+                            <span class="location-text" phone="0555-25-7406">0555-25-7406</span>
+                        </a>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-phone location-icon"></i>
+                        <a href="tel:070-9197-2306" style="color: inherit; text-decoration: none;">
+                            <span class="location-text" phone="070-9197-2306">070-9197-2306</span>
+                        </a>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-clock location-icon"></i>
+                        <span class="location-text">11:00 AM - 9:30 PM</span>
+                    </div>
+                </div>
+                <div class="location-actions">
+                    <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_fuji') }}'">
+                        {% if lang == 'jp' %}
+                            店舗ページ
+                        {% else %}
+                            Visit Page
+                        {% endif %}
+                    </button>
+                    <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/SRFfkiLpUHTxPWAJ8', '_blank')">
+                        {% if lang == 'jp' %}
+                            道順を取得
+                        {% else %}
+                            Get Directions
+                        {% endif %}
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Taj Okinawa -->
         <div class="location-card">
-            <h3>
-                <i class="fas fa-store"></i>
-                Taj Okinawa
-            </h3>
-            <div class="contact-info">
-                <p>
-                    <i class="fas fa-map-marker-alt"></i>
-                    {% if lang == 'jp' %}
-                        〒904-0102 
-                        <br>
-                        沖縄県中頭郡北谷町伊平458-1 イーグルロッジ 1F
-                    {% else %}
-                        〒904-0102
-                        <br>
-                        Okinawa-ken, Nakagami-gun, Chatan-cho, Ihei, 458-1 Eagle Lodge 1F
-                    {% endif %}
-                </p>
-                <p>
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+81-98-923-1312">098-923-1312</a>
-                </p>
-                <p>
-                    <i class="fas fa-clock"></i>
-                    {% if lang == 'jp' %}
-                        店内: 11:00-22:00 | 配達: 11:00-21:30
-                    {% else %}
-                        Dine-in: 11am-10pm | Delivery: 11am-9:30pm
-                    {% endif %}
-                </p>
-                <div class="btn-group">
-                    <a href="{{ url_for('taj_okinawa') }}" class="btn">
+            <div class="location-card-content">
+                <div class="location-header">
+                    <i class="fas fa-store" style="margin-right: 0.5rem;"></i>
+                    <h3 class="location-city">Taj Okinawa</h3>
+                    <p class="location-description">
                         {% if lang == 'jp' %}
-                            詳細を見る
+                            沖縄で本格的なインドの味をお楽しみください。
                         {% else %}
-                            View Details
+                            Taste the Taj. Feel the Island. Your Indian Destination in Okinawa.
                         {% endif %}
-                    </a>
+                    </p>
+                </div>
+                <div class="location-details">
+                    <div class="location-detail">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span class="location-text">
+                            {% if lang == 'jp' %}
+                                〒904-0102 
+                                <br>
+                                沖縄県中頭郡北谷町伊平458-1 イーグルロッジ 1F
+                            {% else %}
+                                〒904-0102
+                                <br>
+                                Okinawa-ken, Nakagami-gun, Chatan-cho, Ihei, 458-1 Eagle Lodge 1F
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-phone location-icon"></i>
+                        <a href="tel:+81-98-923-1312" style="color: inherit; text-decoration: none;">
+                            <span class="location-text" phone="+81-98-923-1312">098-923-1312</span>
+                        </a>
+                    </div>
+                    <div class="location-detail">
+                        <i class="fas fa-clock location-icon"></i>
+                        <span class="location-text">11:00 AM - 10:00 PM</span>
+                    </div>
+                </div>
+                <div class="location-actions">
+                    <button class="btn btn-location-primary" onclick="window.location.href='{{ url_for('taj_okinawa') }}'">
+                        {% if lang == 'jp' %}
+                            店舗ページ
+                        {% else %}
+                            Visit Page
+                        {% endif %}
+                    </button>
+                    <button class="btn btn-location-outline" onclick="window.open('https://maps.app.goo.gl/GUva8oatkwVs4krX7', '_blank')">
+                        {% if lang == 'jp' %}
+                            道順を取得
+                        {% else %}
+                            Get Directions
+                        {% endif %}
+                    </button>
                 </div>
             </div>
         </div>
