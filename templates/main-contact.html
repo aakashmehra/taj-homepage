@@ -72,42 +72,13 @@
     line-height: 1.6;
 }
 
-/* Social Media Icons */
-.social-icons {
-    font-size: 1.5rem;
-    color: #dc2626;
+/* Buffet Service Icon (in social-section-card) */
+.social-section-card .icon-wrapper {
+    font-size: 3rem;
+    color: var(--accent);
     margin-bottom: 1rem;
     display: flex;
-    gap: 1rem;
     justify-content: center;
-}
-
-.social-icons i {
-    transition: transform 0.3s ease;
-}
-
-.social-icons i:hover {
-    transform: scale(1.1);
-}
-
-/* Social Media Buttons */
-.social-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.social-button {
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.social-button i {
-    font-size: 1.5rem;
-    color: #dc2626;
 }
 
 /* Reservations Section */
@@ -176,18 +147,8 @@
         padding: 1.5rem;
     }
     
-    .social-icons {
-        font-size: 1.25rem;
-    }
-    
-    .social-buttons {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .social-button {
-        width: 100%;
-        justify-content: center;
+    .social-section-card .icon-wrapper {
+        font-size: 2.5rem;
     }
     
     /* Reservation Options */
@@ -251,13 +212,6 @@
         padding: 0.5rem 1rem;
     }
     
-    .social-button {
-        padding: 0.625rem 0.875rem;
-    }
-    
-    .social-button i {
-        font-size: 1.25rem;
-    }
 }
 </style>
 <div id="root">
@@ -359,30 +313,29 @@
     
     <div class="social-section-wrapper">
         <div class="social-section-card">
-            <div class="social-icons">
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-facebook"></i>
+            <div class="icon-wrapper">
+                <i class="fas fa-utensils"></i>
             </div>
             <h3>
                 {% if lang == 'jp' %}
-                    SNSでフォロー
+                    ビュッフェサービス
                 {% else %}
-                    Follow Us on Social
+                    Buffet Service
                 {% endif %}
             </h3>
             <p>
                 {% if lang == 'jp' %}
-                    最新情報、お得な情報、イベント情報をSNSでチェックしてください。
+                    特別なイベントをご計画ですか？当店のビュッフェサービスで、タージの本格的な味をお客様のお祝いにお届けします。カスタムメニューの企画やイベントコーディネートについては、お問い合わせください。
                 {% else %}
-                    Check our social media for updates, special offers, and event information.
+                    Planning a special event? Our buffet service brings the authentic taste of Taj to your celebrations. Contact us for custom menu planning and event coordination.
                 {% endif %}
             </p>
-            <div class="social-buttons">
-                <a href="#" class="btn btn-location-outline social-button">
-                    <i class="fab fa-instagram"></i> Instagram
+            <div style="margin-top: 1.5rem;">
+                <a href="tel:070-9197-2306" class="btn btn-location-primary" style="margin-bottom: 0.75rem; display: block;">
+                    <i class="fas fa-phone" style="margin-right: 0.5rem;"></i> 070-9197-2306
                 </a>
-                <a href="#" class="btn btn-location-outline social-button">
-                    <i class="fab fa-facebook"></i> Facebook
+                <a href="mailto:vinnindia@gmail.com" class="btn btn-location-outline" style="display: block;">
+                    <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> vinnindia@gmail.com
                 </a>
             </div>
         </div>
