@@ -532,41 +532,6 @@
     </h2>
     
     <div class="locations-grid">
-        <!-- Taj Okinawa -->
-        <div class="location-card">
-            <h3>
-                <i class="fas fa-store"></i>
-                Taj Okinawa
-            </h3>
-            <div class="contact-info">
-                <p>
-                    <i class="fas fa-map-marker-alt"></i>
-                    〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F
-                </p>
-                <p>
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+81-98-923-1312">098-923-1312</a>
-                </p>
-                <p>
-                    <i class="fas fa-clock"></i>
-                    {% if lang == 'jp' %}
-                        店内: 11:00-22:00 | 配達: 11:00-21:30
-                    {% else %}
-                        Dine-in: 11am-10pm | Delivery: 11am-9:30pm
-                    {% endif %}
-                </p>
-                <div class="btn-group">
-                    <a href="{{ url_for('taj_okinawa') }}" class="btn">
-                        {% if lang == 'jp' %}
-                            詳細を見る
-                        {% else %}
-                            View Details
-                        {% endif %}
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <!-- Taj Nikko -->
         <div class="location-card">
             <h3>
@@ -631,6 +596,41 @@
                 </p>
                 <div class="btn-group">
                     <a href="{{ url_for('taj_fuji') }}" class="btn">
+                        {% if lang == 'jp' %}
+                            詳細を見る
+                        {% else %}
+                            View Details
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Taj Okinawa -->
+        <div class="location-card">
+            <h3>
+                <i class="fas fa-store"></i>
+                Taj Okinawa
+            </h3>
+            <div class="contact-info">
+                <p>
+                    <i class="fas fa-map-marker-alt"></i>
+                    〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F
+                </p>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:+81-98-923-1312">098-923-1312</a>
+                </p>
+                <p>
+                    <i class="fas fa-clock"></i>
+                    {% if lang == 'jp' %}
+                        店内: 11:00-22:00 | 配達: 11:00-21:30
+                    {% else %}
+                        Dine-in: 11am-10pm | Delivery: 11am-9:30pm
+                    {% endif %}
+                </p>
+                <div class="btn-group">
+                    <a href="{{ url_for('taj_okinawa') }}" class="btn">
                         {% if lang == 'jp' %}
                             詳細を見る
                         {% else %}
