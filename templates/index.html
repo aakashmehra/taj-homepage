@@ -88,7 +88,15 @@
                         <div class="location-details">
                             <div class="location-detail">
                                 <i class="fas fa-map-marker-alt location-icon"></i>
-                                <span class="location-text">2F, 2-32 Honcho, Nikko, Tochigi 321-1434</span>
+                                <span class="location-text">
+                                    {% if lang == 'jp' %}
+                                    〒321-1434
+                                    栃木県日光市本町2-32 2階
+                                    {% else %}
+                                    〒321-1434
+                                    Tochigi-ken, Nikko-shi, Honcho 2-32, 2F
+                                    {% endif %}
+                                </span>
                             </div>
                             <div class="location-detail">
                                 <i class="fas fa-phone location-icon"></i>
@@ -136,7 +144,15 @@
                         <div class="location-details">
                             <div class="location-detail">
                                 <i class="fas fa-map-marker-alt location-icon"></i>
-                                <span class="location-text">6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301</span>
+                                <span class="location-text">
+                                    {% if lang == 'jp' %}
+                                        〒401-0301 
+                                        山梨県南都留郡富士河口湖町船津6713-12
+                                    {% else %}
+                                    〒401-0301
+                                    Yamanashi-ken, Minamitsuru-gun, Fujikawaguchiko-machi, Funatsu 6713-12
+                                    {% endif %}
+                                </span>
                             </div>
                             <div class="location-detail">
                                 <i class="fas fa-phone location-icon"></i>
@@ -190,7 +206,15 @@
                         <div class="location-details">
                             <div class="location-detail">
                                 <i class="fas fa-map-marker-alt location-icon"></i>
-                                <span class="location-text">Ihei, 458-1 Eagle Lodge 1F, Chatan, Okinawa</span>
+                                <span class="location-text">
+                                    {% if lang == 'jp' %}
+                                        〒904-0102 
+                                        沖縄県中頭郡北谷町伊平458-1 イーグルロッジ 1F
+                                    {% else %}
+                                    〒904-0102
+                                    Okinawa-ken, Nakagami-gun, Chatan-cho, Ihei, 458-1 Eagle Lodge 1F
+                                    {% endif %}
+                                </span>
                             </div>
                             <div class="location-detail">
                                 <i class="fas fa-phone location-icon"></i>
