@@ -541,7 +541,15 @@
             <div class="contact-info">
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
-                    〒321-1434 Tochigi, Nikko, Honcho 2-32 2F
+                    {% if lang == 'jp' %}
+                        〒321-1434
+                        <br>
+                        栃木県日光市本町2-32 2階
+                    {% else %}
+                        〒321-1434
+                        <br>
+                        Tochigi-ken, Nikko-shi, Honcho 2-32, 2F
+                    {% endif %}
                 </p>
                 <p>
                     <i class="fas fa-phone"></i>
@@ -576,7 +584,15 @@
             <div class="contact-info">
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
-                    6713-12 Funatsu, Fujikawaguchiko-machi, Minamitsuru District, Yamanashi 401-0301
+                    {% if lang == 'jp' %}
+                        〒401-0301 
+                        <br>
+                        山梨県南都留郡富士河口湖町船津6713-12
+                    {% else %}
+                        〒401-0301
+                        <br>
+                        Yamanashi-ken, Minamitsuru-gun, Fujikawaguchiko-machi, Funatsu 6713-12
+                    {% endif %}
                 </p>
                 <p>
                     <i class="fas fa-phone"></i>
@@ -615,7 +631,15 @@
             <div class="contact-info">
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
-                    〒904-0102 Okinawa, Nakagami District, Chatan, Ihei, 458-1 イーグルロッジ 1F
+                    {% if lang == 'jp' %}
+                        〒904-0102 
+                        <br>
+                        沖縄県中頭郡北谷町伊平458-1 イーグルロッジ 1F
+                    {% else %}
+                        〒904-0102
+                        <br>
+                        Okinawa-ken, Nakagami-gun, Chatan-cho, Ihei, 458-1 Eagle Lodge 1F
+                    {% endif %}
                 </p>
                 <p>
                     <i class="fas fa-phone"></i>
