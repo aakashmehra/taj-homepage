@@ -141,14 +141,13 @@
                                 Call Now
                             {% endif %}
                         </a>
-                        <a href="tel:070-9197-2306" class="btn btn-location-outline">
-                            <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
+                        <button class="btn btn-location-outline" onclick="showTakeoutModal('070-9197-2306', '{{ restaurant.location }}')">
                             {% if lang == 'jp' %}
                                 テイクアウト注文
                             {% else %}
                                 Takeout Orders
                             {% endif %}
-                        </a>
+                        </button>
                     {% else %}
                         <a href="tel:{{ restaurant.phone }}" class="btn btn-location-primary">
                             <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
@@ -174,14 +173,13 @@
                                 {% endif %}
                             </button>
                         {% endif %}
-                        <a href="tel:{{ restaurant.phone }}" class="btn btn-location-outline">
-                            <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
+                        <button class="btn btn-location-outline" onclick="showTakeoutModal('{{ restaurant.phone }}', '{{ restaurant.location }}')">
                             {% if lang == 'jp' %}
                                 テイクアウト注文
                             {% else %}
                                 Takeout Orders
                             {% endif %}
-                        </a>
+                        </button>
                     {% endif %}
                 </div>
             </div>
